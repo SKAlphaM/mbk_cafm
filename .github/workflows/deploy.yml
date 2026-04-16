@@ -1,0 +1,14 @@
+name: Deploy Odoo Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64]
+
+    steps:
+      - name: Run deploy script
+        run: /home/saleem/odoo_git_test/deploy.sh
