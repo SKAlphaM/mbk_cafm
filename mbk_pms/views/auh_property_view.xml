@@ -9,7 +9,7 @@
         <field name="context">{'default_country_id':2, 'default_state_id':546}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Create a new Abu dhabi property TEST
+                Create a new Abu dhabi property
             </p>
         </field>
     </record>
