@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_fm_equipment_kanban" model="ir.ui.view">
+        <field name="name">mbk_fm.equipment.kanban</field>
+        <field name="model">mbk_fm.equipment</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="name"/>
+                <field name="color"/>
+                <field name="technician_id"/>
+                <field name="custodian"/>
+                <field name="category_id"/>
+                <field name="serial_no"/>
+                <field name="model"/>
+                <!-- <field name="maintenance_ids"/> -->
+                <field name="maintenance_open_count"/>
+                <field name="next_action_date"/>
+                <field name="activity_ids"/>
+                <field name="activity_state"/>
+                <progressbar field="activity_state"
+                             colors="{&quot;planned&quot;: &quot;success&quot;, &quot;today&quot;: &quot;warning&quot;, &quot;overdue&quot;: &quot;danger&quot;}"/>
+                <templates>
+                    <t t-name="kanban-tooltip">
+                        <ul class="oe_kanban_tooltip">
+                            <li t-if="record.serial_no.raw_value">
+                                <b>Serial Number:</b>
+                                <t t-esc="record.serial_no.value"/>
+                            </li>
+                            <li t-if="record.model.raw_value">
+                                <b>Model Number:</b>
+                                <t t-esc="record.model.value"/>
+                            </li>
+                        </ul>
+                    </t>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
+                            <div class="o_dropdown_kanban dropdown" t-if="!selection_mode">
+
+                                <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
+                                   data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <t t-if="widget.editable">
+                                        <a role="menuitem" type="edit" class="dropdown-item">Edit...</a>
+                                    </t>
+                                    <t t-if="widget.deletable">
+                                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                    </t>
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <div role="separator" class="dropdown-header">Record Colour</div>
+                                    <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_content" tooltip="kanban-tooltip">
+                                <div class="o_kanban_record_top">
+                                    <b class="o_kanban_record_title">
+                                        <field name="name"/>
+                                        <small>
+                                            <span t-if="record.model.raw_value">(<field name="model"/>)
+                                            </span>
+                                        </small>
+                                    </b>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div t-if="record.serial_no.raw_value">
+                                        <field name="serial_no"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <div class="badge badge-danger"
+                                             t-if="!selection_mode and record.maintenance_open_count.raw_value">
+                                            <t t-out="record.maintenance_open_count.raw_value"/>
+                                            Request
+                                        </div>
+                                        <div class="badge badge-secondary"
+                                             t-if="!selection_mode and record.next_action_date.raw_value">
+                                            <t t-out="moment(record.next_action_date.raw_value).format('MMMM Do')"/>
+                                        </div>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <div class="o_kanban_inline_block" t-if="!selection_mode">
+                                            <field name="activity_ids" widget="kanban_activity"/>
+                                        </div>
+                                        <field name="custodian"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_equipment_tree" model="ir.ui.view">
+        <field name="name">mbk_fm.equipment.tree</field>
+        <field name="model">mbk_fm.equipment</field>
+        <field name="arch" type="xml">
+            <list sample="1">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="custodian"/>
+                <field name="assign_date" groups="base.group_no_one"/>
+                <field name="serial_no"/>
+                <field name="team_id"/>
+                <field name="technician_id"/>
+                <field name="category_id"/>
+                <field name="ticket_type_id"/>
+                <field name="unit_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="activity_exception_decoration" widget="activity_exception"/>
+            </list>
+        </field>
+    </record>
+<!-- equipment : views -->
+    <record id="view_mbk_fm_equipment_form" model="ir.ui.view">
+        <field name="name">mbk_fm.equipment.form</field>
+        <field name="model">mbk_fm.equipment</field>
+        <field name="arch" type="xml">
+            <form string="Equipments">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_tickets"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-wrench">
+                            <field string="Maintenance" name="maintenance_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" string="Name" placeholder="e.g. LED Monitor"/>
+                        </h1>
+                    </div>
+                    <div class="oe_title">
+                        <label for="code" class="oe_edit_only"/>
+                        <h3>
+                            <field name="code" string="Code" placeholder="e.g. XXXXXXX"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="category_id" options="{&quot;no_open&quot;: True}" context="{'default_company_id':company_id}"/>
+                            <field name="ticket_type_id"/>
+                            <field name="unit_id"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="custodian"/>
+                        </group>
+                        <group>
+                            <field name="team_id"/>
+                            <field name="technician_id"/>
+                            <field name="assign_date" groups="base.group_no_one"/>
+                            <field name="scrap_date" groups="base.group_no_one"/>
+                            <field name="location" string="Used in location"/>
+                            <field name="subcontractor"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="note"/>
+                        </page>
+                        <page string="Product Information" name="product_information">
+                            <group>
+                                <group>
+                                    <field name="partner_id"/>
+                                    <field name="partner_ref"/>
+                                    <field name="model"/>
+                                    <field name="serial_no"/>
+                                </group>
+                                <group>
+                                    <field name="effective_date"/>
+                                    <field name="cost" groups="mbk_fm.group_fm_manager"/>
+                                    <field name="warranty_date"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Maintenance" name="maintenance">
+                            <group>
+                                <group name="maintenance">
+                                    <field name="next_action_date" class="oe_read_only"
+                                           string="Next Preventive Maintenance"/>
+                                    <label for="period" string="Preventive Maintenance Frequency"/>
+                                    <div class="o_row">
+                                        <field name="period"/>
+                                        days
+                                    </div>
+                                    <label for="maintenance_duration" string="Maintenance Duration"/>
+                                    <div class="o_row">
+                                        <field name="maintenance_duration"/>
+                                        hours
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_equipment_search" model="ir.ui.view">
+        <field name="name">mbk_fm.equipment.search</field>
+        <field name="model">mbk_fm.equipment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Ticket Type Name"
+                       filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="code"/>
+                <field name="custodian"/>
+                <field name="team_id"/>
+                <field name="technician_id"/>
+                <filter name="filter_type_archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mbk_fm_equipment" model="ir.actions.act_window">
+        <field name="name">Equipments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_fm.equipment</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Equipment
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_fm_equipment"
+              name="Equipments"
+              action="action_mbk_fm_equipment"
+              parent="menu_mbk_fm_root"
+              sequence="20"/>
+</odoo>

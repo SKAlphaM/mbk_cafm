@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="maintenance_request_wizard_form_view" model="ir.ui.view">
+        <field name="name">Maintenance Request Wizard Form</field>
+        <field name="model">maintenance.request.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Request Wizard">
+                <group>
+                    <group>
+                        <field name="from_date" required="1"/>
+                        <field name="case_type"/>
+                        <field name="team_id"/>
+                        <field name="unit_id"/>
+                        <field name="property_id"/>
+                    </group>
+                    <group>
+                        <field name="to_date" required="1"/>
+                        <field name="technician_id"/>
+                        <field name="mode_of_contact"/>
+                        <field name="state"/>
+                        <field name="priority" widget="priority"/>
+                    </group>
+                </group>
+                <group string="Optional Fields">
+                    <group>
+                        <field name="optional_close_date"/>
+                        <field name="optional_complaint_reg_by"/>
+                        <field name="optional_techicians"/>
+                    </group>
+                    <group>
+                        <field name="optional_details_of_complaint"/>
+                        <field name="optional_customer"/>
+                        <field name="optional_mode_of_contact"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_create_report"
+                            string="View Report"
+                            type="object"
+                            class="oe_highlight"/>
+                    <button string="Cancel"
+                            class="btn btn-default"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_maintenance_requests_wizard" model="ir.actions.act_window">
+        <field name="name">Maintenance Request Wizard</field>
+        <field name="res_model">maintenance.request.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="menu_maintenance_requests_wizard"
+            name="Maintenance Register"
+            action="mbk_fm.action_maintenance_requests_wizard"
+            parent="mbk_fm.menu_mbk_fm_reports"
+            sequence='20'/>
+
+</odoo>

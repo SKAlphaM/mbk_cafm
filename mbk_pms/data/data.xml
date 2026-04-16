@@ -1,0 +1,189 @@
+<odoo>
+    <data noupdate="1">
+    <record id="service_1" model="mbk_pms.service">
+        <field name="name">Residential Rent</field>
+        <field name="code">RR</field>
+        <field name="category">rent</field>
+    </record>
+    <record id="service_2" model="mbk_pms.service">
+        <field name="name">Commercial Rent</field>
+        <field name="code">CR</field>
+        <field name="category">rent</field>
+    </record>
+
+    <!--Contract Sequences -->
+    <record id="sequence_pms_seq" model="ir.sequence">
+        <field name="name">Contract No sequence</field>
+        <field name="code">mbk_pms.contract</field>
+        <field name="prefix">ADPM</field>
+        <field name="padding">4</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+
+    <!--Payment Collection Sequence -->
+    <record id="sequence_pms_receipt_seq" model="ir.sequence">
+        <field name="name">Payment Collection No sequence</field>
+        <field name="code">mbk_pms.payment_collection</field>
+        <field name="prefix">RV</field>
+        <field name="padding">4</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+
+    <!--Payment Deposit Sequence -->
+    <record id="sequence_pms_deposit_seq" model="ir.sequence">
+        <field name="name">Payment Deposit sequence</field>
+        <field name="code">mbk_pms.payment_deposit</field>
+        <field name="prefix">DEP</field>
+        <field name="padding">4</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+
+    <!--Payment Cheque Hold Sequence -->
+    <record id="sequence_pms_cheque_hold_seq" model="ir.sequence">
+        <field name="name">Cheque Hold Request sequence</field>
+        <field name="code">mbk_pms.cheque_hold</field>
+        <field name="prefix">CH</field>
+        <field name="padding">3</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+    <!--Cheque Replacement Sequence -->
+    <record id="sequence_pms_cheque_replacement_seq" model="ir.sequence">
+        <field name="name">Cheque Replacement Voucher sequence</field>
+        <field name="code">mbk_pms.cheque_replacement</field>
+        <field name="prefix">CR</field>
+        <field name="padding">3</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+    <!--Cheque Bounced Sequence -->
+    <record id="sequence_pms_cheque_bounced_seq" model="ir.sequence">
+        <field name="name">Cheque Bounced Voucher sequence</field>
+        <field name="code">mbk_pms.cheque_bounced</field>
+        <field name="prefix">CB</field>
+        <field name="padding">3</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+
+    <!--Payment Clearing Sequence -->
+    <record id="sequence_pms_payment_clearing_seq" model="ir.sequence">
+        <field name="name">Payment Clearing Voucher sequence</field>
+        <field name="code">mbk_pms.payment_clearing</field>
+        <field name="prefix">PC</field>
+        <field name="padding">4</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+    <!--Break Request Sequence -->
+    <record id="sequence_pms_break_request_seq" model="ir.sequence">
+        <field name="name">Break Request sequence</field>
+        <field name="code">mbk_pms.break_request</field>
+        <field name="prefix">BR</field>
+        <field name="padding">4</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+    <!--Break Contract Sequence -->
+    <record id="sequence_pms_break_contract_seq" model="ir.sequence">
+        <field name="name">Break Contract sequence</field>
+        <field name="code">mbk_pms.break_contract</field>
+        <field name="prefix">BC</field>
+        <field name="padding">4</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+
+    <!--Renewal Offer Letter Sequence -->
+    <record id="sequence_pms_renewal_offer_seq" model="ir.sequence">
+        <field name="name">Renewal Offer sequence</field>
+        <field name="code">mbk_pms.renewal_offer</field>
+        <field name="prefix">RO</field>
+        <field name="padding">4</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+
+    <!--Renewal Offer Letter Sequence -->
+    <record id="sequence_pms_lease_offer_seq" model="ir.sequence">
+        <field name="name">Lease Offer sequence</field>
+        <field name="code">mbk_pms.lease_offer</field>
+        <field name="prefix">LO</field>
+        <field name="padding">4</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+
+    <!--Cheque Internal Sequence No -->
+    <record id="sequence_pms_cheque" model="ir.sequence">
+        <field name="name">Cheque sequence</field>
+        <field name="code">mbk_pms.cheque_sequence</field>
+        <field name="prefix">CHQ</field>
+        <field name="padding">5</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+
+    <!--Process Bounced Cheque Sequence -->
+    <record id="sequence_pms_process_bounced" model="ir.sequence">
+        <field name="name">Process Bounced sequence</field>
+        <field name="code">mbk_pms.process_bounced</field>
+        <field name="prefix">PB</field>
+        <field name="padding">4</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+
+    <!-- Contract Approval activities, for automatic generation mainly -->
+    <record id="mail_act_pms_contract_approval" model="mail.activity.type">
+        <field name="name">To Approve</field>
+        <field name="icon">fa-check</field>
+        <field name="res_model">mbk_pms.contract</field>
+    </record>
+
+    <!-- Cheque Hold Request Approval activities, for automatic generation mainly -->
+    <record id="mail_act_pms_chq_hold_approval" model="mail.activity.type">
+        <field name="name">To Approve</field>
+        <field name="icon">fa-check</field>
+        <field name="res_model">mbk_pms.cheque_hold</field>
+    </record>
+
+    <!-- Renewal Offer Letter Approval activities, for automatic generation mainly -->
+    <record id="mail_act_pms_renewal_offer_approval" model="mail.activity.type">
+        <field name="name">To Approve</field>
+        <field name="icon">fa-check</field>
+        <field name="res_model">mbk_pms.renewal_offer</field>
+    </record>
+
+    <!-- Lease Offer Letter Approval activities, for automatic generation mainly -->
+    <record id="mail_act_pms_lease_offer_approval" model="mail.activity.type">
+        <field name="name">To Approve</field>
+        <field name="icon">fa-check</field>
+        <field name="res_model">mbk_pms.lease_offer</field>
+    </record>
+
+    <!-- Break Contract Approval activities, for automatic generation mainly -->
+    <record id="mail_act_pms_break_contract_approval" model="mail.activity.type">
+        <field name="name">To Approve</field>
+        <field name="icon">fa-check</field>
+        <field name="res_model">mbk_pms.break_contract</field>
+    </record>
+
+    </data>
+</odoo>

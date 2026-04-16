@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="1">
+    <!-- Maintenance-specific activities, for automatic generation mainly -->
+    <record id="mail_act_fm_maintenance_request" model="mail.activity.type">
+        <field name="name">Maintenance Request</field>
+        <field name="icon">fa-wrench</field>
+        <field name="res_model">mbk_fm.ticket</field>
+    </record>
+
+    <!-- Material Request activities, for automatic generation mainly -->
+    <record id="mail_act_fm_material_request" model="mail.activity.type">
+        <field name="name">Material Request</field>
+        <field name="icon">fa-shopping-cart</field>
+        <field name="res_model">mbk_fm.ticket</field>
+    </record>
+
+    <!-- Maintenance Approval activities, for automatic generation mainly -->
+    <record id="mail_act_fm_ticket_approval" model="mail.activity.type">
+        <field name="name">To Approve</field>
+        <field name="icon">fa-check</field>
+        <field name="res_model">mbk_fm.ticket</field>
+    </record>
+
+    <!-- Material Request Approval activities, for automatic generation mainly -->
+    <record id="mail_act_fm_mr_approval" model="mail.activity.type">
+        <field name="name">To Approve</field>
+        <field name="icon">fa-check</field>
+        <field name="res_model">mbk_fm.material_request</field>
+    </record>
+
+    <!--Maintenance Request Sequences -->
+    <record id="sequence_ticket_seq" model="ir.sequence">
+        <field name="name">FM Ticket sequence</field>
+        <field name="code">mbk_fm.ticket</field>
+        <field name="prefix">W</field>
+        <field name="padding">5</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+
+    <!--Material Request Sequences -->
+    <record id="sequence_fm_material_request_seq" model="ir.sequence">
+        <field name="name">FM Material Request sequence</field>
+        <field name="code">mbk_fm.material_request</field>
+        <field name="prefix">MR</field>
+        <field name="padding">4</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+    </record>
+</data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mbk_cafm_attachment,access_mbk_cafm.attachment,model_mbk_cafm_attachment,,1,1,1,0
+access_admin_mbk_cafm_attachment,access_admin_mbk_cafm.attachment,model_mbk_cafm_attachment,base.group_system,1,1,1,1
+

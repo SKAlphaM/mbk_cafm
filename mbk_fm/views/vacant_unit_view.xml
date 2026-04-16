@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_mbk_fm_vacant_unit" model="ir.actions.act_window">
+        <field name="name">Vacant Units</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_pms.unit</field>
+        <field name="view_mode">list,form</field>
+         <field name="domain">[('status', 'in', ('vacant','maintenance','booked'))]</field>
+        <field name="context">{'search_default_filter_type_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new unit
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_fm_vacant_unit"
+              name="Vacant Units"
+              action="action_mbk_fm_vacant_unit"
+              parent="menu_mbk_fm_maintenance"
+              sequence="30"/>
+</odoo>

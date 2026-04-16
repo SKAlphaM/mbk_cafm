@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>view_mbk_pms_property_form
+    <record id="view_mbk_fm_pms_property_form" model="ir.ui.view">
+        <field name="name">mbk_fm_pms.property.form</field>
+        <field name="model">mbk_pms.property</field>
+        <field name="inherit_id" ref="mbk_pms.view_mbk_pms_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_tickets" icon="fa-wrench">
+                    <field string="Total Tickets" name="maintenance_count" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_pms_unit_form" model="ir.ui.view">
+        <field name="name">mbk_fm_pms.unit.form</field>
+        <field name="model">mbk_pms.unit</field>
+        <field name="inherit_id" ref="mbk_pms.view_mbk_pms_unit_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_tickets" icon="fa-wrench">
+                    <field string="Total Tickets" name="maintenance_count" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

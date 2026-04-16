@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+	<record model="ir.cron" id="mbk_fm_maintenance_requests_cron">
+        <field name="name">FM: generate preventive maintenance requests</field>
+        <field name="model_id" ref="model_mbk_fm_equipment"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_generate_requests()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="False"/>
+    </record>
+</odoo>

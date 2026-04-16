@@ -1,0 +1,402 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+    <template id="report_lease_agreement_report">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+            <div class="page" style="!important; font-family: Times New Roman;">
+                <div class="oe_structure"/>
+                <table style="width: 100%;">
+                    <tr style="width: 100%;">
+                        <td colspan="6" class="text-center" style="!important; padding:5px;width: 100%; color:black">
+                            <h2 style="!important; color:black"><b>Lease Agreement</b></h2>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%;">
+                        <td colspan="6" class="text-left" style="font-size: 20px !important;border-bottom:1px solid black;color:#ff0000;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 100%;">
+                            <strong><span t-field="doc.contract_type"/></strong>
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Issue Date
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-esc="doc.contract_date.strftime('%m/%b/%Y')"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">تاريخ الانشاء</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Contract No.
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.name"/></b></td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 17%;"><strong>رقم العقد</strong>
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td  class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Contract Type
+                        </td>
+                        <td colspan="2" class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 34%;"><b><span t-field="doc.unit_id.use_type"/></b>
+                        </td>
+                        <td  class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;"><span t-if="doc.unit_id.use_type == 'com'">تجاري</span><span t-if="doc.unit_id.use_type == 'res'">سكني</span></td>
+                        <td colspan="2" class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 34%;"><b>نوع العقد</b>
+                        </td>
+                    </tr>
+                    <tr style="font-size: 16px !important;width: 100%;">
+                        <td colspan="3" class="text-left" style="font-size: 16px !important;border-bottom:2px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 50%;"><b>Lessor Detail</b>
+                        </td>
+                        <td colspan="3" class="text-right" style="font-size: 16px !important;border-bottom:2px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 50%;"><b>بيانات المؤجر</b>
+                        </td>
+                    </tr>
+                    </table>
+
+                    <table style="font-size: 13px !important;width: 100%;">
+            
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td  class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Lessor
+                        </td>
+                        <td colspan="2" class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 34%;"><b><span t-field="doc.company_id.name"/></b>
+                        </td>
+                        <td colspan="2" class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 34%;"><b>الظفرة لإدارة العقارات</b></td>
+                        <td  colspan="2" class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">المؤجر
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;">City</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;"><b><span t-field="doc.company_id.state_id.name"/></b></td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">P O Box</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;"><b><span t-field="doc.company_id.zip"/></b></td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;">ص.ب</td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;"><b>أبوظبي</b></td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 14%;">المدينة</td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;">Telephone</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;"><b><span t-field="doc.company_id.phone"/></b></td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Email</td>
+                        <td class="text-left" style="font-size: 13px !important;color:blue;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;"><b><span t-field="doc.company_id.email"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;">البريد الالكتروني
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;"><b><span t-field="doc.company_id.phone"/></b></td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 14%;"><b>هاتف</b>
+                        </td>
+                    </tr>
+                    <tr style="font-size: 16px !important;width: 100%;">
+                        <td colspan="4" class="text-left" style="font-size: 16px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;"><b>Lessee Detail</b>
+                        </td>
+                        <td colspan="3" class="text-right" style="font-size: 16px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;"><b>بيانات المستأجر</b>
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td  class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;">Tenant Name
+                        </td>
+                        <td colspan="2" class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;"><b><span t-field="doc.partner_id.name"/></b>
+                        </td>
+                        <td colspan="3" class="text-center" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;"><span t-field="doc.partner_id.arabic_name"/></td>
+                        <td  class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;">اسم المستأجر
+                        </td>
+                    </tr>
+                </table>
+                <table style="font-size: 13px !important;border-top:1px solid black;width: 100%;">
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Occupant Name
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.partner_id.name"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">الرخصة التجارية
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Trade License</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.partner_id.trade_license_no"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">الرخصة التجارية
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Nationality
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.partner_id.nationality.name"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">الجنسية
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Chamber No.</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.partner_id.chamber_no"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">عضوية الغرفة
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">City
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.partner_id.state_id.name"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">المدينة
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Place of Issue</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.partner_id.place_of_issue"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">جهة الاصدار
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 13%;">Mobile No
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 13%;"><b><span t-field="doc.partner_id.mobile"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">رقم الهاتف المتحرك
+                        </td>
+						<t t-if="doc.unit_id.use_type == 'res'">
+							<td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Emirates ID</td>
+							<td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.partner_id.emirates_id_no"/></b>
+							</td>
+							<td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 17%;">بطاقة الهوية الإماراتية
+							</td>
+						</t>
+						<t t-if="doc.unit_id.use_type == 'com'">
+							<td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 16%;">TRN No
+							</td>
+							<td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><span t-field="doc.partner_id.vat"/>
+							</td>
+							<td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 17%;">رقم التسجيل الضريبي
+							</td>
+						</t>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Telephone No
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.partner_id.phone"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">رقم الهاتف
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">P.O. Box</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.partner_id.zip"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">ص.ب
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td colspan="2" class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Email Address
+                        </td>
+                        <td colspan="2" class="text-center" style="font-size: 13px !important;color:blue;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.partner_id.email"/></b>
+                        </td>
+                        <td colspan="2" class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 17%;">البريد الإلكتروني
+                        </td>
+                    </tr>
+                    <tr style="font-size: 16px !important;width: 100%;">
+                        <td colspan="3" class="text-left" style="font-size: 16px !important;border-bottom:2px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;"><b>Contract Details</b>
+                        </td>
+                        <td colspan="3" class="text-right" style="font-size: 16px !important;border-bottom:2px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;"><b>بيانات العقد</b>
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Lease Start Date
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-esc="doc.start_date.strftime('%m/%b/%Y')"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">تاريخ بداية العقد
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 20%;">Annual Rent</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;"><b><span t-esc="'{0:,.2f}'.format(annual_rent_amount)"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">الايجار السنوي
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Lease End Date
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-esc="doc.expiry_date.strftime('%m/%b/%Y')"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">تاريخ نهاية العقد
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 20%;">Paid Rent Amount</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;"><b><span t-esc="'{0:,.2f}'.format(doc.total_rent+doc.extra_paid)"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">الإيجار المدفوع
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">No.of Installments
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-esc="payment_terms"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">عدد الدفعات
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 20%;">Held Security Deposit</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 14%;"><b><span t-esc="'{0:,.2f}'.format(doc.total_deposit)"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">قيمة التأميــــــن
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td colspan="2" class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Contract Period
+                        </td>
+                        <td colspan="2" class="text-center" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-esc="contract_period"/></b>
+                        </td>
+                        <td colspan="2" class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 17%;">مــــدة العقــــــد
+                        </td>
+                    </tr>
+                    <tr style="font-size: 16px !important;width: 100%;">
+                        <td colspan="3" class="text-left" style="font-size: 16px !important;border-bottom:2px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;"><b>Building Detail</b>
+                        </td>
+                        <td colspan="3" class="text-right" style="font-size: 16px !important;border-bottom:2px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;"><b>بيانات العقار</b>
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Property ID
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.property_id.property_id"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">رقم العقار
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">City</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.property_id.city"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">المدينة
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Unit No.
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.unit_id.rn_id.name"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">رقم العين
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Floor No.</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.unit_id.rn_id.code"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">رقم الطابق
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Unit Type
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.unit_id.category"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">نوع الوحدة
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Actual Usage</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.unit_id.use_type"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">الاستخدام الفعلي
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">NO.Of Rooms
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.unit_id.type_id.name"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">عدد غرف النوم</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Plot No</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.property_id.plot_no"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">رقم القطعة
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Property Type
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.unit_id.use_type"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">نوع العقار
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Zone</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.property_id.zone"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">المنطقة
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">No. of Occupants
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.no_of_occupants"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">عدد القاطنين
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Unit Name</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.unit_id.unit_name"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">رقم الوحدة
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Area Sq.Ft
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.unit_id.sq_ft"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">المساحة قدم مربع
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Govt Reg No</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.govt_contract_no"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">رقم العقد الحكومي</td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 16%;">Parking Details
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.parking_details"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;">تفاصيل موقف السيارات
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Store Details</td>
+                        <td class="text-left" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.store_details"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;border-bottom:1px solid black;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">غرفة مخزن
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;width: 100%;">
+<!--                        <td class="text-left" style="font-size: 13px !important;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 10%;">Remarks-->
+<!--                        </td>-->
+                        <td colspan="3" class="text-left" style="font-size: 13px !important;color:#ff0000;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 50%"><span style="!important; color:black">Remarks &amp;ensp;</span><b><span t-field="doc.note"/></b>
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;padding-left:10px; padding-top:5px; padding-bottom:5px;width: 17%;">Premise No.</td>
+                        <td class="text-left" style="font-size: 13px !important;padding-right:10px; padding-top:5px; padding-bottom:5px;width: 17%;"><b><span t-field="doc.unit_id.premise_no"/></b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;padding-right:2px; padding-top:5px; padding-bottom:5px;width: 16%;">رقم العقار
+                        </td>
+                    </tr>
+                    <tr style="font-size: 13px !important;height: 50px;width: 100%;">
+                        <td class="text-left" style="font-size: 13px !important;width: 16%;padding-left:25px;">
+                        <br/><br/><br/>
+                            Lessor Signature
+                             <br/><br/>
+                        </td>
+                        <td class="text-center" style="font-size: 13px !important;width: 17%;padding-left:25px;">
+                             <br/><br/><br/>
+                            <b>________________________</b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;width: 17%;padding-right:25px;">
+                             <br/><br/><br/>
+                            توقيع المؤجر
+                        </td>
+                        <td class="text-left" style="font-size: 13px !important;width: 17%;padding-left:25px;">
+                             <br/><br/><br/><b>Lessee Signature</b></td>
+                        <td class="text-center" style="font-size: 13px !important;width: 17%;padding-left:20px;">
+                             <br/><br/><br/><b>________________________</b>
+                        </td>
+                        <td class="text-right" style="font-size: 13px !important;width: 16%;padding-right:25px;">
+                             <br/><br/><br/>توقيع المستأجر
+                        </td>
+                    </tr>
+                     <tr style="font-size: 13px !important;width: 100%;">
+                        <td colspan="3" class="text-left" style="font-size: 13px !important;width: 50%;padding-left:25px;">
+                            <b>I Acknowledge That I Have Read And Understand The Terms</b></td>
+                        <td colspan="3" class="text-right" style="font-size: 13px !important;width: 50%;padding-right:25px;">
+                            <b>إطلعت ووافقت على شروط العقد وعليه اوقع.</b></td>
+                     </tr>
+                </table>
+                <div style="font-size: 13px !important;page-break-after: always;"/>
+               <div >
+                       <center><img t-att-src="'/mbk_pms/static/src/img/lease_contract_tnc_pic1.jpg'" height="1100" width="800"/></center>
+                </div>
+                <div >
+                       <center><img t-att-src="'/mbk_pms/static/src/img/lease_contract_tnc_pic2.jpg'" height="1100" width="800"/></center>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="mbk_pms.lease_agreement_report">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="mbk_pms.report_lease_agreement_report" t-lang="doc.partner_id.lang"/>
+        </t>
+    </t>
+    </template>
+
+    </data>
+</odoo>

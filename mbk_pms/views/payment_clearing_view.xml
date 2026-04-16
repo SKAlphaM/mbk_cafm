@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_pms_payment_clearing_kanban" model="ir.ui.view">
+        <field name="name">mbk_pms.payment_clearing.kanban</field>
+        <field name="model">mbk_pms.payment_clearing</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="name"/>
+                <field name="clearing_date"/>
+                <field name="journal_id"/>
+                <field name="state"/>
+                <field name="activity_ids"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li>
+                                        <strong>No:
+                                            <field name="name"/>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Date:
+                                        <field name="clearing_date"/>
+                                    </li>
+                                    <li>
+                                        Emirate:
+                                        <field name="journal_id"/>
+                                    </li>
+                                    <li>
+                                        User:
+                                        <field name="owner_user_id"/>
+                                    </li>
+                                    <li>
+                                        State:
+                                        <field name="state" widget="badge" decoration-success="state == 'done'"
+                                               decoration-info="state == 'active'"
+                                               decoration-muted="state == 'cancel'"/>
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_mbk_pms_payment_clearing_tree" model="ir.ui.view">
+        <field name="name">mbk_pms.payment_clearing.tree</field>
+        <field name="model">mbk_pms.payment_clearing</field>
+        <field name="arch" type="xml">
+            <list sample="1" decoration-success="state == 'done'" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="clearing_date"/>
+                <field name="journal_id"/>
+                <field name="property_id" optional="hide"/>
+                <field name="owner_user_id"/>
+                <field name="net_amount"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-info="state =='active'" decoration-warning="state == 'draft'" decoration-muted="state == 'cancel'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+    <!-- clearing Voucher : views -->
+    <record id="view_mbk_pms_payment_clearing_form" model="ir.ui.view">
+        <field name="name">mbk_pms.payment_clearing.form</field>
+        <field name="model">mbk_pms.payment_clearing</field>
+        <field name="arch" type="xml">
+            <form string="Clearing Voucher" duplicate="0">
+                <header>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Set to Draft" name="action_draft" type="object" invisible="state != 'cancel'"/>
+                    <button string="Cancel" name="action_cancel" type="object" confirm="Are you sure to continue" invisible="state not in ('draft','active')"/>
+                    <field name="state" widget="statusbar" invisible="not active"
+                           statusbar_visible="draft,active"/>
+                </header>
+                <sheet>
+                    <div invisible="active">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="New" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="clearing_date" readonly="True" invisible="1"/>
+                            <field name="as_on_date"/>
+                            <field name="tenant_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="unit_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="journal_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="payment_mode"/>
+                            <field name="payment_state" invisible="1"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="state_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="property_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="owner_user_id" string="Created By"
+                                   options="{'no_create': True, 'no_open': True}" readonly="True" invisible="1"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                        </group>
+                        <h1><button icon="fa-money" string=" Load Clearing Cheque Details" name="action_load_clearing" type="object" class="oe_highlight" invisible="state != 'draft'"/></h1>
+                    </group>
+                    <notebook>
+                        <page string="Clearing Details" name="clearing_line_ids">
+                            <field name="clearing_line_ids" readonly="state in ('active', 'cancel')">
+                                <list editable="bottom">
+                                    <field name="payment_line_id" options="{'no_create': True}"/>
+                                    <field name="tenant_id"/>
+                                    <field name="contract_id"/>
+                                    <field name="payment_mode" optional="hide"/>
+                                    <field name="ref_date"/>
+                                    <field name="ref_no"/>
+                                    <field name="bank_id"/>
+                                    <field name="deposited_date"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'cleared'"
+                                           decoration-info="state in ('received','deposited')"
+                                           decoration-muted="state == 'cancel'"
+                                           decoration-danger="state == 'bounced'" decoration-warning="state == 'hold'"/>
+                                    <field name="name"/>
+                                    <field name="unit_id"/>
+                                    <field name="property_id" optional="hide"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="payment_line_id" options="{'no_create': True}"/>
+                                        <field name="payment_mode"/>
+                                        <field name="ref_date"/>
+                                        <field name="ref_no"/>
+                                        <field name="bank_id"/>
+                                        <field name="deposited_date"/>
+                                        <field name="state" widget="badge" decoration-success="state == 'cleared'"
+                                               decoration-info="state in ('received','deposited')"
+                                               decoration-muted="state == 'cancel'"
+                                               decoration-danger="state == 'bounced'" decoration-warning="state == 'hold'"/>
+                                        <field name="name"/>
+                                        <field name="contract_id"/>
+                                        <field name="tenant_id"/>
+                                        <field name="unit_id"/>
+                                        <field name="property_id"/>
+                                        <field name="amount" sum="Total Amount"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                    <field name='note' placeholder="Internal Notes"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_mbk_pms_payment_clearing_search" model="ir.ui.view">
+        <field name="name">mbk_pms.payment_clearing.search</field>
+        <field name="model">mbk_pms.payment_clearing</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="clearing No"
+                       filter_domain="['|', ('name', 'ilike', self), ('state_id', 'ilike', self)]"/>
+                <field name="journal_id"/>
+                <field name="state_id"/>
+                <field name="net_amount"/>
+                <filter name="filter_type_active" string="Active"
+                        domain="[('state', '=', 'Active')]"/>
+                <separator/>
+                <filter name="filter_type_active" string="Active" domain="[('state', '=', 'active')]"/>
+                <separator/>
+                <filter name="filter_type_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_type_cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                <separator/>
+                <filter name="filter_type_clearing_date" string="Date" date="clearing_date"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                    <filter string="Emirate" name="group_by_state_id" context="{'group_by':'state_id'}"/>
+                    <filter string="Account" name="group_by_journal_id" context="{'group_by':'journal_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mbk_pms_payment_clearing" model="ir.actions.act_window">
+        <field name="name">Payment Clearing</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_pms.payment_clearing</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new payment clearing
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_pms_payment_clearing"
+              name="Payment Clearing"
+              action="action_mbk_pms_payment_clearing"
+              parent="menu_mbk_pms_payment"
+              sequence="60"/>
+</odoo>

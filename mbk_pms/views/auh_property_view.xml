@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_mbk_pms_auh_property" model="ir.actions.act_window">
+        <field name="name">Abu Dhabi Properties</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_pms.property</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('state_id', '=', 546)]</field>
+        <field name="context">{'default_country_id':2, 'default_state_id':546}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Abu dhabi property
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_pms_auh_property"
+              name="Abu Dhabi Properties"
+              action="action_mbk_pms_auh_property"
+              parent="menu_mbk_pms_master"
+              sequence="20"/>
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- LIST VIEW -->
+    <record id="view_mbk_village_tenant_tracking_tree" model="ir.ui.view">
+        <field name="name">mbk.village.tenant.tracking.tree</field>
+        <field name="model">mbk_village.tenant.tracking</field>
+        <field name="arch" type="xml">
+            <list string="Tenant Tracking" default_order="date desc">
+                <field name="date"/>
+                <field name="tenant_id"/>
+                <field name="company_id"/>
+                <field name="action"/>
+                <field name="notes"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- SEARCH VIEW -->
+    <record id="view_mbk_village_tenant_tracking_search" model="ir.ui.view">
+        <field name="name">mbk.village.tenant.tracking.search</field>
+        <field name="model">mbk_village.tenant.tracking</field>
+        <field name="arch" type="xml">
+            <search string="Search Tenant Tracking">
+                <field name="tenant_id"/>
+                <field name="company_id"/>
+                <field name="action"/>
+                <field name="date"/>
+                <field name="notes"/>
+                 <filter string="Mess Hall" name="filter_mess_hall" domain="[('action','=','mess_hall')]"/>
+                <filter string="On Boarding" name="filter_on_boarding" domain="[('action','=','on_boarding')]"/>
+                <filter string="Off Boarding" name="filter_off_boarding" domain="[('action','=','off_boarding')]"/>
+                <filter string="Gate" name="filter_gate" domain="[('action','=','gate')]"/>
+
+                <filter string="Laundry" name="filter_laundry" domain="[('action','=','laundry')]"/>
+
+                <separator/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Tenant" name="group_by_tenant" context="{'group_by': 'tenant_id'}"/>
+                    <filter string="Company" name="group_by_company" context="{'group_by': 'company_id'}"/>
+                    <filter string="Action" name="group_by_action" context="{'group_by': 'action'}"/>
+                    <filter string="Date" name="group_by_date" context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_mbk_village_tenant_tracking" model="ir.actions.act_window">
+        <field name="name">Tenant Tracking</field>
+        <field name="res_model">mbk_village.tenant.tracking</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_mbk_village_tenant_tracking_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first tenant tracking record
+            </p>
+        </field>
+    </record>
+
+    <!-- MENU -->
+    <menuitem id="menu_mbk_village_tenant_tracking"
+              name="Tenant Tracking"
+              parent="menu_mbk_village_root"
+              action="action_mbk_village_tenant_tracking"
+              sequence="20"/>
+
+</odoo>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_pms_cheque_hold_tree" model="ir.ui.view">
+        <field name="name">mbk_pms.cheque_hold.tree</field>
+        <field name="model">mbk_pms.cheque_hold</field>
+        <field name="arch" type="xml">
+            <list sample="1" decoration-success="state == 'done'" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="request_date"/>
+                <field name="tenant_id"/>
+                <field name="contract_id"/>
+                <field name="contract_amount"/>
+                <field name="amount"/>
+                <field name="owner_user_id"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-info="state =='active'" decoration-warning="state == 'draft'" decoration-muted="state == 'cancel'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+    <!-- Cheque Hold Voucher : views -->
+    <record id="view_mbk_pms_cheque_hold_form" model="ir.ui.view">
+        <field name="name">mbk_pms.cheque_hold.form</field>
+        <field name="model">mbk_pms.cheque_hold</field>
+        <field name="arch" type="xml">
+            <form string="Cheque Hold Request" duplicate="0">
+                <header>
+                    <button string="Submit for Approval" name="action_done_update_state_wizard" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Confirm" name="action_confirm_update_state_wizard" type="object" class="oe_highlight"
+                            invisible="state != 'confirm'"/>
+                    <button string="Reject" name="action_reject_update_state_wizard" type="object"
+                            invisible="state != 'confirm'"/>
+                    <button string="Set to Draft" name="action_draft" type="object" invisible="state not in ('refuse','cancel')"/>
+                    <button string="Cancel" name="action_cancel_update_state_wizard" type="object" confirm="Are you sure to continue?"
+                            invisible="state in ('cancel', 'active')"/>
+                    <field name="state" widget="statusbar" invisible="not active"
+                           statusbar_visible="draft,active"/>
+                </header>
+                <sheet>
+                    <div invisible="active">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="New" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="request_date" readonly="True"/>
+                            <field name="tenant_id" options="{'no_create': True, 'no_open': True}"/>
+
+                            <field name="payment_line_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="ref_date" readonly="True"/>
+                            <field name="bank_id" readonly="True"/>
+                            <field name="contract_amount" readonly="True"/>
+                            <field name="hold_upto_date"/>
+                            <field name="active" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="contract_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="unit_id" readonly="True"/>
+                            <field name="payment_mode" readonly="True"/>
+                            <field name="ref_no" readonly="True"/>
+                            <field name="amount" readonly="True"/>
+                            <field name="hold_upto_days" readonly="True" force_save="1"/>
+                            <field name="owner_user_id" string="Created By"
+                                   options="{'no_create': True, 'no_open': True}" readonly="True" invisible="1"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <field name='note' placeholder="Internal Notes"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_mbk_pms_cheque_hold_search" model="ir.ui.view">
+        <field name="name">mbk_pms.cheque_hold.search</field>
+        <field name="model">mbk_pms.cheque_hold</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Hold Request No/Cheque No"
+                       filter_domain="['|', ('name', 'ilike', self), ('ref_no', 'ilike', self)]"/>
+                <field name="tenant_id"/>
+                <field name="contract_id"/>
+                <field name="unit_id"/>
+                <field name="amount"/>
+                <filter name="filter_type_active" string="Active"
+                        domain="[('state', '=', 'Active')]"/>
+                <separator/>
+                <filter name="filter_type_active" string="Active" domain="[('state', '=', 'active')]"/>
+                <separator/>
+                <filter name="filter_type_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_type_cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                <separator/>
+                <filter name="filter_type_request_date" string="Date" date="request_date"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                    <filter string="Tenant" name="group_by_tenant_id" context="{'group_by':'tenant_id'}"/>
+                    <filter string="Contract" name="group_by_contract_id" context="{'group_by':'contract_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mbk_pms_cheque_hold" model="ir.actions.act_window">
+        <field name="name">Cheque Hold Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_pms.cheque_hold</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new cheque hold request
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_pms_cheque_hold"
+              name="Cheque Hold Request"
+              action="action_mbk_pms_cheque_hold"
+              parent="menu_mbk_pms_payment"
+              sequence="40"/>
+</odoo>

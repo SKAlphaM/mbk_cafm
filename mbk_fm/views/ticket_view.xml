@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_fm_ticket_kanban" model="ir.ui.view">
+        <field name="name">mbk_fm.ticket.kanban</field>
+        <field name="model">mbk_fm.ticket</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="name"/>
+                <field name="priority"/>
+                <field name="ticket_type_id"/>
+                <field name="unit_id"/>
+                <field name="technician_id"/>
+                <field name="state"/>
+                <field name="activity_ids"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li>
+                                        <strong>No:
+                                            <field name="name"/>
+                                            <span class="float-right mt4 mr16"><field name="priority" widget="priority" readonly="True"/></span>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Type:
+                                        <field name="ticket_type_id"/>
+                                    </li>
+                                    <li>
+                                        Unit:
+                                        <field name="unit_id"/>
+                                    </li>
+                                    <li>
+                                        Responsible:
+                                        <field name="technician_id"/>
+                                    </li>
+                                    <li>
+                                        State:
+                                        <field name="state" widget="badge" decoration-success="state == 'done'"
+                                               decoration-warning="state == 'hold'"
+                                               decoration-info="state in ('in-progress','assigned')"
+                                               decoration-danger="state == 'refuse'"
+                                               decoration-muted="state == 'cancel'"/>
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_ticket_tree" model="ir.ui.view">
+        <field name="name">mbk_fm.ticket.tree</field>
+        <field name="model">mbk_fm.ticket</field>
+        <field name="arch" type="xml">
+            <list sample="1" decoration-danger="state == 'refuse'" decoration-warning="state == 'hold'">
+                <field name="name"/>
+                <field name="request_date"/>
+                <field name="ticket_type_id"/>
+                <field name="maintenance_type" optional="hide"/>
+                <field name="unit_id" optional="show"/>
+                <field name="property_id" optional="hide"/>
+                <field name="equipment_id" optional="hide"/>
+                <field name="request_summary"/>
+                <field name="priority" widget="priority" readonly="True"/>
+                <field name="owner_user_id" optional="hide"/>
+                <field name="team_id" optional="hide"/>
+                <field name="technician_id" widget="many2one_avatar_user"/>
+                <field name="schedule_date" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-warning="state == 'hold'" decoration-info="state in ('in-progress','assigned')"
+                       decoration-danger="state == 'refuse'" decoration-muted="state == 'cancel'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="activity_ids" widget="list_activity"/>
+                <field name="activity_exception_decoration" widget="activity_exception"/>
+            </list>
+        </field>
+    </record>
+    <!-- Maintenance Request : views -->
+    <record id="view_mbk_fm_ticket_form" model="ir.ui.view">
+        <field name="name">mbk_fm.ticket.form</field>
+        <field name="model">mbk_fm.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Request" duplicate="0">
+                <header>
+                    <button icon="fa-play" name="action_start_timer_wizard" type="object" class="btn-success"
+                            invisible="state not in ('assigned', 'in-progress') or is_in_progress"/>
+                    <button icon="fa-stop" name="action_end_timer_wizard" type="object" class="btn-danger"
+                            invisible="state != 'in-progress' or  not is_in_progress"/>
+                    <button string="Mark as Done" name="action_done_update_state_wizard" type="object" class="oe_highlight"
+                            invisible="state not in ('active','assigned', 'in-progress') or name == 'New' or is_in_progress"/>
+                    <button string="Hold" name="action_hold_update_state_wizard" type="object"
+                            invisible="state not in ('active','assigned', 'in-progress') or name == 'New' or is_in_progress"/>
+                    <button string="Confirm" name="action_confirm_update_state_wizard" type="object" class="oe_highlight" groups="mbk_fm.group_fm_user"
+                            invisible="state != 'confirm'"/>
+                    <button string="Reject" name="action_reject_update_state_wizard" type="object" groups="mbk_fm.group_fm_user"
+                            invisible="state != 'confirm'"/>
+                    <button string="Cancel" name="action_cancel_update_state_wizard" type="object" confirm="Are you sure to continue?"
+                            invisible="state == 'cancel'"/>
+                    <button string="Create Material Request" name="action_create_material_requests" type="object" class="oe_highlight"
+                            invisible="state not in ('active','assigned', 'in-progress') or name == 'New'"/>
+                    <field name="state" widget="statusbar" invisible="not active"
+                           statusbar_visible="active,assigned,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_material_requests"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-shopping-cart">
+                            <field string="MR" name="material_request_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div invisible="active">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_title" >
+                        <h1>
+                            <field name="name" placeholder="New" readonly="True" class="oe_inline"/>
+                            <field name="live_duration" id="live_duration" widget="ticket_timer" style="color: red; padding-left: 50px;" invisible="not start_time or end_time"/>
+                        </h1>
+                        <label for="request_summary" string="Request" class="oe_edit_only"/>
+                        <h3>
+                            <field name="request_summary"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="owner_user_id" string="Requested By" invisible="1"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="unit_id" options="{'no_create': True, 'no_open': True}" readonly="is_in_progress or state in ('done', 'cancel')"/>
+                            <button name="action_view_pending_tickets" type="object" class="btn btn-link oe_inline align-baseline p-0" invisible="todo_request_count == 0">
+                                Pending Tickets <field name="todo_request_count" style="padding-left: 20px;"/>
+                            </button>
+                            <field name="sub_location" readonly="is_in_progress or state in ('done', 'cancel')"/>
+                            <field name="property_id" readonly="True" invisible="1"/>
+                            <field name="state_id" readonly="True" invisible="1"/>
+                            <field name="room_id" readonly="True" invisible="1"/>
+                            <field name="customer_id" readonly="True" force_save="1"/>
+                            <field name="mobile" string="Contact" invisible="not mobile" readonly="True" force_save="1"/>
+                            <field name="ticket_type_id" string="Maintenance Type"
+                                   options="{'no_create': True, 'no_open': True}" readonly="is_in_progress or state in ('done', 'cancel')"/>
+                            <field name="equipment_id"
+                                   context="{'default_company_id':company_id, 'default_category_id':category_id}"
+                                   options="{'no_create': True, 'no_open': True}" readonly="is_in_progress or state in ('done', 'cancel')"/>
+                            <field name="category_id" invisible="1"/>
+                            <field name="category_id" groups="base.group_multi_company"
+                                   context="{'default_company_id':company_id}"
+                                   invisible="not equipment_id" readonly="is_in_progress or state in ('done','cancel')"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="ticket_date" readonly="True"/>
+                            <field name="request_date" readonly="True" invisible="1"/>
+                            <field name="active" invisible="1"/>
+                            <field name="maintenance_type" widget="radio" readonly="is_in_progress or state in ('done', 'cancel')"/>
+                        </group>
+                        <group>
+                            <field name="team_id" options="{'no_create': True, 'no_open': True}"
+                                   readonly="is_in_progress or state in ('done', 'cancel')"/>
+                            <field name="allowed_member_ids" invisible="1" force_save="1"/>
+                            <field name="technician_id" string="Responsible" widget="many2one_avatar_user"
+                                   options="{'no_create': True, 'no_open': True}"
+                                   readonly="is_in_progress or state in ('done', 'cancel')"
+                                   domain="[('id', 'in', allowed_member_ids)]"/>
+                            <field name="member_ids" widget="many2many_tags" options="{'no_create': True}"
+                                   invisible="not technician_id" readonly="is_in_progress or state in ('done','cancel')"/>
+                            <field name="schedule_date" readonly="is_in_progress or state in ('done', 'cancel')"/>
+                            <label for="duration"/>
+                            <div>
+                                <field name="duration" readonly="is_in_progress or state in ('done', 'cancel')"
+                                       widget="float_time"
+                                       class="oe_inline"/>
+                                <span class="ml8">hours</span>
+                            </div>
+                            <field name="priority" widget="priority" readonly="is_in_progress or state in ('done', 'cancel')"/>
+                            <field name="email" groups="base.group_no_one" force_save="1"/>
+                            <field name="mode_of_contact"/>
+                            <field name="registered_by"/>
+                            <field name="note" string="Sub-Contract Details"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <field name='description' placeholder="Internal Notes"/>
+                    <notebook>
+                        <page string="Activities" name="activity_lines">
+                            <field name="activity_line_ids" readonly="state in ('done','cancel')">
+                                <list editable="bottom">
+                                    <field name="technician_id" widget="many2one_avatar_user" readonly="True"/>
+                                    <field name="member_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                                    <field name="unit_id" invisible="1"/>
+                                    <field name="name" readonly="True"/>
+                                    <field name="start_time" readonly="True"/>
+                                    <field name="end_time" readonly="True"/>
+                                    <field name="duration_hour" widget="float_time" sum="Total" readonly="True"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="technician_id" widget="many2one_avatar_user" readonly="True"/>
+                                        <field name="member_ids" widget="many2many_tags" options="{'no_create': True}" readonly="True"/>
+                                        <field name="unit_id" invisible="1"/>
+                                        <field name="name" readonly="True"/>
+                                        <field name="start_time" readonly="True"/>
+                                        <field name="end_time" readonly="True"/>
+                                        <field name="duration_hour" widget="float_time" readonly="True"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Photos" name="ticket_photo">
+                            <group colspan="8" col="8">
+                                <field name="before_image" widget="image" options="{'zoom': true,'size': [90, 90]}"/>
+                                <field name="after_image" widget="image" options="{'zoom': true,'size': [90, 90]}"/>
+                            </group>
+                        </page>
+                        <page string="Material Request Lines" name="material_lines">
+                            <field name="material_request_line_ids" readonly="True">
+                                <list>
+                                    <field name="mr_id"/>
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="product_uom_qty"/>
+                                    <field name="product_uom"/>
+                                    <field name="qty_delivered"/>
+                                    <field name="state" string="Status"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="mr_id" string="MR No" options="{'no_create': True}"/>
+                                        <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="name"/>
+                                        <field name="product_uom_qty"/>
+                                        <field name="product_uom" options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="qty_delivered"/>
+                                        <field name="state" string="Status"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Ticket log" name="ticket_log">
+                            <group>
+                                <group string="Log">
+                                    <field name="start_time" readonly="1" force_save="1"/>
+                                    <field name="end_time" readonly="1" force_save="1"/>
+                                    <field name="duration_hour" widget="float_time" readonly="1" force_save="1"/>
+                                </group>
+                                <group string="Info">
+                                    <field name="due_date" groups="base.group_no_one" readonly="1" force_save="1"/>
+                                    <field name="is_approval_required" groups="base.group_no_one" force_save="1"/>
+                                    <field name="is_in_progress" invisible="1"/>
+                                    <field name="is_in_progress" groups="base.group_no_one" readonly="1"
+                                           force_save="1"/>
+                                    <field name="done" invisible="1"/>
+                                    <field name="done" groups="base.group_no_one" invisible="1"/>
+                                    <field name="close_date" invisible="not done"
+                                           readonly="True"/>
+                                </group>
+                            </group>
+                            <div colspan="4">
+                                <field name="comment" placeholder="Add an internal note..."/>
+                            </div>
+                        </page>
+	
+			<page string="Tenant Details" name="tenant_signature">
+                                    <group string="Signature">
+                                        <label for="tenant_signature" string="Signature" class="oe_edit_only"/>
+                                        <h2>
+                                            <field name="tenant_signature" widget="signature"/>
+                                        </h2>
+                                    </group>
+                                    <group string="Contact Number">
+                                        <label for="tenant_contact_no" string="Contact Number" class="oe_edit_only"/>
+                                        <h2>
+                                            <field name="tenant_contact_no"/>
+                                        </h2>
+                                    </group>
+
+                                </page>
+			<page string="Supervisor Details" name="supervisor_details">
+                                    <group string="Supervisor Signature">
+                                        <label for="supervisor_signature" string="Signature" class="oe_edit_only"/>
+                                        <h2>
+                                            <field name="supervisor_signature" widget="signature"/>
+                                        </h2>
+                                    </group>
+                                </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_ticket_graph" model="ir.ui.view">
+        <field name="name">mbk_fm.ticket.graph</field>
+        <field name="model">mbk_fm.ticket</field>
+        <field name="arch" type="xml">
+            <graph string="Maintenance Request" sample="1">
+                <field name="technician_id"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_ticket_pivot" model="ir.ui.view">
+        <field name="name">mbk_fm.ticket.pivot</field>
+        <field name="model">mbk_fm.ticket</field>
+        <field name="arch" type="xml">
+            <pivot string="Maintenance Request" sample="1">
+                <field name="technician_id"/>
+                <field name="state"/>
+                <field name="color" invisible="1"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_ticket_activity" model="ir.ui.view">
+        <field name="name">mbk_fm.ticket.activity</field>
+        <field name="model">mbk_fm.ticket</field>
+        <field name="arch" type="xml">
+            <activity string="Maintenance Request">
+                <field name="technician_id"/>
+                <field name="name"/>
+                <field name="id"/>
+                <templates>
+                    <div t-name="activity-box">
+                        <img t-att-src="activity_image('res.users', 'image_128', record.technician_id.raw_value)" role="img" t-att-title="record.technician_id.value" t-att-alt="record.technician_id.value"/>
+                        <div>
+                            <field name="name" display="full"/>
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_ticket_search" model="ir.ui.view">
+        <field name="name">mbk_fm.ticket.search</field>
+        <field name="model">mbk_fm.ticket</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Ticket No/Unit"
+                       filter_domain="['|', ('name', 'ilike', self), ('unit_id.name', 'ilike', self)]"/>
+                <field name="ticket_type_id"/>
+                <field name="state"/>
+                <field name="team_id"/>
+                <field name="technician_id"/>
+                <field name="property_id"/>
+                <filter name="filter_type_todo" string="To Do"
+                        domain="[('state', 'not in', ['done','cancel'])]"/>
+                <separator/>
+                <filter name="filter_type_live" string="On-Job" domain="[('is_in_progress', '=', True)]"/>
+                <separator/>
+                <filter string="High-priority" name="filter_type_high_priority" domain="[('priority', '=', '3')]"/>
+                <separator/>
+                <filter name="filter_type_confirm" string="To Approve" domain="[('state', '=', 'confirm')]"/>
+                <separator/>
+                <filter name="filter_type_action" string="Action Required" domain="[('state', 'in', ['hold', 'refuse'])]"/>
+                <separator/>
+                <filter name="filter_type_scheduled" string="Scheduled" domain="[('schedule_date', '!=', False), ('state', '!=', 'done')]"/>
+                <separator/>
+                <filter string="Unscheduled" name="filter_type_unscheduled" domain="[('schedule_date', '=', False), ('state', '!=', 'done')]"/>
+                 <separator/>
+                <filter name="filter_type_done" string="Done" domain="[('state', '=', 'done')]"/>
+                <separator/>
+                <filter name="filter_overdue" string="Over Due" domain="[('done', '!=', True), ('due_date', '&lt;', datetime.datetime.now())]"/>
+                <separator/>
+                <filter name="filter_request_date" string="Date" date="request_date"/>
+                <separator/>
+                <filter name="filter_type_not_confirm" string="Exclude To Approve" domain="[('state', '!=', 'confirm')]"/>
+                <separator/>
+                <filter name="filter_type_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                    <filter string="Technician" name="group_by_technician_id" context="{'group_by':'technician_id'}"/>
+                    <filter string="Ticket Type" name="group_by_ticket_type_id" context="{'group_by':'ticket_type_id'}"/>
+                    <filter string="Maintenance Type" name="group_by_maintenance_type" context="{'group_by':'maintenance_type'}"/>
+                    <filter string="Team" name="group_by_team_id" context="{'group_by':'team_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mbk_fm_ticket" model="ir.actions.act_window">
+        <field name="name">Maintenance Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_fm.ticket</field>
+        <field name="view_mode">list,form,graph,pivot,calendar,activity,kanban</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new maintenance request
+            </p>
+        </field>
+    </record>
+
+    <record id="action_from_dashboard_mbk_fm_ticket" model="ir.actions.act_window">
+        <field name="name">Maintenance Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_fm.ticket</field>
+        <field name="view_mode">list,form,graph,pivot,calendar,activity</field>
+        <field name="context">{'default_team_id': active_id}</field>
+        <field name="domain">[('team_id', '=', active_id), ('maintenance_type', 'in', context.get('maintenance_type', ['preventive', 'corrective']))]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new maintenance request
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_fm_ticket"
+              name="Maintenance Request"
+              action="action_mbk_fm_ticket"
+              parent="menu_mbk_fm_maintenance"
+              sequence="10"/>
+</odoo>

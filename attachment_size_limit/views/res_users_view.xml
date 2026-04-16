@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_users_form_inherit_attachment_size" model="ir.ui.view">
+       <field name="name">User Attachment Size</field>
+       <field name="model">res.users</field>
+       <field name="inherit_id" ref="base.view_users_form"/>
+       <field name="arch" type="xml">
+            <xpath expr="//field[@name='action_id']/.." position="after">
+                <group name="attachment_size_grp" string="Attachment Size Limit">
+                    <field name="attachment_size_limit"/>
+                </group>
+            </xpath>
+       </field>
+   </record>
+</odoo>

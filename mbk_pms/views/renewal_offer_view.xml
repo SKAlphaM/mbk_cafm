@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_pms_renewal_offer_tree" model="ir.ui.view">
+        <field name="name">mbk_pms.renewal_offer.tree</field>
+        <field name="model">mbk_pms.renewal_offer</field>
+        <field name="arch" type="xml">
+            <list sample="1" decoration-danger="state == 'refuse'" decoration-warning="state == 'hold'">
+                <field name="name"/>
+                <field name="offer_date"/>
+                <field name="partner_id"/>
+                <field name="contract_id" string="Parent Contract"/>
+                <field name="units"/>
+                <field name="start_date"/>
+                <field name="expiry_date"/>
+                <field name="units"/>
+                <field name="state_id"/>
+                <field name="owner_user_id"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-warning="state == 'close'" decoration-info="state in ('sent','active')"
+                       decoration-danger="state == 'refuse'" decoration-muted="state == 'cancel'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="activity_ids" widget="list_activity"/>
+            </list>
+        </field>
+    </record>
+    <!-- Tenancy Contract : views -->
+    <record id="view_mbk_pms_renewal_offer_form" model="ir.ui.view">
+        <field name="name">mbk_pms.renewal_offer.form</field>
+        <field name="model">mbk_pms.renewal_offer</field>
+        <field name="arch" type="xml">
+            <form string="Renewal Offer" duplicate="0">
+                <header>
+                    <button string="Submit for Approval" name="action_done_update_state_wizard" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Confirm" name="action_confirm_update_state_wizard" type="object" class="oe_highlight"
+                            invisible="state != 'confirm'"/>
+                    <button string="Reject" name="action_reject_update_state_wizard" type="object"
+                            invisible="state != 'confirm'"/>
+                    <button string="Create Renewal Contract" name="action_load_renewal_contract" type="object" class="oe_highlight" invisible="state not in ('active','sent')"/>
+                    <button string="Create Non-Renewal Contract" name="action_load_non_renewal_contract" type="object"
+                            class="oe_highlight" invisible="state not in ('active','sent')"
+                            groups="analytic.group_analytic_accounting"/>
+<!--                    '|', ('lease_expiry_date', '&gt;', ((context_today()).strftime('%Y-%m-%d'))), -->
+                    <button string="Set to Draft" name="action_draft" type="object" invisible="state not in ('refuse','cancel')"/>
+                    <button string="Cancel" name="action_cancel_update_state_wizard" type="object" confirm="Are you sure to continue?"
+                            invisible="state in ('cancel', 'close')"/>
+                    <field name="state" widget="statusbar" invisible="not active"
+                           statusbar_visible="draft,active,done"/>
+                </header>
+                <sheet>
+                    <div invisible="active">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Draft" readonly="True"/>
+                        </h1>
+                    </div>
+                    <separator string="Contract Details"/>
+                    <group name="tenancy_header">
+                        <group name="tenant_details">
+                            <field name="contract_id"/>
+                            <field name="partner_id" widget="res_partner_many2one"
+                                   context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}"
+                                   options="{&quot;always_reload&quot;: True}"/>
+                            <field name="partner_contact_id" groups="sale.group_delivery_invoice_address"
+                                   context="{'default_type':'invoice'}" options="{&quot;always_reload&quot;: True}"/>
+                            <field name="mobile" readonly="True" force_save="1"/>
+                            <field name="email" readonly="True" force_save="1"/>
+                            <field name="state_id" readonly="True" force_save="1"/>
+                            <field name="owner_user_id" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group name="contract_details">
+                            <field name="offer_date"/>
+                            <field name="lease_expiry_date"/>
+                            <field name="parent_net_rent_amount"/>
+                            <field name="parent_total_deposit"/>
+                            <field name="currency_id"/>
+                            <field name="valid_upto"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <button string=" Load New Contract Details" name="action_create_offer" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <separator string="New Contract Details"/>
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="is_tax" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="expiry_date"/>
+                            <field name="is_include_service" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Unit Details">
+                            <field name="unit_line_ids" readonly="state in ('draft','active')">
+                                <list editable="bottom">
+                                    <field name="unit_id" options="{'no_create': True}"/>
+                                    <field name="service_id" options="{'no_create': True}" optional="hide"/>
+                                    <field name="unit_type_id" options="{'no_create': True}"/>
+                                    <field name="property_id" options="{'no_create': True}"/>
+                                    <field name="name" optional="hide"/>
+                                    <field name="last_year_rent" sum="Total Last Year Rent"/>
+                                    <field name="original_rent" sum="Total Original Rent"/>
+                                    <field name="discount" sum="Total Original Rent"/>
+                                    <field name="agreement_rent" sum="Total Rent"/>
+                                    <field name="is_tax" column_invisible="not parent.is_tax"/>
+                                    <field name="tax_id" options="{'no_create': True}"
+                                           column_invisible="not parent.is_tax"/>
+                                    <field name="tax_amount" sum="Total Tax Amount"
+                                           column_invisible="not parent.is_tax"/>
+                                    <field name="net_rent" sum="Total Net Amount"
+                                           column_invisible="not parent.is_tax"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="unit_id" options="{'no_create': True}"/>
+                                        <field name="unit_type_id" options="{'no_create': True}"/>
+                                        <field name="property_id" options="{'no_create': True}"/>
+                                        <field name="name" optional="hide"/>
+                                        <field name="original_rent"/>
+                                        <field name="discount"/>
+                                        <field name="agreement_rent"/>
+                                        <field name="is_tax"/>
+                                        <field name="tax_id" options="{'no_create': True}"
+                                               invisible="not is_tax"/>
+                                        <field name="tax_amount" invisible="not is_tax"/>
+                                        <field name="net_rent" invisible="not is_tax"/>
+                                        <field name="company_id" invisible="True"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Service Details">
+                            <field name="service_line_ids" readonly="state not in ('draft', 'draft')">
+                                <list editable="bottom">
+                                    <field name="service_id" options="{'no_create': True}"/>
+                                    <field name="name"/>
+                                    <field name="is_separate_chq" optional="hide" force_save="1"/>
+                                    <field name="is_one_time" optional="hide" force_save="1"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                    <field name="is_tax"/>
+                                    <field name="tax_id" options="{'no_create': True}"
+                                           invisible="not is_tax"/>
+                                    <field name="tax_amount" sum="Total Tax Amount"
+                                           invisible="not is_tax"/>
+                                    <field name="net_amount" sum="Total Net Amount"
+                                           invisible="not is_tax"/>
+                                    <field name="company_id" invisible="True"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="service_id" options="{'no_create': True}"/>
+                                        <field name="name"/>
+                                        <field name="is_separate_chq" optional="hide" force_save="1"/>
+                                        <field name="is_one_time" optional="hide" force_save="1"/>
+                                        <field name="amount" sum="Total Amount"/>
+                                        <field name="is_tax"/>
+                                        <field name="tax_id" options="{'no_create': True}"
+                                               invisible="not is_tax"/>
+                                        <field name="tax_amount" sum="Total Tax Amount"
+                                               invisible="not is_tax"/>
+                                        <field name="net_amount" sum="Total Net Amount"
+                                               invisible="not is_tax"/>
+                                        <field name="company_id" invisible="True"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Security Deposit Details">
+                            <field name="deposit_line_ids" readonly="state not in ('draft', 'draft')">
+                                <list editable="bottom">
+                                    <field name="deposit_id" options="{'no_create': True}"/>
+                                    <field name="name"/>
+                                    <field name="chq_type"/>
+                                    <field name="is_holding" groups="base.group_no_one" force_save="1"/>
+                                    <field name="is_separate_chq" groups="base.group_no_one" force_save="1"/>
+                                    <field name="state" force_save="1"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="deposit_id" options="{'no_create': True}"/>
+                                        <field name="name"/>
+                                        <field name="chq_type"/>
+                                        <field name="amount" sum="Total Amount"/>
+                                        <field name="is_holding" groups="base.group_no_one" force_save="1"/>
+                                        <field name="is_separate_chq" groups="base.group_no_one" force_save="1"/>
+                                         <field name="state" force_save="1"/>
+                                        <field name="company_id" invisible="True"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Payment Schedule">
+                            <group colspan="8" col="8">
+                                <field name="payment_terms"/>
+                                <button icon="fa-calculator" string="Compute Payment Schedule" name="action_update_payment_schedule"
+                                    type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                            </group>
+                            <field name="payment_line_ids" readonly="state in ('close','cancel')">
+                                <list editable="bottom">
+                                    <field name="service_id" options="{'no_create': True}"/>
+                                    <field name="name"/>
+                                    <field name="note"/>
+                                    <field name="ref_date"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                    <field name="from_date" optional="hide" force_save="1" widget="date"/>
+                                    <field name="to_date" optional="hide" force_save="1" widget="date"/>
+                                    <field name="days" sum="Total Days" optional="hide" force_save="1"/>
+                                    <field name="company_id" invisible="True"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="service_id" options="{'no_create': True}"/>
+                                        <field name="name"/>
+                                        <field name="note"/>
+                                        <field name="ref_date"/>
+                                        <field name="amount" sum="Total Amount"/>
+                                        <field name="from_date" optional="hide"/>
+                                        <field name="to_date" optional="hide"/>
+                                        <field name="days" sum="Total Days" optional="hide"/>
+                                        <field name="company_id" invisible="True"/>
+                                    </group>
+                                </form>
+                            </field>
+                            <field name='payment_note' placeholder="Payment Schedule Notes"/>
+                        </page>
+                        <page string="Log">
+                            <group>
+                                <group>
+                                    <field name="active" invisible="1"/>
+                                    <field name="active" groups="base.group_no_one"/>
+                                    <field name="net_rent_amount" invisible="True"/>
+                                    <field name="net_service_amount" invisible="True"/>
+                                    <field name="units" groups="base.group_no_one" force_save="1"/>
+                                </group>
+                                <group>
+                                    <field name="unit_id" groups="base.group_no_one"/>
+                                    <field name="property_id" groups="base.group_no_one"/>
+                                    <field name="renewed_contract_id" groups="base.group_no_one"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group class="oe_subtotal_footer">
+                        <field name="total_rent" string="Agreement Rent" force_save="1"/>
+                        <field name="total_service" string="Services" force_save="1"/>
+                        <field name="total_deposit" string="Security Deposit" force_save="1"/>
+                        <field name="total_rent_tax" string="Rent VAT 5%" invisible="True" force_save="1"/>
+                        <field name="total_service_tax" string="Service VAT 5%" invisible="True" force_save="1"/>
+                        <field name="net_tax" string="VAT 5%" force_save="1"/>
+                        <field name="net_amount" string="Total" class="oe_subtotal_footer_separator" force_save="1"/>
+                    </group>
+                    <field name='note' placeholder="Internal Notes"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mbk_pms_renewal_offer_search" model="ir.ui.view">
+        <field name="name">mbk_pms.renewal_offer.search</field>
+        <field name="model">mbk_pms.renewal_offer</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Renewal Offer Name"
+                       filter_domain="['|', ('name', 'ilike', self), ('partner_id', 'ilike', self)]"/>
+                <field name="state"/>
+                <field name="offer_date"/>
+                <field name="owner_user_id"/>
+                <filter name="filter_type_sent" string="Offer Sent"
+                        domain="[('state', '=', 'open')]"/>
+                <filter name="filter_type_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_type_confirm" string="To Approve" domain="[('state', '=', 'confirm')]"/>
+                <filter name="filter_type_close" string="Expired" domain="[('state', '=','close')]"/>
+                <filter name="filter_type_cancel" string="Cancelled" domain="[('state', '=','cancel')]"/>
+                <separator/>
+                <filter name="filter_offer_date" string="Contract Date" date="offer_date"/>
+                <separator/>
+                <filter name="filter_type_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                    <filter string="Sales Person" name="group_by_owner_user_id" context="{'group_by':'owner_user_id'}"/>
+                    <filter string="Emirate" name="group_by_state_id" context="{'group_by':'state_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mbk_pms_renewal_offer" model="ir.actions.act_window">
+        <field name="name">Renewal Offer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_pms.renewal_offer</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Renewal Offer Letter
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_pms_view_renewal_offer"
+              name="Renewal Offer"
+              action="action_mbk_pms_renewal_offer"
+              parent="menu_mbk_pms_renewal_offer"
+              sequence="10"/>
+</odoo>

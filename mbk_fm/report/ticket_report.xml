@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_ticket">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <h2 class="mt16">
+                                <span>Maintenance Request #</span>
+                                <span t-field="o.name"/>
+                            </h2>
+                            <div class="row mt32 mb32" id="informations">
+                                <div t-if="o.unit_id" class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Unit No:</strong>
+                                    <p class="m-0" t-field="o.unit_id.name"/>
+                                </div>
+                                <div t-if="o.request_date" class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Request Date:</strong>
+                                    <p class="m-0" t-field="o.request_date"/>
+                                </div>
+                                <div t-if="o.ticket_type_id.name" class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Ticket Type:</strong>
+                                    <p class="m-0" t-field="o.ticket_type_id.name"/>
+                                </div>
+                                <div t-if="o.technician_id.name" class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Responsible:</strong>
+                                    <p class="m-0" t-field="o.technician_id.name"/>
+                                </div>
+                            </div>
+                            <h5>
+                                <br/>
+                                <span t-field="o.request_summary"/>
+                                <br/>
+                            </h5>
+                            <div class="oe_structure"/>
+                            <p t-field="o.description"/>
+                            <p t-if="o.customer_id.name">
+                                <strong>Tenant:</strong>
+                                <span t-field="o.customer_id.name"/>
+                            </p>
+                            <p>
+                                <strong>Priority:</strong>
+                                <span t-field="o.priority"/>
+                            </p>
+                            <p t-if="o.maintenance_type">
+                                <strong>Maintenance Type:</strong>
+                                <span t-field="o.maintenance_type"/>
+                            </p>
+                            <p t-if="o.sub_location">
+                                <strong>Location of repair:</strong>
+                                <span t-field="o.sub_location"/>
+                            </p>
+                            <p t-if="o.mode_of_contact">
+                                <strong>Mode Of Contact:</strong>
+                                <span t-field="o.mode_of_contact"/>
+                            </p>
+                            <p t-if="o.registered_by">
+                                <strong>Complaint Reg By:</strong>
+                                <span t-field="o.registered_by"/>
+                            </p>
+                            <p t-if="o.note">
+                                <strong>Sub-Contract Details:</strong>
+                                <span t-field="o.note"/>
+                            </p>
+                            <p t-if="o.member_ids and not o.activity_line_ids">
+                                <strong>Technicians:</strong>
+                                <t t-set="row_c" t-value="1"/>
+                                <t t-foreach="o.member_ids" t-as="m">
+                                    <t t-if="row_c&gt;1">,</t>
+                                    <span t-field="m.name"/>
+                                    <t t-set="row_c" t-value="row_c+1"/>
+                                </t>
+                            </p>
+                            <p t-if="o.sub_location">
+                                <strong>Location of repair:</strong>
+                                <span t-field="o.sub_location"/>
+                            </p>
+                            <p t-if="o.schedule_date">
+                                <strong>Scheduled Date:</strong>
+                                <span t-field="o.schedule_date"/>
+                            </p>
+                            <p t-if="o.duration">
+                                <strong>Scheduled Duration:</strong>
+                                <span t-field="o.duration" t-options="{'widget': 'float_time'}"/>
+                            </p>
+
+                            <p t-if="o.state">
+                                <strong>Status:</strong>
+                                <span t-field="o.state"/>
+                            </p>
+                            <t t-if="o.activity_line_ids">
+                                <h5>Activity Details</h5>
+                                <table class="table table-sm o_main_table">
+                                    <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                                    <!--                                style="display: table-row-group"-->
+                                    <thead>
+                                        <tr>
+                                            <th name="th_hour" class="text-center" width="10%">
+                                                <strong>Sl.No</strong>
+                                            </th>
+                                            <th name="th_description" class="text-center" width="40%">
+                                                <strong>Description</strong>
+                                            </th>
+                                            <th name="th_start_time" class="text-center" width="20%">
+                                                <strong>Start Time</strong>
+                                            </th>
+                                            <th name="th_end_time" class="text-center" width="20%">
+                                                <strong>End Time</strong>
+                                            </th>
+                                            <th name="th_hour" class="text-center" width="10%">
+                                                <strong>Hours</strong>
+                                            </th>
+                                        </tr>
+                                        <tbody class="sale_tbody">
+                                            <t t-set="row_no" t-value="1"/>
+                                            <t t-set="total_hrs" t-value="0"/>
+                                            <t t-foreach="o.activity_line_ids" t-as="line">
+                                                <tr>
+                                                    <td class="text-center" name="row_no">
+                                                        <span t-esc="row_no"/>
+                                                        <t t-set="row_no" t-value="row_no+1"/>
+                                                        <t t-set="total_hrs" t-value="total_hrs+line.duration_hour"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-field="line.name"/><br/>
+                                                        <span t-esc="', '.join(map(lambda x: (x.name), line.member_ids))" id="line_member_ids"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-field="line.start_time"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-field="line.end_time"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-field="line.duration_hour"
+                                                              t-options="{'widget': 'float_time'}"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-if="not total_hrs == 0">
+                                                <tr style="width:100%;height:30px;background-color:#d3d3d3;">
+                                                    <td colspan="4" style="vertical-align:middle;text-align:lef;padding: 0px 50px;">
+                                                      <b>TOTAL</b>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="total_hrs" t-options="{'widget': 'float_time'}"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </thead>
+                                </table>
+                            </t>
+                            <t t-if="o.material_request_line_ids">
+                                <h5>Material Request Details</h5>
+                                <table class="table table-sm o_main_table">
+                                    <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                                    <!--                                style="display: table-row-group"-->
+                                    <thead>
+                                        <tr>
+                                            <th name="th_hour" class="text-center" width="10%">
+                                                <strong>Sl.No</strong>
+                                            </th>
+                                            <th name="th_mr_no" class="text-center" width="10%">
+                                                <strong>MR No</strong>
+                                            </th>
+                                            <th name="th_description" class="text-center" width="50%">
+                                                <strong>Description</strong>
+                                            </th>
+                                            <th name="th_qty" class="text-center" width="10%">
+                                                <strong>Qty</strong>
+                                            </th>
+                                            <th name="th_unit" class="text-center" width="10%">
+                                                <strong>Unit</strong>
+                                            </th>
+                                            <th name="th_status" class="text-center" width="10%">
+                                                <strong>Status</strong>
+                                            </th>
+                                        </tr>
+                                        <tbody class="sale_tbody">
+                                            <t t-set="row_no" t-value="1"/>
+                                            <t t-foreach="o.material_request_line_ids" t-as="line">
+                                                <tr>
+                                                    <td class="text-center" name="row_no">
+                                                        <span t-esc="row_no"/>
+                                                        <t t-set="row_no" t-value="row_no+1"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-field="line.mr_id.name"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-field="line.name"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-field="line.product_uom_qty"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-field="line.product_uom"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-field="line.state"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </thead>
+                                </table>
+                            </t>
+                        </div>
+                        <div class="row">
+                            <div class="col-4" style="right;">
+                                <p class="text-center" style="padding-left:5mm;">
+                                    <br/>
+                                    <span t-esc="o.env.user.name"/>
+                                    <br/>
+                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+                                    <br/>
+                                </p>
+                            </div>
+                            <div class="col-4" style="right;">
+                              </div>
+                            <div class="col-4">
+                              <p class="text-center" >
+                                    <div t-if="o.tenant_signature" >
+                                      <br/>
+                                        <strong>Tenant:</strong><br/><br/>
+                                        <img t-att-src="'data:image/png;base64,%s' % to_text(o.tenant_signature)" style="max-height:70px;"/>
+                                
+                                    </div>
+                                    <br/>
+                                </p>
+                            </div>
+                        </div>
+                        <p class="text-center">
+                            <br/>
+                            This is a system Generated document and does not require any signature or company stamp.
+                        </p>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

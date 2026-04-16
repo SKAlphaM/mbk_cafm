@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="report_general_approval_report">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context(lang=doc.tenant_id.lang)"/>
+                <div class="page" style="!important; font-family: Times New Roman;">
+                    <div class="oe_structure"/>
+                    <table style="height: 30px;width: 100%;">
+                        <tr class="text-center" style="font-size: 200%;padding: 5px;width: 100%;">
+                            <td><strong> General Approval</strong></td>
+                        </tr> 
+                    </table>
+                    <table style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+                      <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px; padding-top:10px; padding-bottom:10px;color:#ff0000;border-left: 1px solid black;" colspan="2"><b><span t-esc="contract_type"/></b></td>
+                        <td class="text-center" style="padding-right:25px;padding-left:25px; padding-top:10px; padding-bottom:10px;border-right:1px solid black;" colspan="2"><b><span t-field="doc.voucher_date"/></b></td>
+                      </tr>
+                      <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;"><b>Building No.</b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;"><b><span t-field="doc.bldg_no"/></b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Contract Number</td>
+                        <td class="text-center" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right:1px solid black;"><b><span t-field="doc.contract_id.name"/></b></td>
+                      </tr>
+                      <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Unit No.</td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;"><b><span t-field="doc.unit_no.name"/></b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Contract Start Date</td>
+                        <td class="text-center" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right:1px solid black;"><b><span t-field="doc.contract_id.start_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></b></td>
+                      </tr>
+                      <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Portfolio</td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;"><b><span t-field="doc.portfolio"/></b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Contract End Date</td>
+                        <td class="text-center" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right:1px solid black;"><b><span t-field="doc.contract_id.expiry_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></b></td>
+                      </tr>
+                      <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Location</td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;"><b><span t-field="doc.state_id.name"/></b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Previous Paid Rent Amount</td>
+                        <td class="text-center" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right:1px solid black;"><b><span t-esc="'{0:,.2f}'.format(doc.previous_rent)"/></b></td>
+                      </tr>
+                      <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Tenant Type</td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;"><b><span t-field="doc.tenant_type"/></b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Current Paid Rent Amount</td>
+                        <td class="text-center" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right:1px solid black;"><b><span t-esc="'{0:,.2f}'.format(doc.current_rent)"/></b></td>
+                      </tr>
+                      <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Lessor's</td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;"><b><span t-field="doc.company_id.name"/></b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;">Security Deposit</td>
+                        <td class="text-center" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right:1px solid black;"><b><span t-esc="'{0:,.2f}'.format(doc.security_deposit)"/></b></td>
+                      </tr>
+                    </table>
+                    <table style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+                      <tr style="border-top: 3px solid black;border-right: 1px solid black;border-left: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;width:30%;">Tenant's Name in Arabic</td>
+                        <td colspan="3" class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;"><b>need to add</b></td>
+                      </tr>
+                      <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;width:30%;">Tenant's Name in English</td>
+                        <td colspan="3" class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black; border-right: 1px solid black;"><b><span t-field="doc.tenant_id.name"/></b></td>
+                      </tr>
+                    </table>
+                      <table style="border-left: 1px solid black;border-right: 1px solid black;border-bottom: 1px solid black;border-collapse: collapse;width: 100%;">
+                      <tr style="border-left: 1px solid black;border-right: 1px solid black;border-bottom: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black;width:25%;"><b>Details of Request(s): </b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-right: 1px solid black;width:75%;"><b><span t-field="doc.details_of_request"/></b></td>
+                      </tr>
+                      <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black;width:25%;"><b>Reason/Justification:</b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-right: 1px solid black;width:75%;"><b><span t-field="doc.reasons"/></b></td>
+                      </tr>
+                    </table>
+                    <table style="border-left: 1px solid black;border-right: 1px solid black;border-bottom: 1px solid black;border-collapse: collapse;width: 100%;">
+                      <tr style="border-left: 1px solid black;border-right: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" colspan="2" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black;"><b style="font-size: 120%;">Proposed by (Property Management) : &amp;nbsp;&amp;nbsp;<span t-field="doc.company_id.name"/></b></td>
+                      </tr>
+                      <tr style="border-left: 1px solid black;border-right: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black;width:50%;"><b>Name : &amp;nbsp;&amp;nbsp; need to add</b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:100px;padding-top:10px; padding-bottom:10px;border-right: 1px solid black;width:50%;"><b>Signature &amp; Date :</b></td>
+                      </tr>
+                      <tr style="border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" colspan="2" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black;"><b style="font-size: 120%;">Recommended By:<br/>
+                        (Comments if any)<br/><i>I confirm that I have reviewed the request and the supporting documents which are in order.</i></b></td>
+                      </tr>
+                      <tr style="border-left: 1px solid black;border-right: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black;width:50%;"><b>Name : &amp;nbsp;&amp;nbsp; need to add</b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:100px;padding-top:10px; padding-bottom:10px;border-right: 1px solid black;width:50%;"><b>Signature &amp; Date :</b></td>
+                      </tr>
+                      <tr style="border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" colspan="2" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black;"><b style="font-size: 120%;">Approved By:</b></td>
+                      </tr>
+                      <tr style="border-left: 1px solid black;border-right: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td class="text-left" style="padding-right:25px;padding-left:25px;padding-top:10px; padding-bottom:10px;border-left: 1px solid black;width:50%;"><b>Name : &amp;nbsp;&amp;nbsp; need to add</b></td>
+                        <td class="text-left" style="padding-right:25px;padding-left:100px;padding-top:10px; padding-bottom:10px;border-right: 1px solid black;width:50%;"><b>Signature &amp; Date :</b></td>
+                      </tr>
+                    </table>
+                  
+                </div>
+            </t>
+        </template>
+    <template id="mbk_pms.general_approval_report">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="mbk_pms.report_general_approval_report" t-lang="doc.tenant_id.lang"/>
+        </t>
+    </t>
+    </template>
+
+    </data>
+</odoo>
+

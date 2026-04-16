@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_pms_cheque_replacement_tree" model="ir.ui.view">
+        <field name="name">mbk_pms.cheque_replacement.tree</field>
+        <field name="model">mbk_pms.cheque_replacement</field>
+        <field name="arch" type="xml">
+            <list sample="1" decoration-success="state == 'done'" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="replacement_date"/>
+                <field name="tenant_id"/>
+                <field name="contract_id"/>
+                <field name="unit_id"/>
+                <field name="replacement_amount"/>
+                <field name="owner_user_id"/>
+                <field name="contract_amount" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-info="state =='active'" decoration-warning="state == 'draft'" decoration-muted="state == 'cancel'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+    <!-- Cheque Replacement Voucher : views -->
+    <record id="view_mbk_pms_cheque_replacement_form" model="ir.ui.view">
+        <field name="name">mbk_pms.cheque_replacement.form</field>
+        <field name="model">mbk_pms.cheque_replacement</field>
+        <field name="arch" type="xml">
+            <form string="Cheque Replacement Voucher" duplicate="0">
+                <header>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Set to Draft" name="action_draft" type="object" invisible="state != 'cancel'"/>
+                    <button string="Cancel" name="action_cancel" type="object" confirm="Are you sure to continue" invisible="state not in ('draft','active')"/>
+                    <field name="state" widget="statusbar" invisible="not active"
+                           statusbar_visible="draft,active"/>
+                </header>
+                <sheet>
+                    <div invisible="active">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="New" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="replacement_date" readonly="True"/>
+                            <field name="tenant_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="unit_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="active" invisible="1"/>
+                            <field name="new_amount" invisible="1"/>
+                            <field name="replacement_amount" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="contract_id" options="{'no_create': True}"/>
+                            <field name="contract_amount"/>
+                            <field name="owner_user_id" string="Created By"
+                                   options="{'no_create': True, 'no_open': True}" readonly="True" invisible="1"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                        </group>
+                        <h1><button icon="fa-money" string=" Load Cheque Details" name="action_load_existing_cheque" type="object" class="oe_highlight" invisible="state != 'draft'"/></h1>
+                    </group>
+                    <separator string="Replacement Check Details"/>
+                    <field name="replacement_line_ids" readonly="state in ('active', 'cancel')">
+                        <list editable="bottom">
+                            <field name="payment_ref_id" options="{'no_create': True}"/>
+                            <field name="service_id" options="{'no_create': True}"/>
+                            <field name="name" optional="hide"/>
+                            <field name="note"/>
+                            <field name="ref_date"/>
+                            <field name="payment_mode"/>
+                            <field name="ref_no"/>
+                            <field name="amount" sum="Total Amount"/>
+                            <field name="bank_id"/>
+                            <field name="chq_type" optional="hide"/>
+                            <field name="from_date" optional="hide" widget="date"/>
+                            <field name="to_date" optional="hide" widget="date"/>
+                            <field name="days" sum="Total Days" optional="hide"/>
+                            <field name="depositing_bank_id" optional="hide"/>
+                            <field name="new_chq_type" optional="hide"/>
+                            <field name="contract_id" invisible="True" force_save="1"/>
+                            <field name="new_account_type" invisible="True" force_save="1"/>
+                            <field name="state" widget="badge" decoration-success="state == 'cleared'"
+                                   decoration-info="state in ('received','deposited')" decoration-muted="state == 'cancel'"
+                                   decoration-danger="state == 'bounced'" decoration-warning="state == 'hold'"/>
+                            <field name="new_payment_mode"/>
+                            <field name="new_ref_date"/>
+                            <field name="new_ref_no"/>
+                            <field name="new_bank_id"/>
+                            <field name="journal_id"/>
+                            <field name="new_amount" sum="Total Amount"/>
+                            <field name="new_name" optional="hide" force_save="1"/>
+                            <field name="payment_line_id" options="{'no_create': True}" optional="hide"/>
+                        </list>
+                    </field>
+                    <field name='note' placeholder="Internal Notes"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_mbk_pms_cheque_replacement_search" model="ir.ui.view">
+        <field name="name">mbk_pms.cheque_replacement.search</field>
+        <field name="model">mbk_pms.cheque_replacement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Replacement No"
+                       filter_domain="['|', ('name', 'ilike', self), ('tenant_id', 'ilike', self)]"/>
+                <field name="contract_id"/>
+                <field name="unit_id"/>
+                <field name="replacement_amount"/>
+                <filter name="filter_type_active" string="Active"
+                        domain="[('state', '=', 'Active')]"/>
+                <separator/>
+                <filter name="filter_type_active" string="Active" domain="[('state', '=', 'active')]"/>
+                <separator/>
+                <filter name="filter_type_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_type_cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                <separator/>
+                <filter name="filter_type_replacement_date" string="Date" date="replacement_date"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                    <filter string="Tenant" name="group_by_tenant_id" context="{'group_by':'tenant_id'}"/>
+                    <filter string="Contract" name="group_by_contract_id" context="{'group_by':'contract_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mbk_pms_cheque_replacement" model="ir.actions.act_window">
+        <field name="name">Cheque Replacement</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_pms.cheque_replacement</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new cheque replacement
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_pms_cheque_replacement"
+              name="Cheque Replacement"
+              action="action_mbk_pms_cheque_replacement"
+              parent="menu_mbk_pms_payment"
+              sequence="50"/>
+</odoo>

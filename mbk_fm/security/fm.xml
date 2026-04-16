@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_fm_user_own" model="res.groups">
+        <field name="name">User: Own Documents Only</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="base.module_category_facility_management"/>
+    </record>
+    <record id="group_fm_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="implied_ids" eval="[(4, ref('group_fm_user_own'))]"/>
+        <field name="category_id" ref="base.module_category_facility_management"/>
+    </record>
+
+    <record id="group_fm_helpdesk" model="res.groups">
+        <field name="name">Help Desk</field>
+        <field name="implied_ids" eval="[(4, ref('group_fm_user'))]"/>
+        <field name="category_id" ref="base.module_category_facility_management"/>
+        <field name="comment">The user will be able to manage all ticket.</field>
+    </record>
+        <!-- This group is only allowed to deal with equipment registration and maintenance -->
+    <record id="group_fm_manager" model="res.groups">
+        <field name="name">Facility Manager</field>
+        <field name="implied_ids" eval="[(4, ref('group_fm_helpdesk'))]"/>
+        <field name="category_id" ref="base.module_category_facility_management"/>
+        <field name="comment">The user will be able to manage equipments.</field>
+    </record>
+
+        <!-- This group is only allowed to delete records -->
+    <record id="group_fm_admin" model="res.groups">
+        <field name="name">Facility Administrator</field>
+        <field name="implied_ids" eval="[(4, ref('group_fm_manager'))]"/>
+        <field name="category_id" ref="base.module_category_facility_management"/>
+        <field name="comment">The user will have full permissions.</field>
+    </record>
+
+
+    <data noupdate="1">
+    <!-- Rules -->
+    <record id="fm_ticket_request_rule_user" model="ir.rule">
+        <field name="name">Users are allowed to access their own maintenance requests</field>
+        <field name="model_id" ref="model_mbk_fm_ticket"/>
+        <field name="domain_force">['|', ('message_partner_ids', 'in', [user.partner_id.id]), ('owner_user_id.id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_fm_user_own'))]"/>
+    </record>
+
+    <record id="fm_material_request_rule_user" model="ir.rule">
+        <field name="name">Users are allowed to access their own maintenance requests</field>
+        <field name="model_id" ref="model_mbk_fm_material_request"/>
+        <field name="domain_force">['|', ('message_partner_ids', 'in', [user.partner_id.id]), ('owner_user_id.id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_fm_user_own'))]"/>
+    </record>
+
+    <record id="fm_ticket_rule_team_lead_user" model="ir.rule">
+        <field name="name">Team Lead of maintenance requests</field>
+        <field name="model_id" ref="model_mbk_fm_ticket"/>
+        <field name="domain_force">[('team_id.team_lead_id.id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_fm_user'))]"/>
+    </record>
+
+    <record id="fm_material_request_rule_team_lead_user" model="ir.rule">
+        <field name="name">Team Lead of material requests</field>
+        <field name="model_id" ref="model_mbk_fm_material_request"/>
+        <field name="domain_force">[('team_id.team_lead_id.id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_fm_user'))]"/>
+    </record>
+
+    <record id="fm_material_helpdesk_user" model="ir.rule">
+        <field name="name">Users are allowed to access all material request</field>
+        <field name="model_id" ref="model_mbk_fm_material_request"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_fm_helpdesk'))]"/>
+    </record>
+
+    <record id="fm_ticket_rule_helpdesk_user" model="ir.rule">
+        <field name="name">Help Desk access to maintenance requests</field>
+        <field name="model_id" ref="model_mbk_fm_ticket"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_fm_helpdesk'))]"/>
+    </record>
+
+    <record id="base.user_admin" model="res.users">
+        <field name="groups_id" eval="[(4, ref('group_fm_admin'))]"/>
+    </record>
+
+    </data>
+
+</odoo>

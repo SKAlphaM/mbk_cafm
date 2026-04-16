@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="maintenance_request_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <!-- <t t-foreach="docs" t-as="p"> -->
+                    <div class="page">
+                        <center><h4>MAINTENANCE REGISTER</h4></center>
+                        <table class="table table-sm o_main_table" style="font-size: 13px;">
+                            <tr>
+                                <strong>
+                                    <th>S.N</th>
+                                    <th>Case No</th>
+                                    <th>Request Date</th>
+                                    <th t-if="optional_close_date">Completion Date</th>
+                                    <th>Unit</th>
+                                    <th t-if="optional_customer">Customer</th>
+                                    <th t-if="optional_complaint_reg_by">Complaint Reg By</th>
+                                    <th t-if="optional_mode_of_contact">Mode Of Contact</th>
+                                    <th>Priority</th>
+                                    <th>Request Summary</th>
+                                    <th t-if="optional_details_of_complaint">Details Of Complaints</th>
+                                    <th>Responsible</th>
+                                    <th t-if="optional_techicians">Technicians</th>
+                                    <th>Status</th>
+                                    <th>Remarks</th>
+                                </strong>
+                            </tr>
+                            <t t-set="rowno" t-value="1"/>
+                            <t  t-foreach="docs" t-as="p">
+                            <tr>
+                                <td class="text-center">
+                                    <span t-esc="rowno"/></td>
+                                <td>
+                                    <span t-esc="p.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="p.ticket_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                </td>
+                                <td t-if="optional_close_date">
+                                    <span t-esc="p.close_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+
+                                </td>
+                                <td>
+                                    <span t-field="p.unit_id.name"/>
+                                </td>
+                                <td t-if="optional_customer">
+                                    <span t-field="p.customer_id.name"/>
+                                </td>
+                                <td t-if="optional_complaint_reg_by">
+                                     <span t-field="p.registered_by"/>
+                                </td>
+                                <td t-if="optional_mode_of_contact">
+                                    <span t-field="p.mode_of_contact"/>
+                                </td>
+                                <td>
+                                    <span t-field="p.priority"/>
+                                </td>
+                                <td>
+                                    <span t-field="p.request_summary"/>
+                                </td>
+                                <td t-if="optional_details_of_complaint">
+                                    <span t-field="p.description"/>
+                                </td>
+                                <td>
+                                    <span t-field="p.technician_id.name"/>
+                                </td>
+                                <td t-if="optional_techicians">
+                                    <t t-foreach="p.member_ids" t-as="l">
+                                       <span t-field="l.name"/>,
+                                    </t>
+                                </td>
+                                <td>
+                                    <span t-field="p.state"/>
+                                </td>
+                                <td>
+                                    <span t-field="p.comment"/>
+                                </td>
+                        </tr>
+                        <t t-set="rowno" t-value="rowno+1"/>
+                    </t>
+                    </table>
+                    </div>
+            </t>
+        </t>
+    </template>
+    <template id="maintenance_request_report_template2">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <!-- <t t-foreach="docs" t-as="p"> -->
+                    <div class="page">
+                        <center><h4>MAINTENANCE REGISTER</h4></center>
+                        <table class="table table-sm o_main_table" style="font-size: 13px;">
+                            <tr>
+                                <strong>
+                                    <th>S.N</th>
+                                    <th>Case No</th>
+                                    <th>Request Date</th>
+                                    <th t-if="optional_close_date">Completion Date</th>
+                                    <th>Unit</th>
+                                    <th t-if="optional_customer">Customer</th>
+                                    <th t-if="optional_complaint_reg_by">Complaint Reg By</th>
+                                    <th t-if="optional_mode_of_contact">Mode Of Contact</th>
+                                    <th>Priority</th>
+                                    <th>Request Summary</th>
+                                    <th t-if="optional_details_of_complaint">Details Of Complaints</th>
+                                    <th>Responsible</th>
+                                    <th t-if="optional_techicians">Technicians</th>
+                                    <th>Status</th>
+                                    <th>Remarks</th>
+                                </strong>
+                            </tr>
+                            <t t-set="rowno" t-value="1"/>
+                            <t  t-foreach="docs" t-as="p">
+                            <tr>
+                                <td class="text-center">
+                                    <span t-esc="rowno"/></td>
+                                <td>
+                                    <span t-esc="p.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="p.ticket_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                </td>
+                                <td t-if="optional_close_date">
+                                    <span t-esc="p.close_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+
+                                </td>
+                                <td>
+                                    <span t-field="p.unit_id.name"/>
+                                </td>
+                                <td t-if="optional_customer">
+                                    <span t-field="p.customer_id.name"/>
+                                </td>
+                                <td t-if="optional_complaint_reg_by">
+                                     <span t-field="p.registered_by"/>
+                                </td>
+                                <td t-if="p.mode_of_contact">
+                                    <span t-field="p.mode_of_contact"/>
+                                </td>
+                                <td>
+                                    <span t-field="p.priority"/>
+                                </td>
+                                <td>
+                                    <span t-field="p.request_summary"/>
+                                </td>
+                                <td t-if="optional_details_of_complaint">
+                                    <span t-field="p.description"/>
+                                </td>
+                                <td>
+                                    <span t-field="p.technician_id.name"/>
+                                </td>
+                                <td t-if="optional_techicians">
+                                    <t t-foreach="p.member_ids" t-as="l">
+                                       <span t-field="l.name"/>,
+                                    </t>
+                                </td>
+                                <td>
+                                    <span t-field="p.state"/>
+                                </td>
+                                <td>
+                                    <span t-field="p.comment"/>
+                                </td>
+                        </tr>
+                        <t t-set="rowno" t-value="rowno+1"/>
+                    </t>
+                    </table>
+                    </div>
+            </t>
+        </t>
+    </template>
+    <!-- <template id="mbk_fm.maintenance_request_report_template">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="p">
+            <t t-call="mbk_fm.maintenance_request_report_template2" t-lang="p.customer_id.lang"/>
+        </t>
+    </t>
+    </template> -->
+</odoo>

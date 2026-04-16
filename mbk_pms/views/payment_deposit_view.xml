@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_pms_payment_deposit_kanban" model="ir.ui.view">
+        <field name="name">mbk_pms.payment_deposit.kanban</field>
+        <field name="model">mbk_pms.payment_deposit</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="name"/>
+                <field name="deposit_date"/>
+                <field name="state_id"/>
+                <field name="state"/>
+                <field name="activity_ids"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li>
+                                        <strong>No:
+                                            <field name="name"/>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Date:
+                                        <field name="deposit_date"/>
+                                    </li>
+                                    <li>
+                                        Emirate:
+                                        <field name="state_id"/>
+                                    </li>
+                                    <li>
+                                        User:
+                                        <field name="owner_user_id"/>
+                                    </li>
+                                    <li>
+                                        State:
+                                        <field name="state" widget="badge" decoration-success="state == 'done'"
+                                               decoration-info="state == 'active'"
+                                               decoration-muted="state == 'cancel'"/>
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_mbk_pms_payment_deposit_tree" model="ir.ui.view">
+        <field name="name">mbk_pms.payment_deposit.tree</field>
+        <field name="model">mbk_pms.payment_deposit</field>
+        <field name="arch" type="xml">
+            <list sample="1" decoration-success="state == 'done'" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="deposit_date"/>
+                <field name="state_id"/>
+                <field name="property_id" optional="hide"/>
+                <field name="owner_user_id" optional="hide"/>
+                <field name="net_amount" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-info="state =='active'" decoration-warning="state == 'draft'" decoration-muted="state == 'cancel'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+    <!-- Deposit Voucher : views -->
+    <record id="view_mbk_pms_payment_deposit_form" model="ir.ui.view">
+        <field name="name">mbk_pms.payment_deposit.form</field>
+        <field name="model">mbk_pms.payment_deposit</field>
+        <field name="arch" type="xml">
+            <form string="Deposit Voucher" duplicate="0">
+                <header>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Set to Draft" name="action_draft" type="object" invisible="state != 'cancel'"/>
+                    <button string="Cancel" name="action_cancel" type="object" confirm="Are you sure to continue" invisible="state not in ('draft','active')"/>
+                    <field name="state" widget="statusbar" invisible="not active"
+                           statusbar_visible="draft,active"/>
+                </header>
+                <sheet>
+                    <div invisible="active">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="New" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="deposit_date" readonly="True" invisible="1"/>
+                            <field name="as_on_date"/>
+                            <field name="tenant_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="unit_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="depositing_bank_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="state_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="property_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="owner_user_id" string="Created By"
+                                   options="{'no_create': True, 'no_open': True}" readonly="True" invisible="1"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                            <field name="payment_ref_id" readonly="True" groups="base.group_no_one"/>
+                        </group>
+                        <h1><button icon="fa-money" string=" Load Deposit Cheque Details" name="action_load_deposit" type="object" class="oe_highlight" invisible="state != 'draft'"/></h1>
+                    </group>
+                    <notebook>
+                        <page string="Deposit Details" name="deposit_line_ids">
+                            <field name="deposit_line_ids" readonly="state in ('active', 'cancel')">
+                                <list editable="bottom">
+                                    <field name="payment_line_id" options="{'no_create': True}"/>
+                                    <field name="service_id"/>
+                                    <field name="payment_mode" optional="hide"/>
+                                    <field name="tenant_id"/>
+                                    <field name="contract_id"/>
+                                    <field name="ref_date"/>
+                                    <field name="ref_no"/>
+                                    <field name="bank_id"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'cleared'"
+                                           decoration-info="state in ('received','deposited')"
+                                           decoration-muted="state == 'cancel'"
+                                           decoration-danger="state == 'bounced'" decoration-warning="state == 'hold'"/>
+                                    <field name="unit_id"/>
+                                    <field name="property_id" optional="hide"/>
+                                    <field name="name"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="payment_line_id" options="{'no_create': True}"/>
+                                        <field name="payment_mode"/>
+                                        <field name="tenant_id"/>
+                                        <field name="contract_id"/>
+                                        <field name="ref_date"/>
+                                        <field name="ref_no"/>
+                                        <field name="bank_id"/>
+                                        <field name="state" widget="badge" decoration-success="state == 'cleared'"
+                                               decoration-info="state in ('received','deposited')"
+                                               decoration-muted="state == 'cancel'"
+                                               decoration-danger="state == 'bounced'" decoration-warning="state == 'hold'"/>
+                                        <field name="unit_id"/>
+                                        <field name="property_id"/>
+                                        <field name="name"/>
+                                        <field name="amount"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                    <field name='note' placeholder="Internal Notes"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_mbk_pms_payment_deposit_search" model="ir.ui.view">
+        <field name="name">mbk_pms.payment_deposit.search</field>
+        <field name="model">mbk_pms.payment_deposit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Deposit No"
+                       filter_domain="['|', ('name', 'ilike', self), ('state_id', 'ilike', self)]"/>
+                <field name="state_id"/>
+                <field name="property_id"/>
+                <field name="net_amount"/>
+                <filter name="filter_type_active" string="Active"
+                        domain="[('state', '=', 'Active')]"/>
+                <separator/>
+                <filter name="filter_type_active" string="Active" domain="[('state', '=', 'active')]"/>
+                <separator/>
+                <filter name="filter_type_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_type_cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                <separator/>
+                <filter name="filter_type_deposit_date" string="Date" date="deposit_date"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                    <filter string="Emirate" name="group_by_state_id" context="{'group_by':'state_id'}"/>
+                    <filter string="Property" name="group_by_property_id" context="{'group_by':'property_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mbk_pms_payment_deposit" model="ir.actions.act_window">
+        <field name="name">Cheque Deposit</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_pms.payment_deposit</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new payment deposit
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_pms_payment_deposit"
+              name="Cheque Deposit"
+              action="action_mbk_pms_payment_deposit"
+              parent="menu_mbk_pms_payment"
+              sequence="20"/>
+</odoo>

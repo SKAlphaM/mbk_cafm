@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_mbk_pms_lease_enquiry" model="ir.actions.act_window">
+        <field name="name">Enquiry</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_pms.lease_offer</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">['|',('state', '=', 'draft'), ('name', '=', 'Draft')]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new lease enquiry
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_pms_view_lease_enquiry"
+              name="Enquiry"
+              action="action_mbk_pms_lease_enquiry"
+              parent="menu_mbk_pms_lease_contract"
+              sequence="10"/>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+	<record model="ir.cron" id="mbk_pms_cheque_hold_cron">
+        <field name="name">PMS: update hold cheque status on expiry of hold requests</field>
+        <field name="model_id" ref="model_mbk_pms_cheque_hold"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_update_hold_cheques()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="False"/>
+    </record>
+
+	<record model="ir.cron" id="mbk_pms_break_status_cron">
+        <field name="name">PMS: Update unit status of terminated contract</field>
+        <field name="model_id" ref="model_mbk_pms_break_contract"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_update_break_unit_status()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="False"/>
+    </record>
+</odoo>

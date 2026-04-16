@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_mbk_cafm_attachments"
+              name="MBK Attachments"
+              web_icon="mbk_cafm_attachment_controller,static/description/logo.png"
+              groups="group_mbk_attachment_admin"
+              sequence="0"/>
+
+
+    <menuitem id="sub_menu_mbk_cafm_attachment"
+              name="MBK Attachments"
+              action="action_mbk_cafm_attachment"
+              parent="menu_mbk_cafm_attachments"
+              sequence="1"/>
+
+
+</odoo>

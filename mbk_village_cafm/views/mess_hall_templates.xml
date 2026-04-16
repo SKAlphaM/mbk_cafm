@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="mess_hall_page_template" name="Mess Hall Page">
+        <t t-call="website.layout">
+            <div id="mess_hall_wrapper" class="mess-kiosk-page">
+                <div class="mess-kiosk-overlay"></div>
+
+                <div class="mess-kiosk-container">
+                    <div class="mess-top-bar">
+                        <div class="mess-brand-box">
+                            <div class="mess-logo-circle">
+                                <img src="/mbk_village_cafm/static/src/img/logo.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 90%;"/>
+                            </div>
+                            <div class="mess-brand-text">
+                                <div class="mess-brand-title">AL Dhafra Workers Village</div>
+                            </div>
+                        </div>
+
+                        <div class="mess-clock-box">
+                            <div id="mess_live_date" class="mess-live-date"></div>
+                            <div id="mess_live_time" class="mess-live-time"></div>
+                        </div>
+                    </div>
+
+                    <div class="mess-main-panel">
+                        <div class="mess-main-header">
+                            <h1>Mess Hall</h1>
+                            <!--                            <h2>Please Scan</h2>-->
+                            <p class="mess-instruction">Please scan the access card or enter the card number manually.</p>
+                        </div>
+
+                        <div class="mess-test-input-wrap">
+                            <input type="text" id="mess_card_input" class="mess-card-input-visible" placeholder="Enter or scan card number" autocomplete="off" autofocus="autofocus"/>
+                            <button type="button" id="mess_check_btn" class="mess-check-btn">
+                                Check Access
+                            </button>
+                        </div>
+
+                        <div id="mess_default_state" class="mess-default-state">
+                            <div class="pulse-ring"></div>
+                            <div class="scan-icon-wrap">
+                                <div class="scan-icon">⌁</div>
+                            </div>
+                            <div class="waiting-text">Waiting for card scan...</div>
+                        </div>
+
+                        <div id="mess_result" class="mess-result d-none">
+                            <div id="mess_result_message" class="mess-result-message"></div>
+
+                            <div id="mess_success_card" class="mess-success-card d-none">
+                                <div class="mess-profile-left">
+                                    <div class="mess-photo-frame">
+                                        <img id="tenant_image" src="" alt="Tenant" class="tenant-image"/>
+                                    </div>
+                                </div>
+
+                                <div class="mess-profile-right">
+                                    <div class="mess-profile-grid">
+                                        <div class="mess-info-item">
+                                            <div class="mess-info-label">Name</div>
+                                            <div id="tenant_name" class="mess-info-value"></div>
+                                        </div>
+                                        <div class="mess-info-item">
+                                            <div class="mess-info-label">Counter</div>
+                                            <div id="counter_data" class="mess-info-value"></div>
+                                        </div>
+                                        <div class="mess-info-item">
+                                            <div class="mess-info-label">Food Menu</div>
+                                            <div id="menu_items" class="mess-info-value"></div>
+                                        </div>
+                                        <div class="mess-info-item">
+                                            <div class="mess-info-label">Room</div>
+                                            <div id="tenant_code" class="mess-info-value"></div>
+                                        </div>
+                                        <div class="mess-info-item">
+                                            <div class="mess-info-label">Company</div>
+                                            <div id="tenant_company" class="mess-info-value"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="mess_failed_card" class="mess-failed-card d-none">
+                                <div class="mess-denied-icon">✖</div>
+                                <div id="mess_failed_text" class="mess-denied-text"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mess-footer-note">
+                        Keep the card near the scanner and wait for confirmation.
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

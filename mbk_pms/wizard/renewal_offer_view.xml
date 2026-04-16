@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_pms_renewal_offer" model="ir.ui.view">
+        <field name="name">mbk_pms.renewal_offer.wizard.form</field>
+        <field name="model">mbk_pms.renewal_offer_wizard</field>
+        <field name="arch" type="xml">
+            <form name="Form Options">
+                <group>
+                    <group>
+                        <field name="contract_id"/>
+                        <field name="units"/>
+                        <field name="expiry_date"/>
+                        <field name="parent_net_rent_amount"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="property_id"/>
+                        <field name="parent_total_deposit"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_create_renewal_offer" string="Create Renewal Offer" class="oe_highlight" type="object" default_focus="1"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mbk_pms_renewal_offer_wizard" model="ir.actions.act_window">
+        <field name="name">Renewal Offer Letter</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_pms.renewal_offer_wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_mbk_pms_create_renewal_offer"
+              name="Create Renewal Offer"
+              action="action_mbk_pms_renewal_offer_wizard"
+              parent="menu_mbk_pms_renewal_offer"
+              sequence="10"/>
+
+</odoo>

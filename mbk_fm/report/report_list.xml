@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_mbk_fm_ticket_report" model="ir.actions.report">
+            <field name="name">Maintenance Request</field>
+            <field name="model">mbk_fm.ticket</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_fm.report_ticket</field>
+            <field name="report_file">mbk_fm.report_ticket</field>
+            <field name="print_report_name">'Maintenance Request- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_fm_ticket"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_mbk_fm_ticket_image_report" model="ir.actions.report">
+            <field name="name">Maintenance Request with image</field>
+            <field name="model">mbk_fm.ticket</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_fm.report_ticket_image</field>
+            <field name="report_file">mbk_fm.report_ticket_image</field>
+            <field name="print_report_name">'Maintenance Request with image- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_fm_ticket"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="action_mbk_fm_mr_report" model="ir.actions.report">
+            <field name="name">Material Request</field>
+            <field name="model">mbk_fm.material_request</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_fm.mr</field>
+            <field name="report_file">mbk_fm.mr</field>
+            <field name="print_report_name">'Material Request- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_fm_material_request"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="paperformat_landscape_report" model="report.paperformat">
+            <field name="name">Landscape Report Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">25</field>
+            <field name="margin_bottom">17</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">22</field>
+            <field name="dpi">90</field>
+        </record>
+        <record id="action_mbk_fm_maintenance_request_report" model="ir.actions.report">
+            <field name="name">Maintenance Register</field>
+            <field name="model">maintenance.request.wizard</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">mbk_fm.maintenance_request_report_template</field>
+            <field name="report_file">mbk_fm.maintenance_request_report_template</field>
+            <field name="print_report_name">'Maintenance Register- %s - %s' % (object.from_date, object.to_date)</field>
+            <field name="binding_model_id" ref="model_maintenance_request_wizard"/>
+            <field name="paperformat_id" ref="paperformat_landscape_report"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,428 @@
+header,
+footer {
+    display: none !important;
+}
+
+#wrapwrap,
+#wrap,
+main {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.mess-kiosk-page {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: #f5f5f5;
+    color: #111111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.mess-kiosk-page.mess-state-success {
+    background: linear-gradient(135deg, #062e1b 0%, #0f5132 45%, #0b3b24 100%);
+    color: #ffffff;
+}
+
+.mess-kiosk-page.mess-state-failed {
+    background: linear-gradient(135deg, #3b0a0a 0%, #7f1d1d 45%, #450a0a 100%);
+    color: #ffffff;
+}
+
+.mess-kiosk-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top right, rgba(0,0,0,0.04), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(0,0,0,0.04), transparent 30%);
+    pointer-events: none;
+}
+
+.mess-kiosk-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1250px;
+}
+
+.mess-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    gap: 20px;
+}
+
+.mess-brand-box,
+.mess-clock-box {
+    background: #111111;
+    color: #ffffff;
+    border: 1px solid #111111;
+    border-radius: 22px;
+    padding: 18px 22px;
+}
+
+.mess-brand-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.mess-logo-circle {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #111111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.mess-brand-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.mess-clock-box {
+    text-align: right;
+    min-width: 270px;
+}
+
+.mess-live-date {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.mess-live-time {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.mess-main-panel {
+    background: rgba(255,255,255,0.13);
+    border: 1px solid #dcdcdc;
+    border-radius: 30px;
+    padding: 40px 42px 34px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.18);
+}
+
+.mess-main-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.mess-main-header h1 {
+    font-size: 60px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: 0.5px;
+    color: #111111;
+}
+
+.mess-main-header h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #111111;
+    margin: 12px 0 10px;
+}
+
+.mess-instruction {
+    font-size: 18px;
+    color: #222222;
+    margin: 0;
+}
+
+.mess-test-input-wrap {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto 30px;
+    max-width: 760px;
+    flex-wrap: wrap;
+}
+
+.mess-card-input-visible {
+    flex: 1;
+    min-width: 320px;
+    height: 58px;
+    border-radius: 14px;
+    border: 2px solid #111111;
+    background: #ffffff;
+    color: #111111;
+    padding: 0 18px;
+    font-size: 22px;
+    outline: none;
+}
+
+.mess-card-input-visible::placeholder {
+    color: #666666;
+}
+
+.mess-card-input-visible:focus {
+    border-color: #111111;
+    box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.08);
+}
+
+.mess-check-btn {
+    height: 58px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 14px;
+    background: #111111;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.mess-check-btn:hover {
+    background: #000000;
+}
+
+.mess-default-state {
+    text-align: center;
+    padding: 48px 0 40px;
+    position: relative;
+}
+
+.pulse-ring {
+    width: 160px;
+    height: 160px;
+    border: 3px solid rgba(17, 17, 17, 0.12);
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 26px;
+    transform: translateX(-50%);
+    animation: pulseRing 2s infinite ease-out;
+}
+
+.scan-icon-wrap {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #111111;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.scan-icon {
+    font-size: 54px;
+    font-weight: 700;
+}
+
+.waiting-text {
+    font-size: 30px;
+    font-weight: 700;
+    color: #222222;
+}
+
+.mess-result {
+    margin-top: 8px;
+}
+
+.mess-result-message {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    animation: popIn 0.28s ease;
+}
+
+.success-msg {
+    color: #bbf7d0;
+}
+
+.failed-msg {
+    color: #fecaca;
+}
+
+.mess-success-card {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+    background: #111111;
+    color: #ffffff;
+    border: 1px solid #222222;
+    border-radius: 24px;
+    padding: 28px;
+    animation: slideUp 0.25s ease;
+}
+
+.mess-profile-left {
+    width: 300px;
+    text-align: center;
+}
+
+.mess-photo-frame {
+    width: 260px;
+    height: 260px;
+    margin: 0 auto;
+    border-radius: 24px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.18);
+}
+
+.tenant-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+    background: #ffffff;
+}
+
+.mess-profile-right {
+    flex: 1;
+}
+
+.mess-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.mess-info-item {
+    background: #111111;
+    color: #ffffff;
+    border: 1px solid #222222;
+    border-radius: 18px;
+    padding: 18px 20px;
+    min-height: 110px;
+}
+
+.mess-info-label {
+    font-size: 16px;
+    opacity: 0.85;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.mess-info-value {
+    font-size: 28px;
+    font-weight: 800;
+    word-break: break-word;
+}
+
+.mess-failed-card {
+    text-align: center;
+    background: #111111;
+    color: #ffffff;
+    border: 1px solid #222222;
+    border-radius: 24px;
+    padding: 44px 24px;
+    animation: slideUp 0.25s ease;
+}
+
+.mess-denied-icon {
+    font-size: 72px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.mess-denied-text {
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.mess-footer-note {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 15px;
+    color: #222222;
+}
+
+.d-none {
+    display: none !important;
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: translateX(-50%) scale(0.8);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateX(-50%) scale(1.3);
+        opacity: 0;
+    }
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.96);
+        opacity: 0.4;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(12px);
+        opacity: 0.4;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 992px) {
+    .mess-top-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .mess-clock-box {
+        text-align: center;
+    }
+
+    .mess-success-card {
+        flex-direction: column;
+    }
+
+    .mess-profile-left {
+        width: 100%;
+    }
+
+    .mess-profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mess-main-header h1 {
+        font-size: 42px;
+    }
+
+    .mess-main-header h2 {
+        font-size: 28px;
+    }
+
+    .mess-result-message {
+        font-size: 30px;
+    }
+
+    .mess-denied-text,
+    .mess-info-value {
+        font-size: 22px;
+    }
+
+    .mess-card-input-visible {
+        min-width: 100%;
+    }
+}

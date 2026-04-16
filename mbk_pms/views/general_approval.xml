@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_general_approval_tree" model="ir.ui.view">
+        <field name="name">view.general.approval.tree</field>
+        <field name="model">general.approval</field>
+        <field name="arch" type="xml">
+            <list sample="1" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="tenant_id"/>
+                <field name="portfolio"/>
+                <field name="tenant_type"/>
+                <field name="contract_id"/>
+                <field name="bldg_no"/>
+                <field name="current_rent"/>
+                <field name="previous_rent"/>
+                <field name="security_deposit"/>
+                <field name="unit_no" optional="hide"/>
+                <field name="state_id" optional="hide"/>
+                <field name="company_id" optional="hide"/>
+                <field name="contract_start_date" optional="hide"/>
+                <field name="contract_expiry_date" optional="hide"/>
+                <field name="state" widget="badge" decoration-info="state =='active'" decoration-warning="state == 'draft'" decoration-muted="state == 'cancel'"/>
+            </list>
+        </field>
+    </record>
+    <!-- General Approval Voucher : views -->
+    <record id="view_general_approval_form" model="ir.ui.view">
+        <field name="name">view.general.approval.form</field>
+        <field name="model">general.approval</field>
+        <field name="arch" type="xml">
+            <form string="General Approval" duplicate="0">
+                <header>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button string="Cancel" name="action_cancel" type="object" confirm="Do you want to cancel the approval?" invisible="state not in ('draft','active')"/>
+                    <button string="Set To Draft" name="action_set_draft" type="object" confirm="Do you want to move the status to draft?" invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active,cancel"/>
+                </header>
+                <sheet>
+                    <div invisible="state != 'cancel'">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="New" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="bldg_no"/>
+                            <field name="unit_no" options="{'no_create': True}"/>
+                            <field name="portfolio" required="1"/>
+                            <field name="state_id" required="1" options="{'no_create': True}"/>
+                            <field name="tenant_type" required="1"/>
+                            <field name="company_id" required="1"  options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="voucher_date"/>
+                            <field name="contract_id" options="{'no_create': True}"/>
+                            <field name="current_rent"/>
+                            <field name="previous_rent"/>
+                            <field name="security_deposit"/>
+                            <field name="tenant_id" options="{'no_create': True}"/>
+                            <label for="contract_start_date" string="Contract Period"/>
+                            <div>
+                                <div name="date_read_only" class="o_row oe_read_only">
+                                    <span><field name="contract_start_date" class='oe_inline'/></span>
+                                    <span>To <field name="contract_expiry_date" class='oe_inline'/></span>
+                                </div>
+                            </div>
+                        </group>
+                        <field name='details_of_request' placeholder="Details of Request"/>
+                        <field name='reasons' placeholder="Reason/Justification"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_general_approval_search" model="ir.ui.view">
+        <field name="name">view.general.approval.search</field>
+        <field name="model">general.approval</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"
+                       filter_domain="['|', ('name', 'ilike', self), ('tenant_id', 'ilike', self)]"/>
+                <field name="tenant_id"/>
+                <field name="contract_id"/>
+                <field name="bldg_no"/>
+                <separator/>
+                <filter name="filter_type_active" string="Active" domain="[('state', '=', 'active')]"/>
+                <separator/>
+                <filter name="filter_type_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_type_cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Tenant" name="group_by_tenant_id" context="{'group_by':'tenant_id'}"/>
+                    <filter string="Contract" name="group_by_contract_id" context="{'group_by':'contract_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_general_approval" model="ir.actions.act_window">
+        <field name="name">General Approval</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">general.approval</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Voucher
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_general_approval"
+              name="General Approval"
+              action="action_general_approval"
+              parent="menu_mbk_pms_activities_menu"
+              sequence="51"/>
+</odoo>

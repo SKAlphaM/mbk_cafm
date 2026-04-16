@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mbk_fm_ticket_activity_line_tree_view" model="ir.ui.view">
+            <field name="name">mbk_fm.ticket.activity.line.tree</field>
+            <field name="model">mbk_fm.ticket.activity.line</field>
+            <field name="arch" type="xml">
+                <list string="Ticket Activities" delete="0">
+                    <field name="ticket_id" readonly="True"/>
+                    <field name="technician_id" widget="many2one_avatar_user" readonly="True"/>
+                    <field name="member_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="name" readonly="True"/>
+                    <field name="start_time" readonly="True"/>
+                    <field name="end_time" readonly="True"/>
+                    <field name="duration_hour" widget="float_time" sum="Total" readonly="True"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_mbk_fm_ticket_activity_line_form" model="ir.ui.view">
+            <field name="name">mbk_fm.ticket.activity.line.form</field>
+            <field name="model">mbk_fm.ticket.activity.line</field>
+            <field name="arch" type="xml">
+                <form create="0" edit="0">
+                    <sheet>
+                        <group>
+                            <field name="ticket_id" readonly="True" options="{'no_create': True}"/>
+                            <field name="technician_id" widget="many2one_avatar_user" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="member_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" readonly="True"/>
+                            <field name="name" readonly="True"/>
+                            <field name="start_time" readonly="True"/>
+                            <field name="end_time" readonly="True"/>
+                            <field name="duration_hour" widget="float_time" sum="Total" readonly="True"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mbk_fm_ticket_activity_line_search_view" model="ir.ui.view">
+            <field name="name">mbk_fm.ticket.activity.line.search</field>
+            <field name="model">mbk_fm.ticket.activity.line</field>
+            <field name="arch" type="xml">
+                <search string="Ticket Activities">
+                    <field name="ticket_id"/>
+                    <field name="technician_id"/>
+                    <field name="member_ids"/>
+                    <filter name="filter_activity_date" string="Date" date="start_time"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Ticket" name="group_by_ticket_id" context="{'group_by':'ticket_id'}"/>
+                        <filter string="Responsible" name="group_by_technician_id" context="{'group_by':'technician_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="mbk_fm_ticket_activity_line_act_window" model="ir.actions.act_window">
+            <field name="name">Ticket Activities</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mbk_fm.ticket.activity.line</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Activity.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Ticket Activities" id="mbk_fm_ticket_activity_line_menu" parent="menu_mbk_fm_maintenance" action="mbk_fm_ticket_activity_line_act_window" sequence="50"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,377 @@
+<?xml version="1.0"?>
+<odoo>
+  <data>
+    <template id="report_renewal_notice_residential_report">
+        <t t-call="web.external_layout">
+        <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+       
+        <div class="page" style="!important; font-family: Times New Roman;" valign="top">
+             <table style="border:double;width: 100%;page-break-inside: avoid;" valign="top">
+                 <tr>
+                     <td class="text-center"  style="border:double;padding:5px;" colspan="3" valign="top">
+                       <span style="font-size: 25px;"><b>Lease Agreement Renewal Notice</b></span>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="border:double;width: 49%;padding:5px;" valign="top">
+                          <table width="100%"  style="font-size: 18px;">
+                              <tr>
+                                  <td width="30%">Date</td>
+                                  <td  width="5%">:</td>
+                                  <td  width="65%"><strong><span t-field="doc.offer_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></strong></td>
+                              </tr>
+                              <tr>
+                                  <td width="20%">Tenant Name</td>
+                                  <td  width="5%">:</td>
+                                  <td  width="75%"><strong><span t-field="doc.partner_id.name"/></strong></td>
+                              </tr>
+                               <tr>
+                                  <td width="20%">Development Name</td>
+                                  <td  width="5%">:</td>
+                                  <td  width="75%"><strong><span>need to add</span></strong></td>
+                              </tr>
+                              <tr>
+                                  <td><span>Unit/Villa</span></td>
+                                  <td><span>:</span></td>
+                                  <td><strong><span t-field="doc.unit_id.rn_id.ref_id"/></strong></td>
+                              </tr>
+                              <tr>
+                                  <td><span>Location</span></td>
+                                  <td><span>:</span></td>
+                                  <td><strong><span t-field="doc.property_id.street"/></strong></td>
+                              </tr>
+                              <tr>
+                                  <td><span>Lease Expiry Date</span></td>
+                                  <td><span>:</span></td>
+                                  <td><strong><span t-field="doc.lease_expiry_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></strong></td>
+                              </tr>
+                              <tr>
+                                  <td><span>Lease No</span></td>
+                                  <td><span>:</span></td>
+                                  <td><strong><span t-field="doc.contract_id.name"/></strong></td>
+                              </tr>
+                              <tr>
+                                  <td colspan="3" style="font-size: 20px;">
+                                      <b>Subject: <u><i>"Lease agreement renewal notice"</i></u></b>
+                                    <p style="font-size: 18px;padding-top:10px;">
+                                          Dear Valued Tenant,<br/>
+                                          <b><i>We would like to inform you that your lease agreement in respect of
+                                               the above mentioned unit will be due for renewal on the aforesaid
+                                               expiry date.
+                                              <br/>
+                                              <i>To renew your lease, you are kindly requested to confirm your
+                                                intention to renewal within (2) months prior to lease expiry date,
+                                                please visit our management office located at Abu Dhabi,Dubai &amp;
+                                                Fujairah within 30 days prior to the expiry of your lease.
+                                            </i>
+                                            </i>
+                                          </b>
+                                        </p>
+                                  </td>
+                              </tr>
+                          </table>
+
+                      </td>
+                     <td style="border-left:double;border-right:double;border-top: 0px solid white;border-bottom: 0px solid white;width: 2%;padding:5px;">&amp;nbsp;</td>
+                     <td style="border:double;width: 49%;padding:5px;">
+                        <table width="100%"  style="font-size: 18px;">
+                            <tr>
+                                <td  width="75%"   class="text-right"  style="direction: rtl;"><strong><span t-field="doc.offer_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></strong></td>
+                                <td  width="5%" class="text-right">:</td>
+                                <td width="20%" class="text-right" style="direction: rtl;padding:5px;">‫ﺍﻟﺘﺎﺭﻳﺦ</td>
+                            </tr>
+                            <tr>
+                                  <td  width="75%"   class="text-right"  style="direction: rtl;"><strong><span t-field="doc.partner_id.name"/></strong></td>
+                                  <td  width="5%">:</td>
+                                  <td width="20%" class="text-right" style="direction: rtl;padding:5px;">‫ﺍﻟﺘﺎﺭﻳﺦﻟﻤﺴﺘﺄﺟﺮ‬ ‫ﺍﺳﻢ</td>
+                            </tr>
+                            <tr>
+                                  <td  width="75%"   class="text-right"  style="direction: rtl;"><strong>need to add</strong></td>
+                                  <td  width="5%" class="text-right">:</td>
+                                  <td width="20%" class="text-right" style="direction: rtl;padding:5px;">‫‫ﺍﻟﻌﻘﺎﺭ‬ ‫ﺳﻢ</td>
+                              </tr>
+                            <tr>
+                                  <td  width="75%"   class="text-right"  style="direction: rtl;"><strong><span t-field="doc.unit_id.rn_id.ref_id"/></strong></td>
+                                  <td  width="5%" class="text-right">:</td>
+                                  <td width="20%" class="text-right" style="direction: rtl;padding:5px;">‫ﻓﻴﻻ‬ / ‫ﻭﺣﺪﺓ‬ ‫ﺭﻗﻢ</td>
+                              </tr>
+                            <tr>
+                                  <td  width="75%"   class="text-right" style="direction: rtl;"><strong><span t-field="doc.property_id.street"/></strong></td>
+                                  <td  width="5%" class="text-right">:</td>
+                                  <td width="20%"   class="text-right" style="direction: rtl;padding:5px;">‫ﻟﻤﻮﻗﻊ</td>
+                            </tr>
+                            <tr>
+                                <td  width="75%" class="text-right"><strong><span t-field="doc.lease_expiry_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></strong></td>
+                                <td  width="5%" class="text-right">:</td>
+                                <td width="20%" class="text-right" style="direction: rtl;padding:5px;">‫ﻋﻘﺪ‬ ‫ﺍﻧﺘﻬﺎﺀ‬ ‫ﺗﺎﺭﻳﺦ</td>
+                            </tr>
+                            <tr>
+                                <td  width="75%"  class="text-right" style="direction: rtl;"><strong><span t-field="doc.contract_id.name"/></strong></td>
+                                <td  width="5%" class="text-right">:</td>
+                                <td width="20%" class="text-right" style="direction: rtl;padding:5px;">‫ﺍﻟﻌﻘﺪ‬ ‫ﺭﻗﻢ</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"  class="text-right" style="direction: rtl;font-size: 18px;padding:5px;">
+                                    <b>‬ الموضوع : <i><u>اشعار تجديد عقد الإيجار</u></i></b>
+                                    <p  style="font-size: 20px;padding:5px;">
+                                      ، ‫ﺍﻟﻜﺮﻳﻢ‬ ‫ﺍﻟﻤﺴﺘﺄﺟﺮ‬ ‫ﻋﺰﻳﺰﻱ‬<br/>
+                                      <b><i>‫ﻣﺴﺘﺤﻖ‬ ‫ﺳﻴﻜﻮﻥ‬ ‫ﺃﻋﻻﻩ‬ ‫ﺍﻟﻤﺬﻛﻮﺭﺓ‬ ‫ﺑﺎﻟﻮﺣﺪﺓ‬‫ﻳﺘﻌﻠﻖ‬ ‫ﻓﻴﻤﺎ‬ ‫ﺑﻜﻢ‬ ‫ﺍﻟﺨﺎﺹ‬ ‫ﺍﻹﻳﺠﺎﺭ‬ ‫ﻋﻘﺪ‬ ‫ﺑﺄﻥ‬ ‫ﻋﻠﻤﺎ‬ ‫ﻧﺤﻴﻄﻜﻢ‬
+                        .‫ﺍﻟﻤﺬﻛﻮﺭ‬ ‫ﺍﻟﻌﻘﺪ‬ ‫ﺍﻧﺘﻬﺎﺀ‬ ‫ﺗﺎﺭﻳﺦ‬ ‫ﻣﻦ‬ ‫ﺍﻋﺘﺒﺎﺭﺍ‬ ‫ﺍﻟﺘﺠﺪﻳﺪ‬
+
+                                        </i>
+                                      </b>
+                                    </p>
+                               </td>
+                            </tr>
+                        </table>
+                     </td>
+                 </tr>
+                 <tr>
+                      <td style="border-top: 1px solid black;border-bottom: 1px solid black;width: 49%;padding:5px;font-size: 18px;" valign="top">
+                          <b>Cheque favour to/:</b>
+                          <br/>
+                      <b style="color:#ff0000;font-size: 20px;">&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+                        Al Dhafra Property Management</b>
+                      </td>
+                     <td style="border-left:double;border-right:double;border-top: 0px solid white;border-bottom: 0px solid white;width: 2%;padding:5px;">&amp;nbsp;</td>
+                     <td  class="text-center" style="border-top: 1px solid black;border-bottom: 1px solid black;direction: rtl;width: 49%;padding:5px;font-size: 20px;" valign="top">
+                          لعقارات لادارة العقارات
+                      </td>
+                 </tr>
+                 <tr style="height: 30px;">
+                      <td class="text-left" style="border-top: 1px solid black;padding: 5px;font-size: 20px;"><span><b>Annual Rent : &amp;nbsp;&amp;nbsp;<span t-esc="'{0:,.2f}'.format(doc.net_amount)"/> &amp;nbsp; AED</b></span></td>
+                      <td style="border-left:double;border-right:double;border-top: 0px solid white;border-bottom: 0px solid white;width: 2%;padding:5px;">&amp;nbsp;</td>
+                      <td class="text-right" style="border-top: 1px solid black;font-size: 20px;">‫ﺩﺭﻫﻢ‬AED &amp;nbsp; <span t-esc="'{0:,.2f}'.format(doc.net_amount)"/>&amp;nbsp;&amp;nbsp;<span>‫ﺍﻟﺴﻨﻮﻱ‬ ‫ﺍﻟﻤﺒﻠﻎ‬</span></td>
+                 </tr>
+                 <tr>
+                     <td class="text-left" style="border-top: 1px solid black;padding: 5px;font-size: 18px;">
+
+                            The requirements for renewal are as follows:<br/>
+                            &amp;emsp; 1. Passport copy &amp; valid residence<br/>
+                            &amp;emsp; 2. Copy of Emirates ID.<br/>
+                            &amp;emsp; 3. Recent Water and Electricity Bill.<br/>
+                            &amp;emsp; 4. Passport, Visa and Emirates I.D of family member.<br/>
+                            &amp;emsp; 5. Cheque favoring (as stated above).<br/>
+                            &amp;emsp; 6. Cash Admin Fees (as per the attached schedule of fees).
+
+                     </td>
+                     <td style="border-left:double;border-right:double;border-top: 0px solid white;border-bottom: 0px solid white;width: 2%;padding:5px;">&amp;nbsp;</td>
+                     <td class="text-right" style="border-top: 1px solid black;padding: 5px;font-size: 20px;">
+                         : هي الايجار عقد لتجديد المطلوبة المستندات‬<br/>
+
+                        1 .نسخة عن جواز السفر ساري المفعول مع تأشيرة الإقامة .<br/>
+                        2 .نسخة عن الهوية الاماراتية .<br/>
+                        3 .فاتورة المياه والكهرباء الأخيرة .<br/>
+                        4 .جواز السفر والتأشيرة والإمارات العربية المتحدة من أفراد الأسرة‫<br/>
+                        .( اعلاه ذكر كما (شيك. 5<br/>
+                        .( الرسوم بجدول مذكور هو كما (نقدا ... الإدارية الرسوم. 6<br/>
+
+                     </td>
+                 </tr>
+                 <tr>
+                     <td class="text-center" style="padding: 5px;">
+                         <table style="border: 1px solid black;border-collapse:seperate;margin: 0 auto;width:100%;font-size: 18px;">
+                            <tr style="border:1px solid black;">
+                              <td class="text-left" style="padding: 5px;border: 1px solid black;font-size: 18px;">Contract Fee</td>
+                              <td style="padding: 5px;border: 1px solid black;">
+                                <t t-foreach="doc.service_line_ids" t-as="service_line">
+                                    <span t-if="service_line.name == 'Contract Fee'" t-esc="'{0:,.2f}'.format(service_line.net_amount)"/>
+                                </t>
+                              </td>
+                            </tr>
+                            <tr style="border:1px solid black;">
+                              <td class="text-left" style="padding: 5px;border: 1px solid black;font-size: 18px;">Postdated cheque fee(each)</td>
+                              <td style="padding: 5px;border: 1px solid black;">
+                                <t t-foreach="doc.service_line_ids" t-as="service_line">
+                                    <span t-if="service_line.name == 'Postdated cheque fee(each)'" t-esc="'{0:,.2f}'.format(service_line.net_amount)"/>
+                                </t>
+                              </td>
+                            </tr>
+                            <tr style="border:1px solid black;">
+                              <td class="text-left" style="padding: 5px;border: 1px solid black;font-size: 18px;">Municipality</td>
+                              <td style="padding: 5px;border: 1px solid black;">
+                                <t t-foreach="doc.service_line_ids" t-as="service_line">
+                                    <span t-if="service_line.name == 'Municipality'" t-esc="'{0:,.2f}'.format(service_line.net_amount)"/>
+                                </t>
+                              </td>
+                            </tr>
+                  </table>
+                     </td>
+                     <td style="border-left:double;border-right:double;border-top: 0px solid white;border-bottom: 0px solid white;width: 2%;padding:5px;">&amp;nbsp;</td>
+
+                    <td class="text-right" style="padding: 5px;">
+                      <table style="border: 1px solid black;border-collapse:seperate;margin: 0 auto;width:100%;font-size: 18px;">
+                        <tr style="border:1px solid black;">
+                          <td class="text-left" style="padding: 5px;border: 1px solid black;font-size: 18px;">‫ﺟﺪﻳﺪ‬ ‫ﻋﻘﺪ‬ ‫ﻹﺻﺪﺍﺭ‬ ‫ﺭﺳﻮﻡ‬</td>
+                          <td style="padding: 5px;border: 1px solid black;">
+                            <t t-foreach="doc.service_line_ids" t-as="service_line">
+                                <span t-if="service_line.name == 'Contract Fee'" t-esc="'{0:,.2f}'.format(service_line.net_amount)"/>
+                            </t>
+                          </td>
+                        </tr>
+                        <tr style="border:1px solid black;">
+                          <td class="text-left" style="padding: 5px;border: 1px solid black;font-size: 18px;">‫ﻣﺆﺟﻞ‬ ‫ﺷﻴﻚ‬ ‫ﻛﻞ‬ ‫ﻋﻦ‬ ‫ﺭﺳﻮﻡ‬</td>
+                          <td style="padding: 5px;border: 1px solid black;">
+                            <t t-foreach="doc.service_line_ids" t-as="service_line">
+                                <span t-if="service_line.name == 'Postdated cheque fee(each)'" t-esc="'{0:,.2f}'.format(service_line.net_amount)"/>
+                            </t>
+                          </td>
+                        </tr>
+                        <tr style="border:1px solid black;">
+                          <td class="text-left" style="padding: 5px;border: 1px solid black;font-size: 18px;">‫ﺍﺟﺎﺭﻱ‬ ‫ﻋﻘﺪ‬ ‫ﺭﺳﻮﻡ‬</td>
+                          <td style="padding: 5px;border: 1px solid black;">
+                            <t t-foreach="doc.service_line_ids" t-as="service_line">
+                                <span t-if="service_line.name == 'Municipality'" t-esc="'{0:,.2f}'.format(service_line.net_amount)"/>
+                            </t>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="text-left" style="border-top: 1px solid black;padding: 5px;font-size: 18px;">
+
+                        <p>
+                          Any <b><i>delay</i></b> in accordance to renew the tenancy contract will affect a penalty of <b><i>AED 50</i></b> each day.<br/>
+                          “If you do not intend to renew your contract upon expiry, please send written confirmation of your intention within two (2) months prior to expiry or a penalty of two (2) months gross rent will be charged.”
+                        </p>
+                        <p>
+                          <b>Note :</b><br/>
+                          1. Starting from 1st January 2018, most and services shall be subject to
+                          5% (out of the annual rent) value added tax in compliance with the
+                          federal Laws &amp; regulations levying and regulating the tax in the UAE.<br/>
+
+                          VAT is a consumption tax that the end user is obligated to pay and
+                          <b><u>AL DHAFRA PROPERTY MANAGEMENT</u></b> will be only acting
+                          as a collection Agent on behalf of the taxation authority. <b><u>AL DHAFRA
+                          PROPERTY MANAGEMENT </u></b> is legally obliged to comply with
+                          this Government mandate from 1st January 2018.<br/>
+                          Please visit our office to complete the renewal formalities. Our working hours from 8.00 AM to 17:00PM - Monday to Saturday.
+                          For information, send e-mail to:<br/>
+                          <b style="color:#ff0000;"><u>syam@aldhpm.com,nivedh@aldhpm.com,fatima@aldhpm.com,abdulrahman@aldhpm.com</u></b>
+                          <br/>
+                          This is for your kind information and further necessary action.<br/>
+                          <b>Thanks &amp; Regards.</b>
+                          <br/><br/>
+                          <b>Tenant Signature / Stamp</b>
+                          <br/><br/>
+                          <b>Date :</b>
+                        </p>
+
+                    </td>
+                     <td style="border-left:double;border-right:double;border-top: 0px solid white;border-bottom: 0px solid white;width: 2%;padding:5px;">&amp;nbsp;</td>
+
+                    <td class="text-right"  style="border-top: 1px solid black;padding: 5px;">
+
+                        <p style="font-size: 18px;padding:5px;">
+                          ‫ﺃﻱ‬ <b><i>‫ﺍﻹﻳﺠﺎﺭ‬ ‫ﻋﻘﺪ‬ ‫ﻟﺘﺠﺪﻳﺪ‬ ‫ﺗﺄﺧﻴﺮ‬</i></b> ‫ﻗﺪﺭﻫﺎ‬ ‫ﻏﺮﺍﻣﺔ‬ ‫ﻳﻔﺮﺽ‬ ‫ﺳﻮﻑ‬ <b><i>50</i></b>. ‫ﻳﻮﻡ‬ ‫ﻛﻞ‬ ‫ﺩﺭﻫﻢ‬<br/>
+                          ‫ﺍﻧﺘﻬﺎﺀ‬ ‫ﻣﻦ‬ (2) ‫ﺷﻬﺮﻳﻦ‬ ‫ﻗﺒﻞ‬ ‫ﺑﺬﻟﻚ‬ ‫ﺧﻄﻲ‬ ‫ﺗﺄﻛﻴﺪ‬ ‫ﺇﺭﺳﺎﻝ‬ ‫ﻳﺮﺟﻰ‬ ، ‫ﺍﻟﺘﺠﺪﻳﺪ‬ ‫ﻓﻲ‬ ‫ﺍﻟﺮﻏﺒﺔ‬ ‫ﻋﺪﻡ‬ ‫ﺣﺎﻟﺔ‬ ‫ﻭﻓﻲ‬
+                          . ‫ﺍﻟﻌﻘﺪ‬ ‫ﻟﺸﺮﻭﻁ‬ ‫ﻃﺒﻘﺎ‬ ‫ﻏﺮﺍﻣﺔ‬ ‫ﻋﻠﻴﻜﻢ‬ ‫ﺳﺘﻄﺒﻖ‬ ‫ﻭﺇﻻ‬ ‫ﺍﻟﻌﻘﺪ‬
+                        </p>
+                        <p style="font-size: 18px;padding:5px;">
+                          <b>: ‫ﻣﻠﺤﻮﻇﺔ‬</b><br/>
+                          1‫ﺍﻟﻘﻴﻤﺔ‬ ‫ﻟﻀﺮﻳﺒﺔ‬ ‫ﻭﻣﻨﺘﺠﺎﺕ‬ ‫ﺧﺪﻣﺎﺕ‬ ‫ﻣﻌﻈﻢ‬ ‫ﺳﺘﺨﻀﻊ‬ ،2018 ‫ﻟﻌﺎﻡ‬ ‫ﻳﻨﺎﻳﺮ‬ ‫ﻣﻦ‬ ‫ﺍﻷﻭﻝ‬ ‫ﻣﻦ‬ ‫ﺍﻋﺘﺒﺎﺭﺍ‬
+                          ‫ﺩﻭﻟﺔ‬ ‫ﻓﻲ‬ ‫ﺍﻟﻀﺮﻳﺒﺔ‬ ‫ﻟﻬﺬﻩ‬ ‫ﺍﻟﻤﻨﻈﻤﺔ‬ ‫ﻭﺍﻟﺘﺸﺮﻳﻌﺎﺕ‬ ‫ﺍﻟﻘﻮﺍﻧﻴﻦ‬ ‫ﻟﻤﻘﺘﻀﻴﺎﺕ‬ ً‫ﻭﻓﻘﺎ‬ ‫ﻭﺫﻟﻚ‬ %5 ‫ﺑﻮﺍﻗﻊ‬ ‫ﺍﻟﻤﻀﺎﻓﺔ‬
+                          ‫ﺍﻟﻤﺘﺤﺪﺓ‬ ‫ﺍﻟﻌﺮﺑﻴﺔ‬ ‫ﺍﻹﻣﺎﺭﺍﺕ‬<br/>
+
+                          ‫ﻭﺍﻟﺨﺪﻣﺎﺕ‬ ‫ﻟﻠﻤﻨﺘﺠﺎﺕ‬ ‫ﺍﻟﻨﻬﺎﺋﻲ‬ ‫ﺍﻟﻤﺴﺘﺨﺪﻡ‬ ‫ﻳﺪﻓﻌﻬﺎ‬ ‫ﺍﺳﺘﻬﻻﻛﻴﺔ‬ ‫ﺿﺮﻳﺒﺔ‬ ‫ﻫﻲ‬ ‫ﺍﻟﻤﻀﺎﻓﺔ‬ ‫ﺍﻟﻘﻴﻤﺔ‬ ‫ﺿﺮﻳﺒﺔ‬
+                          ‫ﻟﻤﺼﻠﺤﺔ‬ ‫ﺍﻟﻀﺮﻳﺒﺔ‬ ‫ﻫﺬﻩ‬ ‫ﺗﺤﺼﻴﻞ‬ ‫ﻋﻠﻰ‬ ‫ﻳﻘﺘﺼﺮ‬
+                          <b><u>‫ﺍﻟﻌﻘﺎﺭﺍﺕ‬ ‫ﻻﺩﺍﺭﺓ‬ ‫ﺩﻭﺭﺍﻟﻈﻔﺮﺓ‬</u></b> ‫ﺃﻥ‬ ‫ﻳﻌﻨﻲ‬ ‫ﻣﺎ‬ ‫ﻭﻫﻮ‬
+                          ‫ﻟﻠﻀﺮﺍﺋﺐ‬ ‫ﺍﻻﺗﺤﺎﺩﻳﺔ‬ ‫ﺍﻟﻬﻴﺌﺔ‬.
+                          ‫ﺍﻻﻣﺘﺜﺎﻝ‬<b><u>‫ﺍﻟﻌﻘﺎﺭﺍﺕ‬ ‫ﻻﺩﺍﺭﺓ‬ ‫ﺍﻟﻈﻔﺮﺓ‬</u></b> ‫ﻣﻦ‬ ‫ﻓﺈﻧﻪ‬ ،‫ﺑﻬﺎ‬ ‫ﺍﻟﻤﻌﻤﻮﻝ‬ ‫ﺍﻟﻘﻮﺍﻧﻴﻦ‬ ‫ﻭﺑﻤﻮﺟﺐ‬‫ﻋﻠﻰ‬‫ﻟﻘﺮﺍﺭﺍﺕ‬‫ﺍﻟﻮﺍﺟﺐ‬
+                          ‫ﻳﻨﺎﻳﺮ‬ 2018 ‫ﻣﻦ‬ ‫ﺍﻷﻭﻝ‬ ‫ﻣﻦ‬ ‫ﺍﻋﺘﺒﺎﺭﺍ‬ ‫ﺍﻟﻀﺮﻳﺒﺔ‬ ‫ﺑﺸﺄﻥ‬ ‫ﺍﻻﺗﺤﺎﺩﻳﺔ‬ ‫ﻜﻮﻣﺔ‬<br/><br/><br/><br/><br/>
+                          <b style="color:#ff0000;"><u>syam@aldhpm.com,nivedh@aldhpm.com,fatima@aldhpm.com,abdulrahman@aldhpm.com</u></b>
+                          <br/><br/>
+                          ‫ﺍﻟﻻﺯﻡ‬ ‫ﻭﺇﺟﺮﺍﺀ‬ ، ‫ﻟﻠﻌﻠﻢ‬ ‫ﻫﺬﺍ‬
+                          ،، ‫ﻭﺍﻓﺮ‬ ‫ﺑﻘﺒﻮﻝ‬ ‫ﻭﺗﻔﻀﻠﻮﺍ‬
+                          ‫ﺍﻻﺣﺘﺮﺍﻡ‬
+                          <br/><br/>
+                          <b>‫ﺍﻟﺨﺘﻢ‬ / ‫ﺍﻟﻤﺴﺘﺄﺟﺮ‬ ‫ﺗﻮﻗﻴﻊ‬</b>
+                          <br/><br/>
+                          <b>: ‫ﺍﻟﺘﺎﺭﻳﺦ‬</b>
+                        </p>
+                     </td>
+                  </tr>
+                </table>
+            <div style="page-break-after: always;"/>
+            <table style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+              <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                <td class="text-center" style="border-left: 1px solid black; border-right: 1px solid black;" colspan="7"><b>PAYMENT SCHEDULE</b></td>
+              </tr>
+              <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                <td class="text-center" style="color:#ff0000;border-left: 1px solid black; border-right: 1px solid black;" colspan="7"><b><span t-field="doc.property_id.name"/></b></td>
+              </tr>
+              <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                <td class="text-center" style="border-left: 1px solid black; border-right: 1px solid black;" colspan="7"><b>Contract Period : &amp;nbsp; <span t-field="doc.start_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>&amp;nbsp; to &amp;nbsp;<span t-field="doc.expiry_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/> </b></td>
+              </tr>
+              <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                <td class="text-center" style="color:#ff0000;border-left: 1px solid black; border-right: 1px solid black;" colspan="7"><b><span t-field="doc.unit_id.name"/></b></td>
+              </tr>
+              <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                <td class="text-center" style="color:#ff0000;border-left: 1px solid black; border-right: 1px solid black;" colspan="7"><b>Contract Value: &amp;nbsp;<span t-if="doc.net_amount" t-esc="'{0:,.2f}'.format(doc.net_amount)"/></b></td>
+              </tr>
+              <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                <th class="text-center" style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:5%;">SL NO</th>
+                <th class="text-center" style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:15%;">DATE OF THE CHEQUE</th>
+                <th class="text-left" style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:23%;">PERIOD</th>
+                <th class="text-center" style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:12%;">AMOUNT</th>
+                <th class="text-center" style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:10%;">TAX</th>
+                <th class="text-center" style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:15%;">TOTAL</th>
+                <th class="text-center" style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:20%;">REMARKS</th>
+              </tr>
+              <t t-set="rowno" t-value="1"/>
+              <t t-foreach="doc.payment_line_ids" t-as="line">
+
+                <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                        <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-center"><span t-esc="rowno"/></td>
+                        <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-left"><span t-if="line.ref_date" t-field="line.ref_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></td>
+                        <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-left"><span t-if="line.from_date" t-field="line.from_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>&amp;nbsp; - &amp;nbsp;<span t-field="line.to_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></td>
+                        <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-right"><span t-if="line.amount" t-esc="'{0:,.2f}'.format(line.amount)"/></td>
+                        <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-right"><span></span></td>
+                        <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-right"><span t-if="line.amount" t-esc="'{0:,.2f}'.format(line.amount)"/></td>
+                        <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-left"><span t-if="line.note" t-field="line.note"/></td>
+
+                </tr>
+                <t t-set="rowno" t-value="rowno+1"/>
+            </t>
+              <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                <td class="text-right" style="border-left: 1px solid black; border-right: 1px solid black;" colspan="3"><b>TOTAL</b></td>
+                <td class="text-right" style="border-left: 1px solid black; border-right: 1px solid black;"><b><span t-if="doc.net_amount" t-esc="'{0:,.2f}'.format(doc.net_amount)"/></b></td>
+                <td class="text-right" style="border-left: 1px solid black; border-right: 1px solid black;"></td>
+                <td class="text-right" style="border-left: 1px solid black; border-right: 1px solid black;"><b><span t-if="doc.net_amount" t-esc="'{0:,.2f}'.format(doc.net_amount)"/></b></td>
+                <td class="text-right" style="border-left: 1px solid black; border-right: 1px solid black;"></td>
+              </tr>
+            </table>
+            <br/>
+
+            <table style="width: 100%;">
+              <tr style="height: 30px;width: 100%;">
+                <td class="text-left" colspan="7"><b><u>BANK PAYMENT DETAILS</u></b></td>
+              </tr>
+              <tr style="height: 30px;width: 100%;">
+                <td class="text-left" colspan="7"><b>Bank Account : &amp;nbsp; <span t-field="doc.company_id.name"/></b></td>
+              </tr>
+              <tr style="height: 30px;width: 100%;">
+                <td class="text-left" colspan="7"><b>Account No :  &amp;nbsp; <span>need to be added </span> </b></td>
+              </tr>
+              <tr style="height: 30px;width: 100%;">
+                <td class="text-left" colspan="7"><b>IBAN No :</b></td>
+              </tr>
+              <tr style="height: 30px;width: 100%;">
+                <td class="text-left" colspan="7"><b>Bank Name : &amp;nbsp; <span>need to be added </span></b></td>
+              </tr>
+            </table>
+        </div>
+    </t>
+    </template>
+    <template id="mbk_pms.renewal_notice_residential_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="mbk_pms.report_renewal_notice_residential_report" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>
+

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_mbk_attachment_admin" model="res.groups">
+        <field name="name">MBK Attachment Access</field>
+    </record>
+
+</odoo>

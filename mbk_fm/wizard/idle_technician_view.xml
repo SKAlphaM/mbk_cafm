@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_fm_idle_technician" model="ir.ui.view">
+        <field name="name">mbk_fm.idle_technician.wizard.form</field>
+        <field name="model">mbk_fm.idle_technician</field>
+        <field name="arch" type="xml">
+            <form name="Report Options">
+                <group>
+                    <field name="status"/>
+                </group>
+                <footer>
+                    <button name="action_view_idle_tech" string="Ok" class="oe_highlight" type="object" default_focus="1"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mbk_fm_idle_technician" model="ir.actions.act_window">
+        <field name="name">Technicians Status</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_fm.idle_technician</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="menu_mbk_fm_technician_status"
+            name="Technicians Status"
+            action="action_mbk_fm_idle_technician"
+            parent="mbk_fm.menu_mbk_fm_reports"
+            groups="mbk_fm.group_fm_user"
+            sequence='30'/>
+
+    <record id="view_mbk_fm_technician_tree" model="ir.ui.view">
+        <field name="name">mbk_fm.technician.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <list create="0" delete="0" edit="0">
+                    <field name="name" readonly="1"/>
+                    <field name="department_id"/>
+                    <field name="job_title"/>
+                    <field name="parent_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_mbk_fm_technician_search" model="ir.ui.view">
+        <field name="name">mbk_fm.technician.search</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Technician"
+                       filter_domain="['|', ('name', 'ilike', self), ('barcode', 'ilike', self)]"/>
+                <field name="job_title"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_manager" string="Manager" domain="[]" context="{'group_by': 'parent_id'}"/>
+                    <filter name="group_department" string="Department" domain="[]"
+                            context="{'group_by': 'department_id'}"/>
+                    <filter name="job_title" string="Job" domain="[]" context="{'group_by': 'job_title'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

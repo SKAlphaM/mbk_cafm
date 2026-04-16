@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_pms_chq_hold_update_state" model="ir.ui.view">
+        <field name="name">mbk_pms.chq_hold_update_state.wizard.form</field>
+        <field name="model">mbk_pms.chq_hold_update_state_wizard</field>
+        <field name="arch" type="xml">
+            <form name="Approve Document">
+                <h1>
+                    <center> <field name="label_name" nolabel="1" readonly="True"/> </center>
+                </h1>
+                <group>
+                    <field name="cheque_hold_id" invisible="1"/>
+                    <field name="comment"/>
+                    <field name="status" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_update_state" string="Ok" class="oe_highlight" type="object" default_focus="1"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mbk_pms_chq_hold_update_state" model="ir.actions.act_window">
+        <field name="name">Cheque Hold Request Approval</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_pms.chq_hold_update_state_wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

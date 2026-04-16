@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mbk_village_tenant_user,access.mbk.village.tenant.user,model_mbk_village_tenant,base.group_user,1,1,1,1
+access_mbk_village_tenant_tracking,access.mbk.village.tenant.tracking,model_mbk_village_tenant_tracking,base.group_user,1,1,1,1

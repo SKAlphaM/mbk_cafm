@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_fm_material_request_kanban" model="ir.ui.view">
+        <field name="name">mbk_fm.material_request.kanban</field>
+        <field name="model">mbk_fm.material_request</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="name"/>
+                <field name="ticket_id"/>
+                <field name="unit_id"/>
+                <field name="owner_user_id"/>
+                <field name="state"/>
+                <field name="activity_ids"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li>
+                                        <strong>No:
+                                            <field name="name"/>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Ticket No:
+                                        <field name="ticket_id"/>
+                                    </li>
+                                    <li>
+                                        Unit:
+                                        <field name="unit_id"/>
+                                    </li>
+                                    <li>
+                                        Requested By:
+                                        <field name="owner_user_id"/>
+                                    </li>
+                                    <li>
+                                        State:
+                                        <field name="state" widget="badge" decoration-success="state == 'done'"
+                                               decoration-info="state == 'active'"
+                                               decoration-muted="state == 'cancel'"/>
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_material_request_tree" model="ir.ui.view">
+        <field name="name">mbk_fm.material_request.tree</field>
+        <field name="model">mbk_fm.material_request</field>
+        <field name="arch" type="xml">
+            <list sample="1" decoration-success="state == 'done'" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="request_date"/>
+                <field name="ticket_id"/>
+                <field name="unit_id" optional="show"/>
+                <field name="property_id" optional="hide"/>
+                <field name="equipment_id" optional="hide"/>
+                <field name="owner_user_id" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-info="state =='active'" decoration-warning="state == 'draft'" decoration-muted="state == 'cancel'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+    <!-- Product  custom view for search more : views -->
+    <record id="product_product_mr_tree_view" model="ir.ui.view">
+        <field name="name">mbk_fm.product.product.mr.tree</field>
+        <field name="model">product.product</field>
+        <field eval="16" name="priority"/>
+        <field name="arch" type="xml">
+            <list string="Product" duplicate="false" sample="1">
+                <field name="default_code" optional="show" readonly="1"/>
+                <field name="barcode" optional="hide" readonly="1"/>
+                <field name="name" readonly="1"/>
+                <field name="uom_id" options="{'no_open': True, 'no_create': True}" optional="show" readonly="1"/>
+                <field name="categ_id" optional="show"/>
+                <field name="type" readonly="1"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide" readonly="1"/>
+                <field name="active" invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <!-- Maintenance Request : views -->
+    <record id="view_mbk_fm_material_request_form" model="ir.ui.view">
+        <field name="name">mbk_fm.material_request.form</field>
+        <field name="model">mbk_fm.material_request</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Request" duplicate="0">
+                <header>
+                    <button string="Confirm" name="action_submit_approval" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" invisible="not show_approve_button"/>
+                    <button string="Reject" name="action_reject_update_state_wizard" type="object" class="oe_highlight" invisible="not show_approve_button"/>
+<!--                    <button string="Mark as Done" name="action_done" type="object" class="oe_highlight" invisible=state != 'active'" groups="stock.group_stock_user"/>-->
+                    <button string="Set to Draft" name="action_draft" type="object" invisible="state not in ('cancel','refuse')"/>
+                    <button string="Cancel" name="action_cancel" type="object" confirm="Are you sure to continue" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" invisible="not active"
+                           statusbar_visible="draft,active,done"/>
+                </header>
+                <sheet>
+                    <div invisible="active">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="New" readonly="True"/>
+                        </h1>
+                        <label for="request_summary" string="Request" class="oe_edit_only"/>
+                        <h3>
+                            <field name="request_summary"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="unit_id" readonly="True" force_save="1"/>
+                            <field name="customer_id" readonly="True" force_save="1"/>
+                            <field name="state_id" invisible="1"/>
+                            <field name="property_id"/>
+                            <field name="equipment_id" readonly="True" force_save="1"/>
+                            <field name="store_user_id" force_save="1"/>
+                            <field name="request_date" readonly="True" invisible="1"/>
+                            <field name="active" invisible="1"/>
+                            <field name="show_approve_button" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="ticket_id" readonly="True"/>
+                            <field name="owner_user_id" string="Requested By"
+                                   options="{'no_create': True, 'no_open': True}" readonly="True"/>
+                            <field name="request_date_time" readonly="True"/>
+                            <field name="sub_location"/>
+                            <field name="use_store_item"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                            <field name="mr_ref_id" readonly="True" force_save="1" groups="base.group_no_one"/>
+                            <field name="team_id" groups="base.group_no_one"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Material Details" name="material_request_lines">
+                            <field name="request_line_ids" readonly="state in ('done','cancel')">
+                                <list editable="bottom">
+                                    <field name="product_id" options="{'no_create': True}" readonly="state == 'active'" context="{'tree_view_ref': 'mbk_fm.product_product_mr_tree_view'}"/>
+                                    <field name="name" readonly="state == 'active'"/>
+                                    <field name="product_uom_qty" readonly="state == 'active'"/>
+                                    <field name="product_uom" options="{'no_create': True}" readonly="state == 'active'"/>
+                                    <field name="qty_delivered" readonly="state != 'active'"/>
+                                    <field name="state"  invisible="1" force_save="1"/>
+                                    <field name="ticket_id"  invisible="1" force_save="1"/>
+                                    <field name="product_uom_category_id"  invisible="1" force_save="1"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="product_id" options="{'no_create': True}" readonly="state == 'active'"/>
+                                        <field name="name" readonly="state == 'active'"/>
+                                        <field name="product_uom_qty" readonly="state == 'active'" force_save="1"/>
+                                        <field name="product_uom" options="{'no_create': True}" readonly="state == 'active'" force_save="1"/>
+                                        <field name="qty_delivered" readonly="state != 'active'"/>
+                                        <field name="note"/>
+                                        <field name="state"  invisible="1" force_save="1"/>
+                                        <field name="product_uom_category_id"  invisible="1" force_save="1"/>
+                                        <field name="ticket_id"  invisible="1" force_save="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                    <field name='note' placeholder="Internal Notes"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_mbk_fm_material_request_search" model="ir.ui.view">
+        <field name="name">mbk_fm.material_request.search</field>
+        <field name="model">mbk_fm.material_request</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Material Request No"
+                       filter_domain="['|', ('name', 'ilike', self), ('ticket_id', 'ilike', self)]"/>
+                <field name="ticket_id"/>
+                <field name="request_summary"/>
+                <field name="unit_id"/>
+                <field name="owner_user_id"/>
+                <filter name="filter_type_todo" string="To Do"
+                        domain="[('state', 'not in', ['done','cancel'])]"/>
+                <separator/>
+                <filter name="filter_type_approve" string="To Approve" domain="[('state', 'in', ('1','2'))]"/>
+                <separator/>
+                <filter name="filter_type_active" string="Active" domain="[('state', '=', 'active')]"/>
+                <separator/>
+                <filter name="filter_type_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_type_cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                <separator/>
+                <filter name="filter_type_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                    <filter string="Technician" name="group_by_owner_user_id" context="{'group_by':'owner_user_id'}"/>
+                    <filter string="Unit" name="group_by_unit_id" context="{'group_by':'unit_id'}"/>
+                    <filter string="Property" name="group_by_property_id" context="{'group_by':'property_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mbk_fm_material_request" model="ir.actions.act_window">
+        <field name="name">Material Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_fm.material_request</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new maintenance request
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_fm_material_request"
+              name="Material Request"
+              action="action_mbk_fm_material_request"
+              parent="menu_mbk_fm_maintenance"
+              sequence="20"/>
+</odoo>

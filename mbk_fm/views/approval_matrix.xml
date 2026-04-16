@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- MBKApprovalMatrix Form View -->
+    <record id="view_mbk_approval_matrix_form" model="ir.ui.view">
+        <field name="name">mbk_approval.matrix.form</field>
+        <field name="model">mbk_approval.matrix</field>
+        <field name="arch" type="xml">
+            <form string="Approval Matrix">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="document"/>
+                        <field name="active"/>
+                    </group>
+                    <notebook>
+                        <page string="Approval Matrix Lines">
+                            <field name="matrix_line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence"/>
+                                    <field name="criteria"/>
+                                    <field name="activity_user_id"/>
+                                    <field name="approver_ids" widget="many2many_tags"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="sequence"/>
+                                        <field name="activity_user_id"/>
+                                        <field name="approver_ids" widget="many2many_tags"/>
+                                        <field name="criteria"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- MBKApprovalMatrix Tree View -->
+    <record id="view_mbk_approval_matrix_tree" model="ir.ui.view">
+        <field name="name">mbk_approval.matrix.tree</field>
+        <field name="model">mbk_approval.matrix</field>
+        <field name="arch" type="xml">
+            <list string="Approval Matrices">
+                <field name="name"/>
+                <field name="document"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action to Open MBKApprovalMatrix Views -->
+    <record id="action_mbk_approval_matrices" model="ir.actions.act_window">
+        <field name="name">Approval Matrices</field>
+        <field name="res_model">mbk_approval.matrix</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create the first approval matrix
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item for MBKApprovalMatrix -->
+    <menuitem id="menu_mbk_approval_matrix" name="Approval Matrices"
+              action="action_mbk_approval_matrices"
+              parent="menu_mbk_config"/>
+</odoo>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_furniture_move_tree" model="ir.ui.view">
+        <field name="name">view.furniture.move.tree</field>
+        <field name="model">furniture.move</field>
+        <field name="arch" type="xml">
+            <list sample="1" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="voucher_date"/>
+                <field name="tenant_id"/>
+                <field name="contract_id"/>
+                <field name="unit_id"/>
+                <field name="property_id"/>
+                <field name="start_date" optional="hide"/>
+                <field name="expiry_date" optional="hide"/>
+                <field name="contract_start_date" optional="hide"/>
+                <field name="contract_expiry_date" optional="hide"/>
+                <field name="state" widget="badge" decoration-info="state =='active'" decoration-warning="state == 'draft'" decoration-muted="state == 'cancel'"/>
+            </list>
+        </field>
+    </record>
+    <!-- Furniture Move In/Out Voucher : views -->
+    <record id="view_furniture_move_form" model="ir.ui.view">
+        <field name="name">view.furniture.move.form</field>
+        <field name="model">furniture.move</field>
+        <field name="arch" type="xml">
+            <form string="Furniture Move In/Out" duplicate="0">
+                <header>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button string="Cancel" name="action_cancel" type="object" confirm="Do you want to cancel the voucher?" invisible="state not in ('draft','active')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active,cancel"/>
+                </header>
+                <sheet>
+                    <div invisible="state != 'cancel'">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="New" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="voucher_date"/>
+                            <field name="contract_id" options="{'no_create': True}"/>
+                            <field name="start_date" required="1"/>
+                            <field name="expiry_date" required="1"/>
+                            <field name="voucher_type" required="1"/>
+                        </group>
+                        <group>
+                            <field name="tenant_id" options="{'no_create': True}"/>
+                            <field name="contact_no"/>
+                            <field name="unit_id" options="{'no_create': True}"/>
+                            <field name="property_id" options="{'no_create': True}"/>
+                            <label for="contract_start_date" string="Contract Period"/>
+                            <div>
+                                <field name="contract_start_date" class="oe_inline"/> - <field name="contract_expiry_date" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <field name='note' placeholder="Internal Notes"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_furniture_move_search" model="ir.ui.view">
+        <field name="name">view.furniture.move.search</field>
+        <field name="model">furniture.move</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"
+                       filter_domain="['|', ('name', 'ilike', self), ('tenant_id', 'ilike', self)]"/>
+                <field name="tenant_id"/>
+                <field name="contract_id"/>
+                <field name="unit_id"/>
+                <separator/>
+                <filter name="filter_type_active" string="Active" domain="[('state', '=', 'active')]"/>
+                <separator/>
+                <filter name="filter_type_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_type_cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                <separator/>
+                <filter name="filter_type_voucher_date" string="Date" date="voucher_date"/>
+                <group expand="0" string="Group By">
+                    <filter string="Tenant" name="group_by_tenant_id" context="{'group_by':'tenant_id'}"/>
+                    <filter string="Contract" name="group_by_contract_id" context="{'group_by':'contract_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_furniture_move" model="ir.actions.act_window">
+        <field name="name">Furniture Move In/Out</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">furniture.move</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Voucher
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_furniture_move"
+              name="Furniture Move In/Out"
+              action="action_furniture_move"
+              parent="menu_mbk_pms_activities_menu"
+              sequence="52"/>
+</odoo>

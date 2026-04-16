@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_mr">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=o.customer_id.lang)"/>
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <h2 class="mt16">
+                        <span>Maintenance Request #</span>
+                        <a t-att-href="mr_url" target="_blank">
+                            <span t-field="o.name"/>
+                        </a>
+                    </h2>
+                    <div class="row mt32 mb32" id="informations">
+                        <div t-if="o.unit_id" class="col-auto col-3 mw-100 mb-2">
+                            <strong>Unit No:</strong>
+                            <p class="m-0" t-field="o.unit_id.name"/>
+                        </div>
+                        <div t-if="o.request_date" class="col-auto col-3 mw-100 mb-2">
+                            <strong>Request Date:</strong>
+                            <p class="m-0" t-field="o.request_date"/>
+                        </div>
+                        <div t-if="o.ticket_id.name" class="col-auto col-3 mw-100 mb-2">
+                            <strong>Ticket No:</strong>
+                            <p class="m-0" t-field="o.ticket_id.name"/>
+                        </div>
+                        <div t-if="o.owner_user_id.name" class="col-auto col-3 mw-100 mb-2">
+                            <strong>Requested By:</strong>
+                            <p class="m-0" t-field="o.owner_user_id.name"/>
+                        </div>
+                    </div>
+                    <h5>
+                        <br/>
+                        <span t-field="o.request_summary"/>
+                        <br/>
+                    </h5>
+                    <div class="oe_structure"/>
+                    <p t-if="o.sub_location">
+                        <strong>Location of repair:</strong>
+                        <span t-field="o.sub_location"/>
+                    </p>
+                    <p t-if="o.state">
+                        <strong>Status:</strong>
+                        <span t-field="o.state"/>
+                    </p>
+                    <table class="table table-sm o_main_table">
+                        <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                        <!--                                style="display: table-row-group"-->
+                        <thead>
+                            <tr style="background-color:#d3d3d3;">
+                                <th name="th_hour" class="text-center" width="10%">
+                                    <strong>Sl.No</strong>
+                                </th>
+                                <th name="th_description" class="text-center" width="60%">
+                                    <strong>Description</strong>
+                                </th>
+                                <th name="th_qty" class="text-center" width="15%">
+                                    <strong>Qty</strong>
+                                </th>
+                                <th name="th_unit" class="text-center" width="15%">
+                                    <strong>Unit</strong>
+                                </th>
+                            </tr>
+                            <tbody class="sale_tbody">
+                                <t t-set="row_no" t-value="1"/>
+                                <t t-foreach="o.request_line_ids" t-as="line">
+                                    <tr>
+                                        <td class="text-center" name="row_no">
+                                            <span t-esc="row_no"/>
+                                            <t t-set="row_no" t-value="row_no+1"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.product_uom_qty"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.product_uom"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </thead>
+                    </table>
+                    <p t-if="o.note">
+                        <strong>Notes:</strong>
+                        <span t-field="o.note"/>
+                    </p>
+                </div>
+                <div class="row">
+                            <div class="col-4" style="right;">
+                                <p class="text-center" style="padding-left:5mm;">
+                                    <br/>
+                                    <span t-esc="o.env.user.name"/>
+                                    <br/>
+                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+                                    <br/>
+                                </p>
+                            </div>
+                            <div class="col-4" style="right;">
+                              </div>
+                            <div class="col-4">
+                            </div>
+                        </div>
+                <p class="text-center">
+                    <br/>
+                    This is a system Generated document and does not require any signature or company stamp.
+                </p>
+            </t>
+        </template>
+        <template id="mbk_fm.mr">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="mbk_fm.report_mr" t-lang="o.customer_id.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

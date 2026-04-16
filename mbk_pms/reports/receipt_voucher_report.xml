@@ -1,0 +1,240 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="report_receipt_voucher_report">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context(lang=doc.tenant_id.lang)"/>
+                <div class="page" style="!important; font-family: Times New Roman;">
+                    <div class="oe_structure"/>
+                    <div class="text-center" style="font-size: 30px !important;padding: 5px;width: 100%;">
+                        <span>
+                            <strong>Cash/Cheque Receipt Voucher</strong>
+                        </span>
+                    </div>
+                    <br/>
+                    <table style="border: 1px solid black;border-collapse:seperate;width: 100%;">
+                        <tr style="border: 1px solid black;border-collapse: seperate;height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;"
+                                colspan="3">
+                                <b>Customer Name and Address</b>
+                            </td>
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 25%;"
+                                colspan="2">
+                                <b>RV No : &amp;nbsp;
+                                    <span t-field="doc.name"/>
+                                </b>
+                            </td>
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 15%;">
+                                <b>RV Date :</b>
+                            </td>
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;">
+                                <b>
+                                    <span t-field="doc.create_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                </b>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;"
+                                colspan="3" rowspan="6">
+                                <span t-field="doc.tenant_id"
+                                      t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;,&quot;name&quot;, &quot;email&quot;], &quot;no_marker&quot;: True}"/>
+                            </td>
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 25%;"
+                                colspan="2">
+                                <b>Contract No.</b>
+                            </td>
+                            <td colspan="2" class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 15%;">
+                                <span t-field="doc.contract_id.name"/>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 25%;"
+                                colspan="2">
+                                <b>Contract Period</b>
+                            </td>
+                            <td colspan="2" class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 15%;">
+                                <span t-field="doc.contract_id.start_date"
+                                      t-options="{&quot;widget&quot;: &quot;date&quot;}"/>&amp;nbsp; - &amp;nbsp;
+                                <span t-field="doc.contract_id.expiry_date"
+                                      t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 25%;"
+                                colspan="2">
+                                <b>Contract Amount</b>
+                            </td>
+                            <td colspan="2" class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-esc="'{0:,.2f}'.format(doc.contract_id.total_rent)"/>
+                            </td>
+                        </tr>
+                        <tr style="border-top: 1px solid black;border-collapse: seperate;height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 25%;"
+                                colspan="2">
+                                <b>Building Name</b>
+                            </td>
+                            <td colspan="2" class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-field="doc.contract_id.property_id.name"/>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 25%;"
+                                colspan="2">
+                                <b>Unit Number</b>
+                            </td>
+                            <td colspan="2" class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-field="doc.contract_id.units"/>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 25%;"
+                                colspan="2">
+                                <b>Contract Type:</b>
+                            </td>
+                            <td colspan="2" class="text-left"
+                                style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-field="doc.contract_id.contract_type"/>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <th class="text-center"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:5%;">
+                                SlNo
+                            </th>
+                            <th class="text-center"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:29%;">
+                                Description
+                            </th>
+                            <th class="text-left"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:12%;">
+                                Payment Mode
+                            </th>
+                            <th class="text-center"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:12%;">
+                                Bank/Cash
+                            </th>
+                            <th class="text-center"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:12%;">
+                                Cheque No
+                            </th>
+                            <th class="text-center"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:15%;">
+                                Cheque Date
+                            </th>
+                            <th class="text-center"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:15%;">
+                                Amount
+                            </th>
+                        </tr>
+                        <t t-set="rowno" t-value="1"/>
+                        <t t-foreach="doc.receipt_line_ids" t-as="line">
+                            <tr style="height: 30px;width: 100%;">
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-center">
+                                    <span t-esc="rowno"/>
+                                </td>
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-left">
+                                    <span t-if="line.name" t-field="line.name"/>
+                                </td>
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-left">
+                                    <span t-field="line.payment_mode"/>
+                                </td>
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-left">
+                                    <span t-if="line.bank_id.street2" t-field="line.bank_id.street2"/>
+                                </td>
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-right">
+                                    <span t-if="line.ref_no" t-field="line.ref_no"/>
+                                </td>
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-right">
+                                    <span t-if="line.ref_date" t-field="line.ref_date"
+                                          t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                </td>
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-right">AED &amp;nbsp;
+                                    <span t-if="line.amount" t-esc="'{0:,.2f}'.format(line.amount)"/>
+                                </td>
+                            </tr>
+                            <t t-set="rowno" t-value="rowno+1"/>
+                        </t>
+                        <tr style="border: 1px solid black;border-collapse: seperate;height: 30px;width: 100%;">
+                            <td class="text-left" colspan="4" style="padding: 5px;width: 60%;">
+                                <strong>AED : &amp;nbsp;
+                                    <span t-esc="doc.currency_id.amount_to_text(total_amt)"/>
+                                    only.
+                                </strong>
+                            </td>
+                            <td class="text-right" colspan="3" style="padding: 5px;width:40%;">
+                                <b>Total: AED &amp;nbsp;
+                                    <span t-esc="'{0:,.2f}'.format(total_amt)"/>
+                                </b>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="height: 30px;width: 100%;">
+                        <div class="text-left" style="padding: 5px;width: 100%;">
+                            <span>Notes/Remarks: Any fees once paid or collected are non-refundable.</span>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-3" style="right;">
+                            <p class="text-center" style="padding-left:5mm;">
+                                <br/>
+                                <br/>
+                                <br/>
+                            </p>
+                            <p class="text-center"
+                               style="padding-left:5mm; border-top:1px solid black; border-length: 7px;">
+                                <b>Prepared by</b>
+                            </p>
+                        </div>
+                        <div class="col-6" style="center"/>
+                        <div class="col-3" style="left">
+                            <p class="text-center" style="padding-left:5mm;">
+                                <br/>
+                                <br/>
+                                <br/>
+                            </p>
+                            <p class="text-center"
+                               style="padding-left:5mm; border-top:1px solid black; border-length: 7px;">
+                                <b>Approved By</b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="mbk_pms.receipt_voucher_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="mbk_pms.report_receipt_voucher_report" t-lang="doc.tenant_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
+

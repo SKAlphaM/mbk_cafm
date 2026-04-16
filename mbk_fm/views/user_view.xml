@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mbk_fm_user_tree" model="ir.ui.view">
+        <field name="name">mbk_fm.user.tree</field>
+        <field name="model">mbk_fm.user</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" string="User Name"/>
+                <field name="team_id"/>
+                <field name="team_lead_id"/>
+                <field name="ticket_type_id"/>
+                <field name="is_based_on_user"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_mbk_fm_user_form" model="ir.ui.view">
+        <field name="name">mbk_fm.user.form</field>
+        <field name="model">mbk_fm.user</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" invisible="1" force_save="1"/>
+                            <field name="user_id" options="{'no_create': True}"/>
+                            <field name="team_id" options="{'no_create': True}"/>
+                            <field name="team_lead_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="ticket_type_id" options="{'no_create': True}"/>
+                            <field name="is_based_on_user"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_mbk_fm_user_search" model="ir.ui.view">
+        <field name="name">mbk_fm.user.search</field>
+        <field name="model">mbk_fm.user</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="User"
+                       filter_domain="['|', ('name', 'ilike', self), ('team_id.name', 'ilike', self)]"/>
+                <field name="team_id"/>
+                <filter name="filter_type_archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mbk_fm_user" model="ir.actions.act_window">
+        <field name="name">User Preference</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_fm.user</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new user Type
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_fm_user"
+              name="User Preference"
+              action="action_mbk_fm_user"
+              parent="menu_mbk_fm_config"
+              sequence="10"/>
+</odoo>

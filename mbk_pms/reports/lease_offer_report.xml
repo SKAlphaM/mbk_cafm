@@ -1,0 +1,443 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="report_lease_offer_report">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+                <!--                <div class="oe_structure"/>-->
+                <div class="page" style="font-size: 14px; font-family: Times New Roman;">
+                    <table width="100%" style="page-break-inside: avoid;">
+                        <tr>
+                            <td width="30%" valign="top" align="left">
+                                <table width="100%">
+                                    <tr style="width: 100%;">
+                                        <td align="left" style="padding-top: 5px;" width="20%">
+                                            <strong>Date</strong>
+                                        </td>
+                                        <td align="left" width="10%">
+                                            <strong>:</strong>
+                                        </td>
+                                        <td align="left" style="padding-top: 5px;padding-left: 10px;" width="70%">
+                                            <span t-field="doc.offer_date"
+                                                  t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="width: 100%;">
+                                        <td align="left" style="padding-top: 5px;">
+                                            <strong>To</strong>
+                                        </td>
+                                        <td align="left">
+                                            <strong>:</strong>
+                                        </td>
+                                        <td align="left" style="padding-top: 5px;">
+                                            <span t-field="doc.partner_id.name"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td width="70%" valign="top" align="right">
+                                <h2 class="mt16">
+                                    <span>Offer No#</span>
+                                    <span t-field="doc.name"/>
+                                </h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" valign="top" align="left">
+                                <u>Offer letter / رسالة عرض</u>
+                                <br/>
+                                <br/>
+                                <span>We thank you for the interest shown in leasing the subject property we are pleased
+                                    to offer you based on the following details
+                                </span>
+
+                            </td>
+                            <td width="50%" valign="top" align="right" style="padding-left: 25px;">
+                                <br/>
+                                <br/>
+                                <span>شكركم على اهتمامكم باستئجار الوحدة, و يسعدنا عرضنها عليكم  حسب التفاصيل التاليه:</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100%" colspan="2" valign="top" align="left">
+                                <br/>
+                                <u>
+                                    <b>Unit breakdown / تفاصيل الوحدة</b>
+                                </u>
+                            </td>
+
+                        </tr>
+                    </table>
+                    <table style="border: 1px solid black;border-collapse: collapse;width: 100%;page-break-inside: avoid;font-size: 14px;">
+
+                        <tr style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+                            <td class="text-left" width="50%"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                Property<br/>العقار
+                            </td>
+                            <td class="text-left" width="50%"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-field="doc.unit_id.property_id.name"/>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                Apartment / Villa<br/>شقة / فيلا
+                            </td>
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-field="doc.unit_id.name"/>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                Size (Sq. Ft)<br/>الحجم (قدم مربع)
+                            </td>
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-field="doc.unit_id.sq_ft"/>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                Annual Rent<br/>الايجارالسنوي
+                            </td>
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                AED &amp;nbsp;
+                                <span t-field="doc.total_rent"/>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                Contract Period<br/>مــــدة العقــــــد
+                            </td>
+                            <!-- <t t-foreach="doc.unit_line_ids" t-as="line"> -->
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-esc="contract_period"/>
+                            </td>
+                            <!-- </t> -->
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                Security Deposit<br/>قيمة التأمين
+                            </td>
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-field="doc.total_deposit"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" width="50%"
+                                style="padding:5px;padding-left: 25px;border: 1px solid black;">Administration Fee
+                                (CASH)<br/>الرسوم الادارية
+                            </td>
+
+                            <td class="text-center"
+                                style="vertical-align:middle;border: 1px solid black;border-collapse: collapse;width: 50%;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="padding:5px;height: 50px;border-right: 1px solid black;border-collapse: collapse;width: 50%;">
+                                            Tawtheeq Fee:<br/>رسوم توثيق العقد<br/>AED &amp;nbsp;
+                                            <t t-foreach="doc.service_line_ids" t-as="service_line">
+                                                <span t-if="service_line.name == 'Tawtheeq Fee'"
+                                                      t-esc="'{0:,.2f}'.format(service_line.net_amount)"/>
+                                            </t>
+                                        </td>
+                                        <td style="padding:5px;border-collapse: collapse;width: 50%;">New Contract Fee:
+                                            <br/>رسوم توثيق العقد<br/>AED &amp;nbsp;
+                                            <t t-foreach="doc.service_line_ids" t-as="service_line">
+                                                <span t-if="service_line.name == 'New Contract Fee'"
+                                                      t-esc="'{0:,.2f}'.format(service_line.net_amount)"/>
+                                            </t>
+                                        </td>
+                                        <!--                                            <td style="padding:5px;width: 32%;">PDC Fee: <br/>رسوم الشيكات الآجلة<br/>AED &amp;nbsp;-->
+                                        <!--                                            <t t-foreach="doc.service_line_ids" t-as="service_line">-->
+                                        <!--                                                <span t-if="service_line.name == 'PDC Fee'" t-esc="'{0:,.2f}'.format(service_line.net_amount)"/>-->
+                                        <!--                                            </t></td>-->
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                No. Payment<br/>عدد الدفعات
+                            </td>
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-field="doc.payment_terms"/>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                Allocated Parking Space<br/>عدد مواقف السيارات
+                            </td>
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <span t-field="doc.parking_details"/>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                Leasing fee<br/>رسوم التأجير
+                            </td>
+
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <t t-foreach="doc.service_line_ids" t-as="service_line">
+                                    <span t-if="service_line.name == 'Leasing Fee'" t-field="service_line.net_amount"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                Services Charge (If Any)<br/>رسوم الخدمات (إن وجدت)
+                            </td>
+
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <t t-foreach="doc.service_line_ids" t-as="service_line">
+                                    <span t-if="service_line.name == 'Services Charge'"
+                                          t-field="service_line.net_amount"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-left"
+                                style="padding:5px;padding-left: 25px;border-left: 1px solid black; border-right: 1px solid black;">
+                                Tenant Accepted<br/>بول المستأجر
+                            </td>
+                            <td style="padding:5px;padding-left: 25px;vertical-align:bottom;text-align:center;border-left: 1px solid black; border-right: 1px solid black;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td><input type="checkbox"/> Approved</td>
+                                        <td><input type="checkbox"/> Declined</td>
+                                        <td tyle="padding:5px;padding-left: 50px;border-top: 1px solid black;">Tenant Signature</td>
+<!--                                        <br/>توقيع المستأجر-->
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table width="100%" style="font-size: 14px;">
+                        <tr>
+                            <td width="50%" valign="top" align="left">
+                                <p>
+                                    <i>This is to inform that this offer letter is valid only for 5 working
+                                        days starting from the date of the letter and kindly confirmed your
+                                        acceptance/ confirmation of this offer letter within this date
+                                        mentioned.
+                                    </i>
+                                </p>
+                                <p>Should you require any further information please feel free to
+                                    contact us on our land line 02-6332344 during official working
+                                    hours
+                                </p>
+                                <br/>
+                            </td>
+                            <td width="50%" valign="top" align="right">
+                                <p>الرجاء التكرم بالعلم ان هذا العرض ساري لمدة 5 ايام عمل يرجى تاكيد قبولكم للعرض خلال
+                                    الفترة المحدده.
+                                </p>
+                                <br/>
+                                <p>و في حال لديكم اي استفسار الرجاءالتواصل معنا على الهاتف المباشر اثناء اوقات العمل
+                                    الرسميه02-6332344
+                                </p>
+                                <br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" valign="top" align="left">
+                                <br/>
+                                <h3>
+                                    <span t-field="doc.company_id.name"/>
+                                </h3>
+                            </td>
+                            <td width="50%" valign="top" align="right">
+                                <br/>
+                                <h3>
+                                    <span>الظفرة لادارة العقارات</span>
+                                </h3>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <div style="page-break-after: always;"/>
+                    <table style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-center" style="border-left: 1px solid black; border-right: 1px solid black;"
+                                colspan="7">
+                                <b>PAYMENT SCHEDULE</b>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-center"
+                                style="color:#ff0000;border-left: 1px solid black; border-right: 1px solid black;"
+                                colspan="7">
+                                <b>
+                                    <span t-field="doc.partner_id.name"/>
+                                </b>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-center"
+                                style="color:#ff0000;border-left: 1px solid black; border-right: 1px solid black;"
+                                colspan="7">
+                                <b>
+                                    <span t-field="doc.unit_id.name"/>
+                                </b>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-center" style="border-left: 1px solid black; border-right: 1px solid black;"
+                                colspan="7">
+                                <b>Contract Period : &amp;nbsp;<span t-field="doc.start_date"
+                                                                     t-options="{&quot;widget&quot;: &quot;date&quot;}"/>&amp;nbsp;
+                                    to &amp;nbsp;
+                                    <span t-field="doc.expiry_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                </b>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-center"
+                                style="color:#ff0000;border-left: 1px solid black; border-right: 1px solid black;"
+                                colspan="7">
+                                <b>Contract Value: &amp;nbsp;
+                                    <span t-if="doc.net_amount" t-esc="'{0:,.2f}'.format(doc.net_rent_amount)"/>
+                                </b>
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <th class="text-center"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:8%;">
+                                SL NO
+                            </th>
+                            <th class="text-center"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:15%;">
+                                CHEQUE DATE
+                            </th>
+                            <th class="text-left"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:45%;">
+                                DESCRIPTION
+                            </th>
+                            <th class="text-center"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:15%;">
+                                AMOUNT
+                            </th>
+                            <th class="text-center"
+                                style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;width:17%;">
+                                REMARKS
+                            </th>
+                        </tr>
+                        <t t-set="rowno" t-value="1"/>
+                        <t t-foreach="doc.payment_line_ids" t-as="line">
+
+                            <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-center">
+                                    <span t-esc="rowno"/>
+                                </td>
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-center">
+                                    <span t-if="line.ref_date" t-field="line.ref_date"
+                                          t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                </td>
+                                <!--                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-left"><span t-if="line.from_date" t-field="line.from_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>&amp;nbsp; - &amp;nbsp;<span t-field="line.to_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></td>-->
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-left">
+                                    <span t-field="line.name"/><br/>
+                                    <span t-esc="doc.currency_id.amount_to_text(line.amount)"/>
+                                </td>
+                                <td style="padding:10px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-right">
+                                    <span t-if="line.amount" t-esc="'{0:,.2f}'.format(line.amount)"/>
+                                </td>
+                                <td style="padding:5px;border-left: 1px solid black; border-right: 1px solid black;"
+                                    class="text-left">
+                                    <span t-if="line.note" t-field="line.note"/>
+                                </td>
+                            </tr>
+                            <t t-set="rowno" t-value="rowno+1"/>
+                        </t>
+                        <tr style="border: 1px solid black;border-collapse: collapse;height: 30px;width: 100%;">
+                            <td class="text-right"
+                                style="padding:10px;border-left: 1px solid black; border-right: 1px solid black;"
+                                colspan="3">
+                                <b>TOTAL</b>
+                            </td>
+                            <td class="text-right"
+                                style="padding:10px;border-left: 1px solid black; border-right: 1px solid black;">
+                                <b>
+                                    <span t-if="doc.net_amount" t-esc="'{0:,.2f}'.format(doc.net_amount)"/>
+                                </b>
+                            </td>
+                            <td class="text-right"
+                                style="border-left: 1px solid black; border-right: 1px solid black;"/>
+                        </tr>
+                    </table>
+                    <br/>
+
+                    <table style="width: 100%;">
+                        <tr style="height: 30px;width: 100%;">
+                            <td class="text-left" colspan="7">
+                                <b>
+                                    <u>BANK PAYMENT DETAILS</u>
+                                </b>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px;width: 100%;">
+                            <td class="text-left" colspan="7">
+                                <b>Bank Account : &amp;nbsp;
+                                    <span t-field="doc.account_id.bank_account_id.acc_holder_name"/>
+                                </b>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px;width: 100%;">
+                            <td class="text-left" colspan="7">
+                                <b>Account No : &amp;nbsp;
+                                    <span t-field="doc.account_id.bank_account_id.acc_number"/>
+                                </b>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px;width: 100%;">
+                            <td class="text-left" colspan="7">
+                                <b>IBAN No : &amp;nbsp;
+                                    <span t-field="doc.account_id.bank_account_id.acc_iban_number"/>
+                                </b>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px;width: 100%;">
+                            <td class="text-left" colspan="7">
+                                <b>Bank Name : &amp;nbsp;
+                                    <span t-field="doc.account_id.bank_id.name"/>
+                                </b>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </template>
+        <template id="mbk_pms.lease_offer_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="mbk_pms.report_lease_offer_report" t-lang="doc.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
+

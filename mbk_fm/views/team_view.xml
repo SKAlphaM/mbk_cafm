@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mbk_fm_ticket_calendar" model="ir.ui.view">
+        <field name="name">mbk_fm.ticket.calendar</field>
+        <field name="model">mbk_fm.ticket</field>
+        <field name="arch" type="xml">
+            <calendar date_start="schedule_date" date_delay="duration" color="technician_id" event_limit="5">
+                <field name="technician_id" widget="many2one_avatar_user" filters="1"/>
+                <field name="priority"/>
+                <field name="maintenance_type"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_mbk_fm_ticket_cal" model="ir.actions.act_window">
+        <field name="name">Maintenance Requests</field>
+        <field name="res_model">mbk_fm.ticket</field>
+        <field name="view_mode">calendar,kanban,list,form,pivot,graph</field>
+        <field name="view_id" ref="view_mbk_fm_ticket_calendar"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new maintenance request
+            </p><p>
+                Follow the process of the request and communicate with the collaborator.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_team_kanban" model="ir.ui.view">
+        <field name="name">mbk_fm.team.kanban</field>
+        <field name="model">mbk_fm.team</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard o_maintenance_team_kanban" create="0">
+                <field name="name"/>
+                <field name="color"/>
+                <field name="todo_request_ids"/>
+                <field name="todo_request_count"/>
+                <field name="todo_request_count_date"/>
+                <field name="todo_request_count_high_priority"/>
+                <field name="todo_request_count_block"/>
+                <field name="todo_request_count_unscheduled"/>
+                <field name="todo_request_count_confirm"/>
+                <field name="todo_request_count_overdue"/>
+                <field name="todo_request_count_timer"/>
+                <field name="todo_request_count_timer_due"/>
+                <field name="todo_request_count_month_due"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''}">
+                            <div t-attf-class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary">
+                                        <a name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action">
+                                            <field name="name"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_manage_button_section">
+                                    <a class="o_kanban_manage_toggle_button" href="#">
+                                        <i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-6 o_kanban_primary_left">
+                                        <button class="btn btn-primary"
+                                                name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action"
+                                                context="{'search_default_filter_type_todo': 1}">
+                                            <t t-esc="record.todo_request_count.value"/>
+                                            To Do
+                                        </button>
+                                        <div t-if="record.todo_request_count_timer.raw_value > 0" class="oe_inline">
+                                            <br/>
+                                            <button class="btn-success fa fa-clock-o" name="action_timer_tickets" type="object">
+                                                <t t-esc="record.todo_request_count_timer.value"/>
+                                            </button>
+                                        </div>
+                                        <div t-if="record.todo_request_count_timer_due.raw_value > 0">
+                                            <button class="btn-danger fa fa-clock-o" name="action_timer_due_tickets" type="object">
+                                                <t t-esc="record.todo_request_count_timer_due.value"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 o_kanban_primary_right">
+                                        <div t-if="record.todo_request_count_date.raw_value > 0">
+                                            <a name="%(mbk_fm.action_mbk_fm_ticket_cal)d" type="action"
+                                            context="{'search_default_filter_type_scheduled': 1, 'search_default_filter_type_todo': 1, 'search_default_filter_type_not_confirm':1}">
+                                                <t t-esc="record.todo_request_count_date.value"/>
+                                                Scheduled
+                                            </a>
+                                        </div>
+                                        <div t-if="record.todo_request_count_unscheduled.raw_value > 0">
+                                            <a name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action"
+                                               context="{'search_default_filter_type_unscheduled': 1, 'search_default_filter_type_not_confirm':1}">
+                                                <t t-esc="record.todo_request_count_unscheduled.value"/>
+                                                Unscheduled
+                                            </a>
+                                        </div>
+                                        <div t-if="record.todo_request_count_high_priority.raw_value > 0">
+                                            <a name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action"
+                                               context="{'search_default_filter_type_high_priority': 1, 'search_default_filter_type_todo': 1, 'search_default_filter_type_not_confirm':1}">
+                                                <t t-esc="record.todo_request_count_high_priority.value"/>
+                                                Top Priorities
+                                            </a>
+                                        </div>
+                                        <div t-if="record.todo_request_count_block.raw_value > 0">
+                                            <a name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action"
+                                               context="{'search_default_filter_type_action': 1}">
+                                                <t t-esc="record.todo_request_count_block.value"/>
+                                                Action Required
+                                            </a>
+                                        </div>
+                                        <div t-if="record.todo_request_count_confirm.raw_value > 0">
+                                            <a name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action"
+                                               context="{'search_default_filter_type_confirm': 1}">
+                                                <t t-esc="record.todo_request_count_confirm.value"/>
+                                                To Approve
+                                            </a>
+                                        </div>
+                                        <div decoration-danger="1==1" t-if="record.todo_request_count_overdue.raw_value > 0">
+                                            <a name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action"
+                                               context="{'search_default_filter_overdue': 1}" style="color:red; font-weight: bold;">
+                                                <t t-esc="record.todo_request_count_overdue.value"/>
+                                                Over Due
+                                            </a>
+                                        </div>
+                                        <div decoration-danger="1==1" t-if="record.todo_request_count_month_due.raw_value > 0">
+                                            <a name="action_month_due_tickets" type="object" style="color:red; font-weight: bold;">
+                                                <t t-esc="record.todo_request_count_month_due.value"/>
+                                                Month Due
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+                                <div class="row">
+                                    <div class="col-6 o_kanban_card_manage_section o_kanban_manage_view">
+                                        <div role="menuitem" class="o_kanban_card_manage_title">
+                                            <span>Requests</span>
+                                        </div>
+                                        <div role="menuitem">
+                                            <a name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action">
+                                                All
+                                            </a>
+                                        </div>
+                                        <div role="menuitem">
+                                            <a name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action"
+                                               context="{'search_default_filter_type_todo': 1}">
+                                                To Do
+                                            </a>
+                                        </div>
+                                        <div role="menuitem">
+                                            <a name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action"
+                                               context="{'search_default_filter_type_live': 1}">
+                                                In Progress
+                                            </a>
+                                        </div>
+                                        <div role="menuitem">
+                                            <a name="%(mbk_fm.action_from_dashboard_mbk_fm_ticket)d" type="action"
+                                               context="{'search_default_filter_type_done': 1}">
+                                                Done
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 o_kanban_card_manage_section o_kanban_manage_new">
+                                        <div role="menuitem" class="o_kanban_card_manage_title">
+                                            <span>Reporting</span>
+                                        </div>
+                                        <div role="menuitem">
+                                            <a name="%(mbk_fm.action_mbk_fm_ticket)d" type="action"
+                                               context="{'search_default_team_id': id}">
+                                                Maintenance Requests
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                    <div class="col-8" role="menuitem" aria-haspopup="true">
+                                        <ul role="menu" class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                    <div role="menuitem" class="col-4">
+                                        <a type="edit" class="dropdown-item">Configuration</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_mbk_fm_team_tree" model="ir.ui.view">
+        <field name="name">mbk_fm.team.tree</field>
+        <field name="model">mbk_fm.team</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name" string="Team Name"/>
+                <field name="code"/>
+                <field name="team_lead_id"/>
+                <field name="member_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}" domain="[('share', '=', False)]"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_mbk_fm_team_form" model="ir.ui.view">
+        <field name="name">mbk_fm.team.form</field>
+        <field name="model">mbk_fm.team</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="team_lead_id" options="{'no_create': True}"/>
+                            <field name="store_user_id" options="{'no_create': True}"/>
+                            <field name="color" widget="color_picker"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                            <field name="member_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_mbk_fm_team_search" model="ir.ui.view">
+        <field name="name">mbk_fm.team.search</field>
+        <field name="model">mbk_fm.team</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="team Name"
+                       filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="code"/>
+                <field name="team_lead_id"/>
+                <filter name="filter_type_archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mbk_fm_team" model="ir.actions.act_window">
+        <field name="name">Maintenance Team</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mbk_fm.team</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new maintenance team
+            </p>
+        </field>
+    </record>
+
+    <record id="action_mbk_fm_dashboard" model="ir.actions.act_window">
+        <field name="name">Maintenance Teams</field>
+        <field name="res_model">mbk_fm.team</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="view_mbk_fm_team_kanban"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Add a new stage in the maintenance request
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mbk_fm_team"
+              name="Maintenance Teams"
+              action="action_mbk_fm_team"
+              parent="menu_mbk_fm_config"
+              sequence="0"/>
+    <menuitem
+        id="menu_m_dashboard"
+        name="Dashboard"
+        parent="menu_mbk_fm_root"
+        action="action_mbk_fm_dashboard"
+        sequence="0"/>
+
+</odoo>

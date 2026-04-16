@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_lease_agreement_report" model="ir.actions.report">
+            <field name="name">Lease Agreement Report</field>
+            <field name="model">mbk_pms.contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_pms.lease_agreement_report</field>
+            <field name="report_file">mbk_pms.lease_agreement_report</field>
+            <field name="print_report_name">'Lease Agreement Report- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_pms_contract"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_furniture_move_in_out_report" model="ir.actions.report">
+            <field name="name">Furniture Move In/Out</field>
+            <field name="model">furniture.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_pms.furniture_move_in_out_report</field>
+            <field name="report_file">mbk_pms.furniture_move_in_out_report</field>
+            <field name="print_report_name">'Furniture Move In/Out- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_furniture_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_break_contract_report" model="ir.actions.report">
+            <field name="name">Break Lease Contract</field>
+            <field name="model">mbk_pms.break_contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_pms.break_contract_report</field>
+            <field name="report_file">mbk_pms.break_contract_report</field>
+            <field name="print_report_name">'Break Lease Contract- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_pms_break_contract"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_lease_offer" model="ir.actions.report">
+            <field name="name">Lease Offer</field>
+            <field name="model">mbk_pms.lease_offer</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_pms.lease_offer_report</field>
+            <field name="report_file">mbk_pms.lease_offer_report</field>
+            <field name="print_report_name">'Lease Offer- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_pms_lease_offer"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_renewal_notice_residential" model="ir.actions.report">
+            <field name="name">Renewal Notice</field>
+            <field name="model">mbk_pms.renewal_offer</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_pms.renewal_notice_residential_report</field>
+            <field name="report_file">mbk_pms.renewal_notice_residential_report</field>
+            <field name="print_report_name">'Renewal Notice- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_pms_renewal_offer"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_receipt_voucher_report" model="ir.actions.report">
+            <field name="name">Receipt Voucher</field>
+            <field name="model">mbk_pms.payment_collection</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_pms.receipt_voucher_report</field>
+            <field name="report_file">mbk_pms.receipt_voucher_report</field>
+            <field name="print_report_name">'Receipt Voucher- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_pms_payment_collection"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_general_approval_report" model="ir.actions.report">
+            <field name="name">General Approval</field>
+            <field name="model">general.approval</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_pms.general_approval_report</field>
+            <field name="report_file">mbk_pms.general_approval_report</field>
+            <field name="print_report_name">'General Approval- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_general_approval"/>
+            <field name="binding_type">report</field>
+        </record>
+        
+        <record id="action_cheque_release_report" model="ir.actions.report">
+            <field name="name">Cheque Release</field>
+            <field name="model">mbk_pms.cheque_release</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_pms.cheque_release_report</field>
+            <field name="report_file">mbk_pms.cheque_release_report</field>
+            <field name="print_report_name">'Cheque Release- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_pms_cheque_release"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_cheque_replacement_report" model="ir.actions.report">
+            <field name="name">Cheque Replacement</field>
+            <field name="model">mbk_pms.cheque_replacement</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_pms.cheque_replacement_report</field>
+            <field name="report_file">mbk_pms.cheque_replacement_report</field>
+            <field name="print_report_name">'Cheque Replacement- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_pms_cheque_replacement"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_cheque_hold_report" model="ir.actions.report">
+            <field name="name">Cheque Hold</field>
+            <field name="model">mbk_pms.cheque_hold</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mbk_pms.cheque_hold_report</field>
+            <field name="report_file">mbk_pms.cheque_hold_report</field>
+            <field name="print_report_name">'Cheque Hold- %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_mbk_pms_cheque_hold"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

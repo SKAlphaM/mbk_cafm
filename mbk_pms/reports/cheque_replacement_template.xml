@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+    <template id="cheque_replacement">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <h2 class="mt16">
+                                <span>Cheque Replacement #</span>
+                                <span t-field="o.name"/>
+                            </h2>
+                            <div class="row mt32 mb32" id="informations">
+                                <div t-if="o.contract_id" class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Contract No:</strong>
+                                    <p class="m-0" t-field="o.contract_id.name"/>
+                                </div>
+                                <div t-if="o.replacement_date" class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Date:</strong>
+                                    <p class="m-0" t-field="o.replacement_date" t-options='{"widget": "date"}'/>
+                                </div>
+                                <div t-if="o.unit_id" class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Unit No:</strong>
+                                    <p class="m-0" t-field="o.unit_id.name"/>
+                                </div>
+                            </div>
+                            <p>
+                                <br/>
+                                <span>Pursuant to my rental payments for the above unit occupied by me, I kindly request permission to</span><br/>
+                                <span>• Replace existing cheque with a new cheque issued.</span>
+                            </p>
+                            <h6>REPLACING CHEQUE DETAILS</h6>
+                            <table class="table table-sm o_main_table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            <strong>Bank</strong>
+                                        </th>
+                                        <th class="text-center">
+                                            <strong>Cheque No</strong>
+                                        </th>
+                                        <th class="text-center">
+                                            <strong>Date</strong>
+                                        </th>
+                                        <th class="text-center">
+                                            <strong>Amount</strong>
+                                        </th>
+                                        <th class="text-center">
+                                            <strong>Status</strong>
+                                        </th>
+                                        <th class="text-center">
+                                            <strong>Remarks</strong>
+                                        </th>
+
+                                    </tr>
+                                    <tbody class="sale_tbody">
+                                        <t t-set="row_no" t-value="1"/>
+                                        <t t-foreach="o.replacement_line_ids" t-as="line">
+                                            <tr>
+                                                <td class="text-center">
+                                                    <span t-field="line.bank_id.name"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.ref_no"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.ref_date" t-options='{"widget": "date"}'/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-if="line.amount != 0" t-field="line.amount"/>
+                                                </td>
+                                                <td class="text-center">
+                                                        <span t-field="line.state"/>
+                                                    </td>
+                                                <td class="text-center">
+                                                        <span t-field="line.note"/>
+                                                    </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </thead>
+                            </table>
+                            <h6>NEW PAYMENT DETAILS</h6>
+                            <table class="table table-sm o_main_table">
+                                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                                <!--                                style="display: table-row-group"-->
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            <strong>Mode</strong>
+                                        </th>
+                                        <th class="text-center">
+                                            <strong>Cheque No</strong>
+                                        </th>
+                                        <th class="text-center">
+                                            <strong>Date</strong>
+                                        </th>
+                                        <th class="text-center">
+                                            <strong>Bank</strong>
+                                        </th>
+                                        <th class="text-center">
+                                            <strong>Amount</strong>
+                                        </th>
+                                    </tr>
+                                    <tbody class="sale_tbody">
+                                        <t t-set="row_no" t-value="1"/>
+                                        <t t-foreach="o.replacement_new_line_ids" t-as="line">
+                                            <tr>
+                                                <td class="text-center">
+                                                    <span t-field="line.payment_mode"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.ref_no"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.ref_date" t-options='{"widget": "date"}'/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.bank_id.name"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.amount"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </thead>
+                            </table>
+                            <p>
+                                <span><b>I undertake to pay all applicable ADPM fees and charges in cash when applicable.</b></span>
+                            </p>
+                            <p t-if="o.note">
+                                <strong>Notes:</strong>
+                                <span t-field="o.note"/>
+                            </p>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td colspan="3" style="width:100%;padding-bottom:12px;">
+                                        <b>Name of Tenant: <span t-field="o.tenant_id.name"/></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="border-bottom:1px solid black; width:100%;padding-bottom:12px;">
+                                        <b>Signature of Tenant:</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="width:100%;padding-bottom:12px;padding-top:15px;">
+                                        <b>Requested by Property/ Leasing Manager:</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom:1px solid black;width:33.3%;padding-bottom:12px;">
+                                        Date:
+                                    </td>
+                                    <td style="border-bottom:1px solid black;width:33.4%;padding-bottom:12px;">
+                                    </td>
+                                    <td style="border-bottom:1px solid black;width:33.3%;padding-bottom:12px;">
+                                        Name &amp; Signature
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="width:100%;padding-bottom:12px;padding-top:15px;">
+                                        <b>Approved By Accounts:</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom:1px solid black;width:33.3%;padding-bottom:12px;">
+                                        Date:
+                                    </td>
+                                    <td style="border-bottom:1px solid black;width:33.4%;padding-bottom:12px;">
+                                    </td>
+                                    <td style="border-bottom:1px solid black;width:33.3%;padding-bottom:12px;">
+                                        Name &amp; Signature
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="width:100%;padding-bottom:12px;padding-top:15px;">
+                                        <b>For Accounts use:</b>
+                                    </td>
+                                </tr>
+                                <tr style="border:1px solid black;">
+                                    <td style="border-right:1px solid black;padding:5px;">
+                                       Date Received
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:5px;">
+                                        Date completed
+                                    </td>
+                                    <td style="padding:5px;">
+                                        Remarks
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:12px;padding-top:25px;">
+                                        <b>Cheque` Custodian:</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:12px;">
+                                        <b>Signature <br/>Date:</b>
+                                    </td>
+                                    <td style="padding-bottom:12px;">
+                                    </td>
+                                    <td style="padding-bottom:12px;">
+                                        <b>Name &amp; Signature...</b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+    </template>
+    <template id="mbk_pms.cheque_replacement_report">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="mbk_pms.cheque_replacement" t-lang="o.tenant_id.lang"/>
+        </t>
+    </t>
+    </template>
+
+    </data>
+</odoo>
+

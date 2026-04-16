@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_mbk_pms_root"
+              name="Property Management"
+              web_icon="mbk_pms,static/description/icon.png"
+              sequence="0"/>
+    <menuitem id="menu_mbk_pms_master"
+              name="Masters"
+              parent="menu_mbk_pms_root"
+              sequence="10"/>
+    <menuitem id="menu_mbk_pms_transactions"
+              name="Tenancy Details"
+              parent="menu_mbk_pms_root"
+              sequence="20"/>
+    <menuitem id="menu_mbk_pms_lease_contract"
+              name="Lease Contract"
+              parent="menu_mbk_pms_transactions"
+              sequence="20"/>
+    <menuitem id="menu_mbk_pms_renewal_offer"
+              name="Lease Contract Renewal"
+              parent="menu_mbk_pms_transactions"
+              sequence="30"/>
+    <menuitem id="menu_mbk_pms_break_lease_menu"
+          name="Break Lease Contract"
+          parent="menu_mbk_pms_transactions"
+          sequence="40"/>
+    <menuitem id="menu_mbk_pms_payment"
+              name="Payment Management"
+              parent="menu_mbk_pms_root"
+              sequence="30"/>
+    <menuitem id="menu_mbk_pms_config"
+              name="Configuration"
+              parent="menu_mbk_pms_root"
+              sequence="90"/>
+</odoo>

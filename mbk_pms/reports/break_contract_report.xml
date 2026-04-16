@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="report_break_contract_report">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context(lang=doc.tenant_id.lang)"/>
+                <div class="page" style="!important; font-family: Times New Roman;">
+                        <div class="text-center" style="color:blue;width: 100%;">
+                            <h3 class="mt16">
+                                <b><span>FINAL SETTLEMENT FOR VACATE UNITS#</span>
+                                    <span t-field="doc.name"/></b>
+                            </h3>
+                        </div>
+                    <table style="font-size: 13px !important;border: 1px solid black;width: 100%;">
+                        <tr style="border: 1px solid black;width: 100%;">
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;" colspan="2">Tenant’s Name</td>
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;" colspan="2"><span t-field="doc.tenant_id.name"/></td>
+                            <td colspan="1" class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;">اسم المستاجر</td>
+                        </tr>
+                        <tr style="border: 1px solid black;width: 100%;">
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;" colspan="2">Building/Unit</td>
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;" colspan="2"><span t-field="doc.units"/></td>
+                            <td colspan="1" class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;">رقم البناية/رقم الوحدة</td>
+                        </tr>
+                        <tr style="border: 1px solid black;width: 100%;">
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;" colspan="2">Unit type</td>
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;" colspan="2"><span t-field="doc.contract_id.unit_id.type_id.name"/></td>
+                            <td colspan="1" class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;">نوع الوحدة</td>
+                        </tr>
+                        <tr style="border: 1px solid black;width: 100%;">
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;" colspan="2">Contract No.</td>
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;" colspan="2"><span t-field="doc.contract_id.name"/></td>
+                            <td colspan="1" class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;">رقم العقد</td>
+                        </tr>
+                        <tr style="border: 1px solid black;width: 100%;">
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;" colspan="2">Contarct Period</td>
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;" colspan="2"><span t-field="doc.contract_id.start_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>&amp;nbsp; - &amp;nbsp; <span t-field="doc.contract_id.expiry_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></td>
+                            <td colspan="1" class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;">مدة العقد</td>
+                        </tr>
+                        <tr style="border: 1px solid black;width: 100%;">
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;" colspan="2">Annual Rent</td>
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;" colspan="2"><span t-esc="'{0:,.2f}'.format(doc.contract_amount)"/></td>
+                            <td colspan="1" class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;">الايجار  السنوي</td>
+                        </tr>
+                        <tr style="border: 1px solid black;width: 100%;">
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;" colspan="2">Held Security Deposit</td>
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;" colspan="2"><span t-esc="'{0:,.2f}'.format(doc.security_deposit)"/></td>
+                            <td colspan="1" class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;">مبلغ التأمين</td>
+                        </tr>
+                        <tr style="border: 1px solid black;width: 100%;">
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;" colspan="2">Lease End Date</td>
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;" colspan="2"><span t-field="doc.expiry_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></td>
+                            <td colspan="1" class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;">تاريخ نهاية العقد</td>
+                        </tr>
+                        <tr style="border: 1px solid black;width: 100%;">
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;" colspan="2">Actual termination date</td>
+                            <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 40%;" colspan="2"><span t-field="doc.breaking_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></td>
+                            <td colspan="1" class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;"> تاريخ الاخلاء الفعلي</td>
+                        </tr>
+                        <table style="font-size: 13px !important;border: 1px solid black;width: 100%;">
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 50%;" colspan="2"><b>Tenant Rent &amp; SD Received Summary</b></td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;" colspan="1"><b>AED(Dirhams)</b></td>
+                                <td colspan="2" class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;"><b>المستحق للمستاجر</b></td>
+                            </tr>
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 5%;">a.</td>
+                                <td class="text-left" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 45%;">Rent Received from Tenant</td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;"><span t-esc="'{0:,.2f}'.format(doc.rent_received)"/></td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 25%;">الإيجار الواردة من المستأجر</td>
+                                <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 5%;">ا</td>
+                            </tr>
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 5%;">b.</td>
+                                <td class="text-left" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 45%;">Refundable Security deposit</td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;"><span t-esc="'{0:,.2f}'.format(doc.balance_security_deposit)"/></td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 25%;">التامين القابل للاسترداد</td>
+                                <td class="text-center" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 5%;">ب</td>
+                            </tr>
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 50%;" colspan="2"><b>Subtotal</b></td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;" colspan="1"><b><span t-esc="'{0:,.2f}'.format(doc.total_received)"/></b></td>
+                                <td colspan="2" class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;"><b>المجموع الفرعي</b></td>
+                            </tr>
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td class="text-left" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 50%;" colspan="2"><b>Deductions (i.e. Due from Tenant)</b></td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;" colspan="1"/>
+                                <td colspan="2" class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;"><b>خصومات مستحقة على المستأجر</b></td>
+                            </tr>
+                            <t t-set="row_no" t-value="0"/>
+                            <t t-foreach="doc.deduction_line_ids" t-as="line">
+                                <tr style="border: 1px solid black;width: 100%;">
+                                    <td style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-center"><span t-esc="sequence[row_no]"/>.</td>
+                                    <td  style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-left"><span t-if="line.name" t-field="line.name"/></td>
+                                    <td style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-right"><span t-esc="'{0:,.2f}'.format(line.amount)"/></td>
+                                    <td colspan="2" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;" class="text-right"><span t-if="line.deduction_id.arabic_name" t-field="line.deduction_id.arabic_name"/></td>
+                                </tr>
+                                <t t-set="row_no" t-value="row_no+1"/>
+                            </t>
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td class="text-left" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 50%;" colspan="2"><b>Total Due from Tenant</b></td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;" colspan="1"><b><span t-esc="'{0:,.2f}'.format(doc.total_deductions)"/></b></td>
+                                <td colspan="2" class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;"><b>المجموع الفرعي</b></td>
+                            </tr>
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td class="text-left" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 50%;" colspan="2"><b>Net Amount Due to Tenant(Refund)</b></td>
+                                <td class="text-danger text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;" colspan="1"><b><span t-esc="'{0:,.2f}'.format(doc.net_due_amount)"/></b></td>
+                                <td colspan="2" class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;"><b>المبلغ الصافى المستحق للمستاجر</b></td>
+                            </tr>
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 50%;" colspan="2"><b>Property Administrator Signature</b></td>
+                                <td class="text-right"
+                                    style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;"
+                                    colspan="1"/>
+                                <td colspan="2" class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;"><b>توقيع مسؤول العقار ات</b></td>
+                            </tr>
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 50%;" colspan="2"><b>Property Management</b></td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;" colspan="1"/>
+                                <td colspan="2" class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;"><b>إدارة الممتلكات</b></td>
+                            </tr>
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 50%;" colspan="2"><b>Account’s Department</b></td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;" colspan="1"/>
+                                <td colspan="2" class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;"><b>قسم الحساب</b></td>
+                            </tr>
+                            <tr style="border: 1px solid black;width: 100%;">
+                                <td style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 50%;" colspan="2"><b>CEO Signature</b></td>
+                                <td class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 20%;" colspan="1"/>
+                                <td colspan="2" class="text-right" style="padding: 5px;border-left: 1px solid black; border-right: 1px solid black;width: 30%;"><b>الريْس التنفيذى</b></td>
+                            </tr>
+                            <tr style="border: 1px solid black;width: 100%;text-align: center;">
+                                <td  style="padding: 5px;width: 100%;" colspan="5"><b><span class="text-center text-danger">Note: Tenant has 7 days grace period to disconnect the Water &amp; Electricity, and to submit the Maintenance Inspection Report</span></b><br/>
+                                <span class="text-center">The tenant has vacated the above mentioned unit and there is NO AMOUNT DUE from the tenant to AL-DHAFRA PROPERTY MANAGEMENT</span><br/>
+                                <span class="text-center">وقد أخلى المستأجر المذكورة أعلاه وحدة وليس هناك مبلغ المستحق على مستأجرالظفرة الادارة العقارات.</span></td>
+                            </tr>
+                        </table>
+                    </table>
+                    </div>
+            </t>
+        </template>
+    <template id="mbk_pms.break_contract_report">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="mbk_pms.report_break_contract_report" t-lang="doc.tenant_id.lang"/>
+        </t>
+    </t>
+    </template>
+
+    </data>
+</odoo>
+
